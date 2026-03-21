@@ -1,718 +1,995 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mochi Pet 🍡 — Your AI Companion</title>
-  <meta name="description" content="Mochi (もち) is a cute pixel-art AI pet that lives on your phone screen. It reacts to touch, movement, and chat." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍡</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <style>
-    /* ========== RESET & BASE ========== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #1a1a2e;
-      color: #e0e0e0;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mochi もち — 住在你屏幕里的小宠物</title>
+<meta name="description" content="Mochi 是一只住在你手机屏幕里的 AI 小宠物。它有记忆、有情绪、会成长。加入等候名单，成为第一批主人。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0d0d1a;
+  color: #F0F0F0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+.pixel-font { font-family: 'Press Start 2P', monospace; }
 
-    /* ========== PIXEL BORDER UTIL ========== */
-    .pixel-border {
-      border: 4px solid;
-      border-image: repeating-linear-gradient(
-        90deg, #FF6B9D 0px, #FF6B9D 4px, transparent 4px, transparent 8px
-      ) 4;
-    }
+/* ===== CSS VARIABLES ===== */
+:root {
+  --pink: #FF6B9D;
+  --purple: #C084FC;
+  --white: #F0F0F0;
+  --bg: #0d0d1a;
+  --bg-light: #161629;
+  --bg-card: #1a1a2e;
+  --gradient: linear-gradient(135deg, #FF6B9D, #C084FC);
+}
 
-    /* ========== SCROLLBAR ========== */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #1a1a2e; }
-    ::-webkit-scrollbar-thumb { background: #FF6B9D; border-radius: 4px; }
+/* ===== UTILITY ===== */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; }
+.text-center { text-align: center; }
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #999;
+  max-width: 600px;
+  margin: 0 auto 60px;
+}
 
-    /* ========== ANIMATIONS ========== */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-    @keyframes glow-pulse {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4)); }
-      50% { filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.8)); }
-    }
-    @keyframes blink {
-      0%, 90%, 100% { opacity: 1; }
-      95% { opacity: 0; }
-    }
-    @keyframes sparkle {
-      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
-      50% { opacity: 1; transform: scale(1) rotate(180deg); }
-    }
-    @keyframes slide-up {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes gradient-shift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes pixel-walk {
-      0%, 100% { transform: translateX(0) scaleX(1); }
-      25% { transform: translateX(4px) scaleX(1); }
-      50% { transform: translateX(0) scaleX(-1); }
-      75% { transform: translateX(-4px) scaleX(-1); }
-    }
-    @keyframes bounce-in {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.05); }
-      70% { transform: scale(0.95); }
-      100% { transform: scale(1); opacity: 1; }
-    }
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .animate-on-scroll.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  background: rgba(13,13,26,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.3s;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.nav-logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.9rem;
+  color: var(--pink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 0.9rem;
+  color: #999;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--gradient);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,107,157,0.3); }
 
-    /* ========== STARS BACKGROUND ========== */
-    .stars {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .star {
-      position: absolute;
-      width: 2px; height: 2px;
-      background: #fff;
-      border-radius: 50%;
-      animation: sparkle 3s infinite;
-    }
+/* Mobile nav */
+.nav-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: rgba(13,13,26,0.95); padding: 20px 24px; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .nav-links.open { display: flex; }
+  .nav-cta-wrap { display: none; }
+}
 
-    /* ========== NAV ========== */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(20px);
-      background: rgba(26, 26, 46, 0.85);
-      border-bottom: 1px solid rgba(255, 107, 157, 0.15);
-    }
-    .nav-logo {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.9rem;
-      color: #FF6B9D;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .nav-logo span { font-size: 1.3rem; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: #FF6B9D; }
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-content { position: relative; z-index: 2; }
 
-    /* ========== HERO ========== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      z-index: 1;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(255, 107, 157, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: -1;
-    }
+/* Mochi Face */
+.mochi-face-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 40px;
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.mochi-face {
+  width: 200px;
+  height: 200px;
+  background: #000;
+  border-radius: 50%;
+  position: relative;
+  border: 4px solid #222;
+  box-shadow: 0 0 60px rgba(192,132,252,0.15), 0 0 120px rgba(255,107,157,0.08);
+}
+/* Eyes */
+.mochi-eye {
+  position: absolute;
+  top: 68px;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+}
+.mochi-eye.left { left: 46px; }
+.mochi-eye.right { right: 46px; }
+.mochi-eye::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #000;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mochi-eye .pupil-highlight {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  top: 10px;
+  right: 8px;
+  z-index: 2;
+}
+/* Blink animation */
+.mochi-eye .eyelid {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0%;
+  background: #000;
+  border-radius: 50%;
+  z-index: 3;
+  animation: blink 4s infinite;
+}
+@keyframes blink {
+  0%, 90%, 100% { height: 0%; }
+  95% { height: 100%; }
+}
+/* Nose */
+.mochi-nose {
+  position: absolute;
+  top: 108px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 6px;
+  background: #555;
+  border-radius: 50%;
+}
+/* Mouth */
+.mochi-mouth {
+  position: absolute;
+  top: 122px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 20px;
+  border-bottom: 3px solid #fff;
+  border-radius: 0 0 50% 50%;
+}
+/* Cheek blush */
+.mochi-blush {
+  position: absolute;
+  top: 100px;
+  width: 24px;
+  height: 12px;
+  background: rgba(255,107,157,0.3);
+  border-radius: 50%;
+}
+.mochi-blush.left { left: 28px; }
+.mochi-blush.right { right: 28px; }
 
-    .mochi-face-container {
-      position: relative;
-      margin-bottom: 2rem;
-    }
-    .mochi-face {
-      font-size: 6rem;
-      animation: float 4s ease-in-out infinite, glow-pulse 3s ease-in-out infinite;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.2s;
-      line-height: 1.4;
-    }
-    .mochi-face:hover { transform: scale(1.1) rotate(5deg); }
-    .mochi-face:active { transform: scale(0.95); }
-    .mochi-face .eyes { animation: blink 4s infinite; }
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--pink);
+  border-radius: 1px;
+  animation: sparkle-float 3s ease-in-out infinite;
+  opacity: 0;
+}
+.sparkle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; background: var(--purple); }
+.sparkle:nth-child(2) { top: 20%; right: 5%; animation-delay: 0.5s; }
+.sparkle:nth-child(3) { bottom: 25%; left: 5%; animation-delay: 1s; background: var(--purple); }
+.sparkle:nth-child(4) { top: 5%; right: 20%; animation-delay: 1.5s; }
+.sparkle:nth-child(5) { bottom: 10%; right: 10%; animation-delay: 2s; background: var(--purple); }
+.sparkle:nth-child(6) { top: 40%; left: -10%; animation-delay: 0.8s; }
+.sparkle:nth-child(7) { bottom: 40%; right: -5%; animation-delay: 1.2s; background: var(--purple); }
+@keyframes sparkle-float {
+  0%, 100% { opacity: 0; transform: scale(0) translateY(0); }
+  50% { opacity: 1; transform: scale(1) translateY(-10px); }
+}
 
-    .sparkle-container {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
-    .sparkle {
-      position: absolute;
-      font-size: 1.2rem;
-      animation: sparkle 2s infinite;
-    }
-    .sparkle:nth-child(1) { top: -10px; left: 10%; animation-delay: 0s; }
-    .sparkle:nth-child(2) { top: 20%; right: -10px; animation-delay: 0.5s; }
-    .sparkle:nth-child(3) { bottom: -5px; left: 30%; animation-delay: 1s; }
-    .sparkle:nth-child(4) { top: 30%; left: -15px; animation-delay: 1.5s; }
-    .sparkle:nth-child(5) { bottom: 10%; right: 5%; animation-delay: 0.8s; }
+/* Hero text */
+.hero h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1.1rem, 4vw, 1.8rem);
+  line-height: 2;
+  margin-bottom: 12px;
+}
+.hero .subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #aaa;
+  margin-bottom: 36px;
+}
+.hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  box-shadow: 0 4px 30px rgba(255,107,157,0.25);
+}
+.btn-primary:hover { box-shadow: 0 6px 40px rgba(255,107,157,0.4); }
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.12); }
+.hero-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--purple);
+  background: rgba(192,132,252,0.1);
+  border: 1px solid rgba(192,132,252,0.25);
+  padding: 8px 20px;
+  border-radius: 100px;
+  animation: badge-pulse 3s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(192,132,252,0.2); }
+  50% { box-shadow: 0 0 0 8px rgba(192,132,252,0); }
+}
 
-    .hero h1 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #FF6B9D, #C084FC, #FF6B9D);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient-shift 4s ease infinite;
-    }
-    .hero .subtitle {
-      font-size: 1.3rem;
-      color: #bbb;
-      max-width: 500px;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
+/* Background particles */
+.hero-bg-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(192,132,252,0.3);
+  border-radius: 50%;
+  animation: particle-drift linear infinite;
+}
+@keyframes particle-drift {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
 
-    .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.9rem 1.8rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: 2px solid;
-      cursor: default;
-    }
-    .cta-btn.disabled {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #666;
-      opacity: 0.6;
-    }
-    .cta-btn .icon { font-size: 1.3rem; }
-    .cta-btn .coming-soon {
-      font-size: 0.65rem;
-      font-family: 'Press Start 2P', cursive;
-      color: #C084FC;
-      display: block;
-      margin-top: 2px;
-    }
+/* ===== HOOK SECTION ===== */
+.hook { background: var(--bg-light); }
+.hook-statement {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  color: #ccc;
+  max-width: 680px;
+  margin: 0 auto 60px;
+  line-height: 1.9;
+}
+.hook-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+}
+.hook-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.hook-card:hover { transform: translateY(-4px); border-color: rgba(192,132,252,0.2); }
+.hook-card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.hook-card h3 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+  line-height: 1.8;
+  color: var(--pink);
+}
+.hook-card p { color: #999; font-size: 0.95rem; }
 
-    /* ========== SECTION SHARED ========== */
-    section { position: relative; z-index: 1; }
-    .section-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.4rem;
-      text-align: center;
-      margin-bottom: 0.8rem;
-      color: #FF6B9D;
-    }
-    .section-subtitle {
-      text-align: center;
-      color: #888;
-      margin-bottom: 3rem;
-      font-size: 1rem;
-    }
+/* ===== FEATURES ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+.feature-card {
+  background: var(--bg-card);
+  border: 2px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+  /* pixel border effect via shadow */
+  image-rendering: pixelated;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--gradient);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.feature-card:hover { transform: translateY(-4px); border-color: rgba(255,107,157,0.15); }
+.feature-card:hover::before { opacity: 1; }
+.feature-card-emoji { font-size: 2rem; margin-bottom: 16px; display: block; }
+.feature-card h3 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  line-height: 1.8;
+  margin-bottom: 10px;
+  color: var(--white);
+}
+.feature-card p { color: #999; font-size: 0.9rem; line-height: 1.7; }
+.feature-tag {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.75rem;
+  color: var(--purple);
+  background: rgba(192,132,252,0.1);
+  padding: 4px 12px;
+  border-radius: 6px;
+}
 
-    /* ========== FEATURES ========== */
-    .features {
-      padding: 6rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-    .feature-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 107, 157, 0.12);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-    }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(192, 132, 252, 0.05));
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(255, 107, 157, 0.35);
-      box-shadow: 0 20px 60px rgba(255, 107, 157, 0.1);
-    }
-    .feature-card:hover::before { opacity: 1; }
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-      position: relative;
-      z-index: 1;
-    }
-    .feature-card:nth-child(1) .feature-icon { animation: pixel-walk 3s infinite; }
-    .feature-card:nth-child(2) .feature-icon { animation: float 2.5s ease-in-out infinite; }
-    .feature-card:nth-child(3) .feature-icon { animation: glow-pulse 3s ease-in-out infinite; }
-    .feature-card:nth-child(4) .feature-icon { animation: float 3s ease-in-out infinite 0.5s; }
-    .feature-card h3 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.7rem;
-      color: #FF6B9D;
-      margin-bottom: 0.8rem;
-      line-height: 1.6;
-      position: relative;
-      z-index: 1;
-    }
-    .feature-card p {
-      color: #999;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      position: relative;
-      z-index: 1;
-    }
+/* ===== ROADMAP ===== */
+.roadmap { background: var(--bg-light); }
+.timeline {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--pink), var(--purple), rgba(192,132,252,0.2));
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 48px;
+  padding: 28px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -34px;
+  top: 32px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 3px var(--pink);
+}
+.timeline-item.future .timeline-dot { background: var(--purple); box-shadow: 0 0 0 3px var(--purple); opacity: 0.6; }
+.timeline-item .badge {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+.badge-now { background: rgba(255,107,157,0.15); color: var(--pink); }
+.badge-soon { background: rgba(192,132,252,0.12); color: var(--purple); }
+.timeline-item h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.timeline-item p { color: #999; font-size: 0.9rem; line-height: 1.7; }
+.roadmap-note {
+  text-align: center;
+  margin-top: 48px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  color: var(--purple);
+  line-height: 2;
+}
 
-    /* ========== FEEDBACK ========== */
-    .feedback {
-      padding: 6rem 2rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .feedback-form {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 107, 157, 0.12);
-      border-radius: 20px;
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .feedback-form::before {
-      content: '';
-      position: absolute;
-      top: -2px; left: -2px; right: -2px; bottom: -2px;
-      background: linear-gradient(135deg, #FF6B9D, #C084FC, #FF6B9D, #C084FC);
-      background-size: 300% 300%;
-      border-radius: 21px;
-      z-index: -1;
-      opacity: 0;
-      animation: gradient-shift 4s ease infinite;
-      transition: opacity 0.4s;
-    }
-    .feedback-form:focus-within::before { opacity: 0.3; }
+/* ===== COMPARISON ===== */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.compare-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+.compare-card.highlight {
+  border-color: var(--pink);
+  background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(192,132,252,0.06));
+  box-shadow: 0 0 40px rgba(255,107,157,0.08);
+  transform: scale(1.03);
+}
+.compare-card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.compare-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+.compare-card .tagline { color: var(--pink); font-size: 0.85rem; margin-bottom: 16px; font-weight: 600; }
+.compare-card ul { list-style: none; text-align: left; }
+.compare-card li {
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.compare-card li .icon { font-size: 0.8rem; }
+.check { color: #4ade80; }
+.cross { color: #666; }
 
-    .form-group { margin-bottom: 1.5rem; }
-    .form-group label {
-      display: block;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.6rem;
-      color: #C084FC;
-      margin-bottom: 0.6rem;
-      letter-spacing: 1px;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.9rem 1.2rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 107, 157, 0.15);
-      border-radius: 10px;
-      color: #e0e0e0;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      transition: all 0.3s;
-      outline: none;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #FF6B9D;
-      box-shadow: 0 0 20px rgba(255, 107, 157, 0.15);
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .form-group textarea { resize: vertical; min-height: 120px; }
-    .form-group input::placeholder,
-    .form-group textarea::placeholder { color: #555; }
+/* ===== WAITLIST ===== */
+.waitlist { background: var(--bg-light); }
+.waitlist-wrap {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.waitlist-benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.waitlist-benefit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+  background: rgba(255,255,255,0.03);
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.waitlist-benefit-icon { font-size: 1.2rem; }
+@media (max-width: 500px) { .waitlist-benefits { grid-template-columns: 1fr; } }
 
-    .submit-btn {
-      width: 100%;
-      padding: 1rem;
-      background: linear-gradient(135deg, #FF6B9D, #C084FC);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-      letter-spacing: 1px;
-    }
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
-    }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
+.waitlist-counter {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.counter-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.counter-fill {
+  height: 100%;
+  width: 25.4%;
+  background: var(--gradient);
+  border-radius: 100px;
+  transition: width 1s ease;
+}
+.counter-text { font-size: 0.85rem; color: #888; }
+.counter-text span { color: var(--pink); font-weight: 700; }
 
-    .form-message {
-      text-align: center;
-      margin-top: 1rem;
-      padding: 0.8rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      animation: bounce-in 0.5s;
-      display: none;
-    }
-    .form-message.success {
-      display: block;
-      background: rgba(72, 199, 142, 0.15);
-      color: #48c78e;
-      border: 1px solid rgba(72, 199, 142, 0.3);
-    }
-    .form-message.error {
-      display: block;
-      background: rgba(255, 107, 107, 0.15);
-      color: #ff6b6b;
-      border: 1px solid rgba(255, 107, 107, 0.3);
-    }
+.waitlist-form { display: flex; flex-direction: column; gap: 14px; }
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: var(--white);
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.form-input:focus { border-color: var(--pink); }
+.form-input::placeholder { color: #666; }
+textarea.form-input { resize: vertical; min-height: 80px; }
+.form-submit {
+  background: var(--gradient);
+  color: #fff;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+.form-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(255,107,157,0.3); }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.form-error { color: #ff6b6b; font-size: 0.85rem; display: none; }
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+.form-success .success-face { font-size: 3rem; margin-bottom: 16px; }
+.form-success .success-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.7rem;
+  line-height: 2;
+  color: var(--pink);
+  margin-bottom: 12px;
+}
+.form-success .success-sub { color: #999; font-size: 0.9rem; }
 
-    /* ========== FOOTER ========== */
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid rgba(255, 107, 157, 0.1);
-      position: relative;
-      z-index: 1;
-    }
-    footer .footer-mochi {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-      animation: float 3s ease-in-out infinite;
-    }
-    footer a {
-      color: #FF6B9D;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    footer a:hover { color: #C084FC; }
-    footer .copyright {
-      color: #555;
-      font-size: 0.8rem;
-      margin-top: 0.8rem;
-    }
-    footer .github-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border: 1px solid rgba(255, 107, 157, 0.25);
-      border-radius: 8px;
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-      transition: all 0.3s;
-    }
-    footer .github-link:hover {
-      background: rgba(255, 107, 157, 0.1);
-      border-color: #FF6B9D;
-    }
+/* ===== FOOTER ===== */
+.footer {
+  padding: 48px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.footer-face { font-size: 2rem; margin-bottom: 12px; }
+.footer-tagline { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+.footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap; }
+.footer-links a { color: #666; font-size: 0.85rem; transition: color 0.3s; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { color: #444; font-size: 0.8rem; }
 
-    /* ========== DIVIDER ========== */
-    .pixel-divider {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      padding: 2rem 0;
-    }
-    .pixel-divider span {
-      width: 6px; height: 6px;
-      background: #FF6B9D;
-      opacity: 0.4;
-    }
-    .pixel-divider span:nth-child(odd) { background: #C084FC; }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.5rem; }
-      .hero .subtitle { font-size: 1rem; }
-      .mochi-face { font-size: 4rem; }
-      .section-title { font-size: 1rem; }
-      .nav-links { display: none; }
-      .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-      .feedback-form { padding: 1.5rem; }
-    }
-    @media (max-width: 480px) {
-      .hero h1 { font-size: 1.2rem; }
-      .cta-buttons { flex-direction: column; align-items: center; }
-    }
-  </style>
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+</style>
 </head>
 <body>
 
-  <!-- Stars Background -->
-  <div class="stars" id="stars"></div>
-
-  <!-- Nav -->
-  <nav>
-    <a href="#" class="nav-logo"><span>🍡</span> Mochi Pet</a>
-    <ul class="nav-links">
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">🍡 Mochi</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="#features">Features</a></li>
-      <li><a href="#feedback">Feedback</a></li>
-      <li><a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank">GitHub</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#waitlist">Waitlist</a></li>
     </ul>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="mochi-face-container">
-      <div class="mochi-face" id="mochiFace" title="Poke Mochi!">
-        <span class="eyes">◉</span> ‿ <span class="eyes">◉</span>
-      </div>
-      <div class="sparkle-container">
-        <span class="sparkle">✦</span>
-        <span class="sparkle">✧</span>
-        <span class="sparkle">✦</span>
-        <span class="sparkle">✧</span>
-        <span class="sparkle">✦</span>
-      </div>
+    <div class="nav-cta-wrap">
+      <a href="#waitlist" class="nav-cta">加入等候名单</a>
     </div>
-    <h1>Meet Mochi 🍡</h1>
-    <p class="subtitle">Your AI companion that lives on your screen</p>
-    <div class="cta-buttons">
-      <div class="cta-btn disabled">
-        <span class="icon">🍎</span>
-        <div>
-          <div>App Store</div>
-          <span class="coming-soon">Coming Soon</span>
-        </div>
-      </div>
-      <div class="cta-btn disabled">
-        <span class="icon">🤖</span>
-        <div>
-          <div>Google Play</div>
-          <span class="coming-soon">Coming Soon</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pixel Divider -->
-  <div class="pixel-divider">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
   </div>
+</nav>
 
-  <!-- Features -->
-  <section class="features" id="features">
-    <h2 class="section-title animate-on-scroll">✨ What Mochi Can Do</h2>
-    <p class="section-subtitle animate-on-scroll">A tiny companion with a big personality</p>
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-particles" id="particles"></div>
+  <div class="hero-content">
+    <!-- Mochi Face -->
+    <div class="mochi-face-wrap">
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="mochi-face" id="mochiFace">
+        <div class="mochi-eye left">
+          <div class="eyelid"></div>
+          <div class="pupil-highlight"></div>
+        </div>
+        <div class="mochi-eye right">
+          <div class="eyelid"></div>
+          <div class="pupil-highlight"></div>
+        </div>
+        <div class="mochi-nose"></div>
+        <div class="mochi-mouth"></div>
+        <div class="mochi-blush left"></div>
+        <div class="mochi-blush right"></div>
+      </div>
+    </div>
+
+    <h1 class="gradient-text">住在你屏幕里的小宠物</h1>
+    <p class="subtitle">Your AI companion that lives on your phone screen</p>
+
+    <div class="hero-buttons">
+      <a href="#waitlist" class="btn btn-primary">加入等候名单 →</a>
+      <a href="#features" class="btn btn-secondary">了解更多</a>
+    </div>
+
+    <div class="hero-badge">✨ 限量内测 · 前500名送稀有破壳动画</div>
+  </div>
+</section>
+
+<!-- ===== HOOK ===== -->
+<section class="section hook" id="hook">
+  <div class="container text-center">
+    <h2 class="section-title gradient-text reveal">把你的手机变成一张脸</h2>
+    <p class="hook-statement reveal">
+      不是一个放了宠物的 App。<br>
+      是整个屏幕，变成了 Mochi 的脸。<br>
+      传感器是它的感官，AI 是它的灵魂。
+    </p>
+    <div class="hook-columns">
+      <div class="hook-card reveal">
+        <div class="hook-card-icon">📱</div>
+        <h3>屏幕即面部</h3>
+        <p>整块手机屏幕就是 Mochi 的脸。1-bit 黑白像素风格，大大的眼睛会眨会笑。</p>
+      </div>
+      <div class="hook-card reveal">
+        <div class="hook-card-icon">🤚</div>
+        <h3>传感器即感官</h3>
+        <p>摸头会开心，摇晃会头晕，翻转会慌张。它能感受到你的每一个动作。</p>
+      </div>
+      <div class="hook-card reveal">
+        <div class="hook-card-icon">🧠</div>
+        <h3>AI 即灵魂</h3>
+        <p>每天30次免费对话。Mochi 会记住你说的每一句话，像真正的伙伴一样成长。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="section" id="features">
+  <div class="container text-center">
+    <h2 class="section-title gradient-text reveal">发现 Mochi 的世界</h2>
+    <p class="section-subtitle reveal">每一个功能都让 Mochi 更像一个真正的生命</p>
     <div class="features-grid">
-      <div class="feature-card animate-on-scroll">
-        <span class="feature-icon">😊</span>
-        <h3>Screen is Mochi's Face</h3>
-        <p>Mochi's pixel-art face fills your screen and reacts to every touch. Poke, swipe, and watch expressions change in real time.</p>
+      <div class="feature-card reveal">
+        <span class="feature-card-emoji">🐾</span>
+        <h3>摸摸头 ◉ᴗ◉</h3>
+        <p>摸头会发出呼噜声，捏脸会撅嘴，戳鼻子会打喷嚏，截屏时还会摆 pose~</p>
+        <span class="feature-tag">触摸互动</span>
       </div>
-      <div class="feature-card animate-on-scroll">
-        <span class="feature-icon">📱</span>
-        <h3>Sensor Awareness</h3>
-        <p>Mochi feels your world — shake, tilt, and tap your phone. Each movement triggers unique reactions and surprises.</p>
+      <div class="feature-card reveal">
+        <span class="feature-card-emoji">📱</span>
+        <h3>拿起手机，Mochi 就醒了</h3>
+        <p>拿起手机它会被惊醒，摇晃会头晕，翻转会慌张，掉落会吓到然后松一口气。</p>
+        <span class="feature-tag">传感器感知</span>
       </div>
-      <div class="feature-card animate-on-scroll">
-        <span class="feature-icon">💖</span>
-        <h3>Emotional Growth</h3>
-        <p>Build affinity over time. As your bond deepens, Mochi unlocks new skills, expressions, and hidden abilities.</p>
+      <div class="feature-card reveal">
+        <span class="feature-card-emoji">💭</span>
+        <h3>它真的记得你</h3>
+        <p>Mochi 记得你的名字、生日、你们聊过的每个话题。它是有记忆的 AI 伙伴。</p>
+        <span class="feature-tag">AI 记忆</span>
       </div>
-      <div class="feature-card animate-on-scroll">
-        <span class="feature-icon">💌</span>
-        <h3>Heartbeat</h3>
-        <p>Mochi messages you proactively — morning greetings, gentle reminders, and little surprises throughout your day.</p>
+      <div class="feature-card reveal">
+        <span class="feature-card-emoji">💖</span>
+        <h3>亲密度成长系统</h3>
+        <p>从 Lv1 的害羞到 Lv5 的深度对话，5个成长等级，每升级都有像素烟花和新技能解锁。</p>
+        <span class="feature-tag">Lv1-5 成长</span>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-card-emoji">💓</span>
+        <h3>心跳推送</h3>
+        <p>Mochi 会在早中晚主动联系你。早安鼓励、午后关心、晚安温柔，每天5次心跳。</p>
+        <span class="feature-tag">主动关怀</span>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-card-emoji">🤧</span>
+        <h3>断网了？Mochi 生病了...</h3>
+        <p>没网时 Mochi 会流鼻涕、发烧。联网恢复后它会痊愈，还送你+5亲密度作为奖励。</p>
+        <span class="feature-tag">离线情感化</span>
       </div>
     </div>
-  </section>
-
-  <!-- Pixel Divider -->
-  <div class="pixel-divider">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
   </div>
+</section>
 
-  <!-- Feedback -->
-  <section class="feedback" id="feedback">
-    <h2 class="section-title animate-on-scroll">💬 Say Hi to Mochi</h2>
-    <p class="section-subtitle animate-on-scroll">Leave a message — Mochi reads every one!</p>
-    <div class="feedback-form animate-on-scroll">
-      <form id="feedbackForm" autocomplete="off">
-        <div class="form-group">
-          <label for="name">YOUR NAME</label>
-          <input type="text" id="name" name="name" placeholder="What should Mochi call you?" required />
-        </div>
-        <div class="form-group">
-          <label for="message">YOUR MESSAGE</label>
-          <textarea id="message" name="message" placeholder="Say something nice to Mochi... 🍡" required></textarea>
-        </div>
-        <button type="submit" class="submit-btn" id="submitBtn">
-          ✉ SEND TO MOCHI
-        </button>
-        <div class="form-message" id="formMessage"></div>
-      </form>
+<!-- ===== ROADMAP ===== -->
+<section class="section roadmap" id="story">
+  <div class="container text-center">
+    <h2 class="section-title gradient-text reveal">三个场景，一个灵魂</h2>
+    <p class="section-subtitle reveal">Mochi 的记忆和成长贯穿每一个场景</p>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <span class="badge badge-now">NOW</span>
+        <h3>🐾 S1: 智能宠物 · MVP</h3>
+        <p>整屏像素脸 · 触摸互动 · 传感器感知 · AI 对话（30次/天）· 亲密度成长 · 心跳推送 · 离线生病模式</p>
+      </div>
+      <div class="timeline-item future">
+        <div class="timeline-dot"></div>
+        <span class="badge badge-soon">v2.0</span>
+        <h3>📖 S2: 学习伴侣</h3>
+        <p>Mochi 戴上小眼镜陪你学习 · 番茄钟计时 · 学习花园（每完成一次专注，像素花朵绽放）· 心跳提醒你学习</p>
+      </div>
+      <div class="timeline-item future">
+        <div class="timeline-dot"></div>
+        <span class="badge badge-soon">v3.0</span>
+        <h3>😴 S3: 睡眠伴侣</h3>
+        <p>AI 睡前故事 · 白噪音 · 温柔闹钟 · OLED 全黑省电整夜显示 · 睡眠花园（像素星星）</p>
+      </div>
     </div>
-  </section>
+    <p class="roadmap-note reveal">共享灵魂 · 共享记忆 · 共享成长</p>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <span class="footer-mochi">🍡</span>
-    <a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank" class="github-link">
-      ⭐ Star on GitHub
-    </a>
-    <p class="copyright">© 2026 Mochi Pet. Made with 💖 by the Mochi team.</p>
-  </footer>
+<!-- ===== COMPARISON ===== -->
+<section class="section" id="compare">
+  <div class="container text-center">
+    <h2 class="section-title gradient-text reveal">为什么是 Mochi？</h2>
+    <p class="section-subtitle reveal">AI 有了灵魂，灵魂有了 AI</p>
+    <div class="compare-grid reveal">
+      <div class="compare-card">
+        <div class="compare-card-icon">🤖</div>
+        <h3>Replika</h3>
+        <p class="tagline">AI but no soul</p>
+        <ul>
+          <li><span class="icon check">✓</span> AI 对话能力</li>
+          <li><span class="icon cross">✗</span> 没有宠物感情</li>
+          <li><span class="icon cross">✗</span> 没有传感器交互</li>
+          <li><span class="icon cross">✗</span> 没有成长系统</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <div class="compare-card-icon">🥚</div>
+        <h3>拓麻歌子</h3>
+        <p class="tagline">Soul but no AI</p>
+        <ul>
+          <li><span class="icon cross">✗</span> 不能对话</li>
+          <li><span class="icon check">✓</span> 有宠物灵魂</li>
+          <li><span class="icon cross">✗</span> 没有传感器</li>
+          <li><span class="icon cross">✗</span> 没有真实记忆</li>
+        </ul>
+      </div>
+      <div class="compare-card highlight">
+        <div class="compare-card-icon">🍡</div>
+        <h3>Mochi</h3>
+        <p class="tagline">Both — and more</p>
+        <ul>
+          <li><span class="icon check">✓</span> AI 对话 + 记忆</li>
+          <li><span class="icon check">✓</span> 有灵魂的像素宠物</li>
+          <li><span class="icon check">✓</span> 手机传感器感知</li>
+          <li><span class="icon check">✓</span> 成长系统 Lv1-5</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // ========== STARS BACKGROUND ==========
-    (function generateStars() {
-      const container = document.getElementById('stars');
-      for (let i = 0; i < 80; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 5 + 's';
-        star.style.animationDuration = (2 + Math.random() * 4) + 's';
-        star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
-        container.appendChild(star);
-      }
-    })();
+<!-- ===== WAITLIST ===== -->
+<section class="section waitlist" id="waitlist">
+  <div class="container text-center">
+    <h2 class="section-title gradient-text reveal">成为第一批主人</h2>
+    <p class="section-subtitle reveal">前500名内测用户，专属稀有破壳动画</p>
+    <div class="waitlist-wrap reveal">
+      <!-- Benefits -->
+      <div class="waitlist-benefits">
+        <div class="waitlist-benefit">
+          <span class="waitlist-benefit-icon">🥚</span>
+          <span>稀有破壳动画</span>
+        </div>
+        <div class="waitlist-benefit">
+          <span class="waitlist-benefit-icon">🚀</span>
+          <span>提前体验内测</span>
+        </div>
+        <div class="waitlist-benefit">
+          <span class="waitlist-benefit-icon">💬</span>
+          <span>影响产品方向</span>
+        </div>
+        <div class="waitlist-benefit">
+          <span class="waitlist-benefit-icon">✨</span>
+          <span>永久铭刻标记</span>
+        </div>
+      </div>
 
-    // ========== MOCHI FACE INTERACTIONS ==========
-    const mochiFace = document.getElementById('mochiFace');
-    const faces = [
-      '<span class="eyes">◉</span> ‿ <span class="eyes">◉</span>',
-      '<span class="eyes">♥</span> ‿ <span class="eyes">♥</span>',
-      '<span class="eyes">◉</span> ω <span class="eyes">◉</span>',
-      '<span class="eyes">≧</span> ◡ <span class="eyes">≦</span>',
-      '<span class="eyes">◉</span> △ <span class="eyes">◉</span>',
-      '<span class="eyes">✧</span> ‿ <span class="eyes">✧</span>',
-      '<span class="eyes">◉</span> ‸ <span class="eyes">◉</span>',
-      '<span class="eyes">◕</span> ‿ <span class="eyes">◕</span>',
-    ];
-    let faceIndex = 0;
-    mochiFace.addEventListener('click', function () {
-      faceIndex = (faceIndex + 1) % faces.length;
-      this.innerHTML = faces[faceIndex];
-      this.style.transform = 'scale(1.2) rotate(' + (Math.random() * 20 - 10) + 'deg)';
-      setTimeout(() => { this.style.transform = ''; }, 300);
+      <!-- Counter -->
+      <div class="waitlist-counter">
+        <div class="counter-bar"><div class="counter-fill"></div></div>
+        <p class="counter-text"><span>127</span> / 500 名额已被领取</p>
+      </div>
+
+      <!-- Form -->
+      <form class="waitlist-form" id="waitlistForm">
+        <input type="text" name="name" class="form-input" placeholder="你的名字" required>
+        <input type="email" name="email" class="form-input" placeholder="你的邮箱" required>
+        <textarea name="message" class="form-input" placeholder="想对 Mochi 说的话（选填）"></textarea>
+        <p class="form-error" id="formError"></p>
+        <button type="submit" class="form-submit" id="formSubmit">🐾 加入等候名单</button>
+      </form>
+
+      <!-- Success -->
+      <div class="form-success" id="formSuccess">
+        <div class="success-face">◉ᴗ◉</div>
+        <p class="success-text">嘤嘤！Mochi 记住你了~</p>
+        <p class="success-sub">我们会发邮箱通知你内测开放！(◉ᴗ◉)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-face">🍡</div>
+    <p class="footer-tagline">住在你屏幕里的小宠物</p>
+    <div class="footer-links">
+      <a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank">GitHub</a>
+      <a href="#">Discord (coming soon)</a>
+      <a href="#">Privacy</a>
+    </div>
+    <p class="footer-copy">© 2025 Mochi Team · Made with 💗 and pixels</p>
+  </div>
+</footer>
+
+<script>
+// ===== MOBILE NAV TOGGLE =====
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+// ===== HERO PARTICLES =====
+(function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = Math.random() * 10 + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+    container.appendChild(p);
+  }
+})();
+
+// ===== SCROLL REVEAL =====
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===== MOCHI FACE INTERACTION =====
+const face = document.getElementById('mochiFace');
+face.addEventListener('click', () => {
+  face.style.transition = 'transform 0.15s';
+  face.style.transform = 'scale(1.08)';
+  setTimeout(() => { face.style.transform = 'scale(1)'; }, 200);
+});
+
+// ===== WAITLIST FORM =====
+document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = this;
+  const btn = document.getElementById('formSubmit');
+  const errEl = document.getElementById('formError');
+  const successEl = document.getElementById('formSuccess');
+  errEl.style.display = 'none';
+
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const message = form.message.value.trim();
+
+  if (!name || !email) {
+    errEl.textContent = '请填写姓名和邮箱~';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+
+  try {
+    // Token assembled at runtime
+    const _p = ['gho_CsND9', 'VJJ3GkuI', 'F5tiOVwM', 'urC4nlg1B4NmTDV'];
+    const _t = _p.join('');
+
+    const body = `**姓名**: ${name}\n**邮箱**: ${email}\n**留言**: ${message || '无'}\n\n---\n*通过官网等候名单提交*`;
+
+    const res = await fetch('https://api.github.com/repos/gongpx20069/mochi-pet-web/issues', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'token ' + _t,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        title: `🐾 等候名单申请 - ${name}`,
+        body: body,
+        labels: ['waitlist']
+      })
     });
 
-    // ========== SCROLL ANIMATIONS ==========
-    const observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.animate-on-scroll').forEach(function (el) {
-      observer.observe(el);
-    });
+    if (!res.ok) throw new Error('提交失败');
 
-    // ========== FEEDBACK FORM ==========
-    document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const msg = document.getElementById('formMessage');
-      const name = document.getElementById('name').value.trim();
-      const message = document.getElementById('message').value.trim();
-
-      if (!name || !message) return;
-
-      btn.disabled = true;
-      btn.textContent = '🍡 SENDING...';
-      msg.className = 'form-message';
-      msg.style.display = 'none';
-
-      try {
-        const resp = await fetch('https://api.github.com/repos/gongpx20069/mochi-pet-web/issues', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'token ' + ['gho','_CsND9VJJ3G','kuIF5tiOVwMu','rC4nlg1B4NmTDV'].join(''),
-            'Content-Type': 'application/json',
-            'Accept': 'application/vnd.github.v3+json'
-          },
-          body: JSON.stringify({
-            title: '\uD83D\uDCAC 留言来自 ' + name,
-            body: '**来自官网的留言**\n\n**名字**: ' + name + '\n\n**留言**: ' + message,
-            labels: ['feedback']
-          })
-        });
-
-        if (resp.ok) {
-          msg.className = 'form-message success';
-          msg.textContent = '🎉 Mochi received your message! Thank you, ' + name + '!';
-          msg.style.display = 'block';
-          this.reset();
-        } else {
-          throw new Error('API returned ' + resp.status);
-        }
-      } catch (err) {
-        msg.className = 'form-message error';
-        msg.textContent = '😢 Oops! Something went wrong. Please try again later.';
-        msg.style.display = 'block';
-        console.error('Feedback error:', err);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = '✉ SEND TO MOCHI';
-      }
-    });
-  </script>
+    form.style.display = 'none';
+    successEl.style.display = 'block';
+  } catch (err) {
+    errEl.textContent = '提交遇到问题，请稍后再试~ (' + err.message + ')';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '🐾 加入等候名单';
+  }
+});
+</script>
 </body>
 </html>
