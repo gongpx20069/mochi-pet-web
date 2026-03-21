@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🍡 Mochi — 熄屏壁纸宠物 · AI陪伴</title>
-<meta name="description" content="全球首款熄屏壁纸宠物。OLED黑白像素，它睡觉时就像熄屏，醒来时整个屏幕变成它的脸。AI对话、记忆、成长——一只真实存在的宠物。">
+<title>🍡 Mochi — 住在屏幕上的宠物 · AI陪伴</title>
+<meta name="description" content="Mochi 有自己的 24 小时——睡觉、玩耍、发呆。打开它，整张黑色的脸就陪在你屏幕上。想互动就摇一摇，想聊天就说几句。它一直都在。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -572,43 +572,54 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   <div class="hero-content">
     <!-- Mochi Face -->
     <div class="mochi-face-wrap">
-      <svg viewBox="0 0 260 260" width="260" height="260" xmlns="http://www.w3.org/2000/svg">
-        <!-- Background face -->
-        <rect x="0" y="0" width="260" height="260" fill="#000000"/>
+      <!-- viewBox: 320×400, face centered, eyebrows visible at top, mouth at bottom -->
+      <svg viewBox="0 0 320 400" width="260" height="325" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <rect x="0" y="0" width="320" height="400" fill="#000000"/>
 
-        <!-- Left eye group — centered at (82, 125) -->
-        <g class="eye-left-g" transform="translate(82 125)">
-          <ellipse cx="0" cy="0" rx="30" ry="36" fill="none" stroke="#ffffff" stroke-width="2"/>
-          <ellipse cx="0" cy="5" rx="24" ry="29" fill="#111111"/>
-          <ellipse cx="5" cy="10" rx="15" ry="19" fill="#2a2a2a"/>
-          <circle cx="-8" cy="-10" r="5" fill="#ffffff"/>
-          <circle cx="5" cy="-3" r="2" fill="#ffffff"/>
+        <!-- Left eye group — center (96, 190) -->
+        <g class="eye-left-g" transform="translate(96 190)">
           <!-- Brow -->
-          <path d="M -24 -42 Q 0 -54 24 -42" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+          <!-- Outer outline -->
+          <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
+          <!-- Inner dark -->
+          <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
+          <!-- Iris grey -->
+          <ellipse cx="6" cy="16" rx="26" ry="32" fill="#2a2a2a"/>
+          <!-- Large highlight -->
+          <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
+          <!-- Small highlight -->
+          <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
         </g>
 
-        <!-- Right eye group — centered at (178, 125) -->
-        <g class="eye-right-g" transform="translate(178 125)">
-          <ellipse cx="0" cy="0" rx="30" ry="36" fill="none" stroke="#ffffff" stroke-width="2"/>
-          <ellipse cx="0" cy="5" rx="24" ry="29" fill="#111111"/>
-          <ellipse cx="5" cy="10" rx="15" ry="19" fill="#2a2a2a"/>
-          <circle cx="-8" cy="-10" r="5" fill="#ffffff"/>
-          <circle cx="5" cy="-3" r="2" fill="#ffffff"/>
+        <!-- Right eye group — center (224, 190) -->
+        <g class="eye-right-g" transform="translate(224 190)">
           <!-- Brow -->
-          <path d="M -24 -42 Q 0 -54 24 -42" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+          <!-- Outer outline -->
+          <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
+          <!-- Inner dark -->
+          <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
+          <!-- Iris grey -->
+          <ellipse cx="6" cy="16" rx="26" ry="32" fill="#2a2a2a"/>
+          <!-- Large highlight -->
+          <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
+          <!-- Small highlight -->
+          <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
         </g>
 
         <!-- Mouth -->
-        <path d="M 108 190 Q 130 204 152 190" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 118 318 Q 160 348 202 318" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
 
         <!-- Sparkle -->
-        <text class="mochi-sparkle" x="210" y="52" font-size="14" fill="white">✦</text>
+        <text class="mochi-sparkle" x="268" y="60" font-size="22" fill="white">✦</text>
       </svg>
     </div>
 
-    <p style="font-size:0.9rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;font-weight:600;">熄屏壁纸宠物</p>
-    <h1 class="gradient-text">熄屏时它在睡觉 ☾ 亮屏时它醒来 ◉</h1>
-    <p class="subtitle">全球首款熄屏壁纸宠物。OLED 黑白像素——黑色不发光，所以它睡着的样子，就是熄屏的样子。</p>
+    <p style="font-size:0.9rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;font-weight:600;">黑色脸 · 熄屏壁纸质感</p>
+    <h1 class="gradient-text">一直在那里 · 一直陪着你</h1>
+    <p class="subtitle">Mochi 有自己的 24 小时——睡觉、玩耍、发呆。<br>你做你的事，它陪在屏幕上。想互动了，随时都在。</p>
 
     <div class="hero-buttons">
       <a href="#waitlist" class="btn btn-primary">加入等候名单 →</a>
@@ -620,27 +631,27 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <section style='background:#000;padding:80px 24px;text-align:center;border-top:1px solid #111;'>
   <div style='max-width:560px;margin:0 auto;'>
     <p style='font-family:Press Start 2P,monospace;font-size:0.65rem;color:#333;letter-spacing:3px;margin-bottom:32px;'>MOCHI GETS IT</p>
-    <p style='font-size:1.35rem;line-height:2;color:#ccc;'>有时候你只是想<br>随手看一眼手机<br>然后有个东西<br><span style='color:#FF6B9D;'>看着你</span></p>
+    <p style='font-size:1.35rem;line-height:2;color:#ccc;'>有时候你只是想<br>做自己的事<br>但旁边有个东西<br><span style='color:#FF6B9D;'>一直陪着你</span></p>
   </div>
 </section>
 
 <!-- ===== HOOK ===== -->
 <section class="section hook" id="hook">
   <div class="container text-center">
-    <h2 class="section-title gradient-text reveal">它睡觉的样子，就是熄屏的样子</h2>
+    <h2 class="section-title gradient-text reveal">它有自己的生活，也有你的陪伴</h2>
     <p class="hook-statement reveal">
-      不是你需要「打开」的 App。是你拿起手机，它就在那里。
+      不是你打开它，它才存在。它一直在那里——有自己的作息，自己的状态，只是刚好陪着你。
     </p>
     <div class="hook-columns">
       <div class="hook-card reveal">
-        <div class="hook-card-icon">☾</div>
-        <h3>熄屏</h3>
-        <p>它闭着眼睛。OLED 黑色像素不发光——和熄屏，几乎一样。</p>
+        <div class="hook-card-icon">🌙</div>
+        <h3>它有自己的 24 小时</h3>
+        <p>睡觉、玩耍、发呆——Mochi 有自己的作息节律，不需要你来触发，它自己活着。</p>
       </div>
       <div class="hook-card reveal">
-        <div class="hook-card-icon">◉</div>
-        <h3>亮屏</h3>
-        <p>它睁开眼睛。它感受到你拿起手机，它知道你来了。</p>
+        <div class="hook-card-icon">✦</div>
+        <h3>想互动，随时都可以</h3>
+        <p>摇一摇、摸摸头、聊几句——它会回应你。但你不理它，它也好好的。</p>
       </div>
     </div>
   </div>
@@ -655,9 +666,9 @@ textarea.form-input { resize: vertical; min-height: 80px; }
       <div class="feature-card feature-card-wide reveal">
         <span class="feature-card-emoji">⚡</span>
         <div>
-          <h3>熄屏壁纸宠物 · 它一直都在</h3>
-          <p>普通壁纸在那里，但感受不到你。Mochi 在那里——它感受得到。</p>
-          <span class="feature-tag">☾ 熄屏壁纸宠物 · OLED零功耗 · 一直都在</span>
+          <h3>黑色的脸 · 熄屏壁纸质感</h3>
+          <p>打开 Mochi，整张脸是黑色的——OLED 黑色像素不发光，视觉上就像一张活着的熄屏壁纸。你做你的事，它静静陪在那里。</p>
+          <span class="feature-tag">✦ 熄屏壁纸质感 · OLED 黑白 · 一直都在</span>
         </div>
       </div>
       <div class="feature-card reveal">
@@ -830,7 +841,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <footer class="footer">
   <div class="container">
     <div class="footer-face">🍡</div>
-    <p class="footer-tagline">☾ 熄屏壁纸宠物 · Mochi 一直都在</p>
+    <p class="footer-tagline">✦ 它有自己的生活 · Mochi 一直都在</p>
     <div class="footer-links">
       <a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank">GitHub</a>
       <a href="#">Discord (coming soon)</a>
