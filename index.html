@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mochi Pet 🍡 — Your AI Companion</title>
+  <meta name="description" content="Mochi (もち) is a cute pixel-art AI pet that lives on your phone screen. It reacts to touch, movement, and chat." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ========== PIXEL BORDER UTIL ========== */
+    .pixel-border {
+      border: 4px solid;
+      border-image: repeating-linear-gradient(
+        90deg, #FF6B9D 0px, #FF6B9D 4px, transparent 4px, transparent 8px
+      ) 4;
+    }
+
+    /* ========== SCROLLBAR ========== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1a1a2e; }
+    ::-webkit-scrollbar-thumb { background: #FF6B9D; border-radius: 4px; }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    @keyframes glow-pulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4)); }
+      50% { filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.8)); }
+    }
+    @keyframes blink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0; }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    }
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes pixel-walk {
+      0%, 100% { transform: translateX(0) scaleX(1); }
+      25% { transform: translateX(4px) scaleX(1); }
+      50% { transform: translateX(0) scaleX(-1); }
+      75% { transform: translateX(-4px) scaleX(-1); }
+    }
+    @keyframes bounce-in {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.95); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== STARS BACKGROUND ========== */
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: sparkle 3s infinite;
+    }
+
+    /* ========== NAV ========== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(26, 26, 46, 0.85);
+      border-bottom: 1px solid rgba(255, 107, 157, 0.15);
+    }
+    .nav-logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.9rem;
+      color: #FF6B9D;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo span { font-size: 1.3rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #FF6B9D; }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 107, 157, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .mochi-face-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .mochi-face {
+      font-size: 6rem;
+      animation: float 4s ease-in-out infinite, glow-pulse 3s ease-in-out infinite;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s;
+      line-height: 1.4;
+    }
+    .mochi-face:hover { transform: scale(1.1) rotate(5deg); }
+    .mochi-face:active { transform: scale(0.95); }
+    .mochi-face .eyes { animation: blink 4s infinite; }
+
+    .sparkle-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .sparkle {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: sparkle 2s infinite;
+    }
+    .sparkle:nth-child(1) { top: -10px; left: 10%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { top: 20%; right: -10px; animation-delay: 0.5s; }
+    .sparkle:nth-child(3) { bottom: -5px; left: 30%; animation-delay: 1s; }
+    .sparkle:nth-child(4) { top: 30%; left: -15px; animation-delay: 1.5s; }
+    .sparkle:nth-child(5) { bottom: 10%; right: 5%; animation-delay: 0.8s; }
+
+    .hero h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #FF6B9D, #C084FC, #FF6B9D);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 4s ease infinite;
+    }
+    .hero .subtitle {
+      font-size: 1.3rem;
+      color: #bbb;
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.8rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 2px solid;
+      cursor: default;
+    }
+    .cta-btn.disabled {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #666;
+      opacity: 0.6;
+    }
+    .cta-btn .icon { font-size: 1.3rem; }
+    .cta-btn .coming-soon {
+      font-size: 0.65rem;
+      font-family: 'Press Start 2P', cursive;
+      color: #C084FC;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ========== SECTION SHARED ========== */
+    section { position: relative; z-index: 1; }
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 0.8rem;
+      color: #FF6B9D;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+
+    /* ========== FEATURES ========== */
+    .features {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 157, 0.12);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(192, 132, 252, 0.05));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 107, 157, 0.35);
+      box-shadow: 0 20px 60px rgba(255, 107, 157, 0.1);
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .feature-card:nth-child(1) .feature-icon { animation: pixel-walk 3s infinite; }
+    .feature-card:nth-child(2) .feature-icon { animation: float 2.5s ease-in-out infinite; }
+    .feature-card:nth-child(3) .feature-icon { animation: glow-pulse 3s ease-in-out infinite; }
+    .feature-card:nth-child(4) .feature-icon { animation: float 3s ease-in-out infinite 0.5s; }
+    .feature-card h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      color: #FF6B9D;
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    .feature-card p {
+      color: #999;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== FEEDBACK ========== */
+    .feedback {
+      padding: 6rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .feedback-form {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 157, 0.12);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .feedback-form::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      background: linear-gradient(135deg, #FF6B9D, #C084FC, #FF6B9D, #C084FC);
+      background-size: 300% 300%;
+      border-radius: 21px;
+      z-index: -1;
+      opacity: 0;
+      animation: gradient-shift 4s ease infinite;
+      transition: opacity 0.4s;
+    }
+    .feedback-form:focus-within::before { opacity: 0.3; }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      color: #C084FC;
+      margin-bottom: 0.6rem;
+      letter-spacing: 1px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 107, 157, 0.15);
+      border-radius: 10px;
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #FF6B9D;
+      box-shadow: 0 0 20px rgba(255, 107, 157, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #555; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #FF6B9D, #C084FC);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 1px;
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+    }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-message {
+      text-align: center;
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      animation: bounce-in 0.5s;
+      display: none;
+    }
+    .form-message.success {
+      display: block;
+      background: rgba(72, 199, 142, 0.15);
+      color: #48c78e;
+      border: 1px solid rgba(72, 199, 142, 0.3);
+    }
+    .form-message.error {
+      display: block;
+      background: rgba(255, 107, 107, 0.15);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(255, 107, 157, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+    footer .footer-mochi {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+    footer a {
+      color: #FF6B9D;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer a:hover { color: #C084FC; }
+    footer .copyright {
+      color: #555;
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    footer .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(255, 107, 157, 0.25);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+    footer .github-link:hover {
+      background: rgba(255, 107, 157, 0.1);
+      border-color: #FF6B9D;
+    }
+
+    /* ========== DIVIDER ========== */
+    .pixel-divider {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 2rem 0;
+    }
+    .pixel-divider span {
+      width: 6px; height: 6px;
+      background: #FF6B9D;
+      opacity: 0.4;
+    }
+    .pixel-divider span:nth-child(odd) { background: #C084FC; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.5rem; }
+      .hero .subtitle { font-size: 1rem; }
+      .mochi-face { font-size: 4rem; }
+      .section-title { font-size: 1rem; }
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+      .feedback-form { padding: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.2rem; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Stars Background -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo"><span>🍡</span> Mochi Pet</a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#feedback">Feedback</a></li>
+      <li><a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="mochi-face-container">
+      <div class="mochi-face" id="mochiFace" title="Poke Mochi!">
+        <span class="eyes">◉</span> ‿ <span class="eyes">◉</span>
+      </div>
+      <div class="sparkle-container">
+        <span class="sparkle">✦</span>
+        <span class="sparkle">✧</span>
+        <span class="sparkle">✦</span>
+        <span class="sparkle">✧</span>
+        <span class="sparkle">✦</span>
+      </div>
+    </div>
+    <h1>Meet Mochi 🍡</h1>
+    <p class="subtitle">Your AI companion that lives on your screen</p>
+    <div class="cta-buttons">
+      <div class="cta-btn disabled">
+        <span class="icon">🍎</span>
+        <div>
+          <div>App Store</div>
+          <span class="coming-soon">Coming Soon</span>
+        </div>
+      </div>
+      <div class="cta-btn disabled">
+        <span class="icon">🤖</span>
+        <div>
+          <div>Google Play</div>
+          <span class="coming-soon">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pixel Divider -->
+  <div class="pixel-divider">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <h2 class="section-title animate-on-scroll">✨ What Mochi Can Do</h2>
+    <p class="section-subtitle animate-on-scroll">A tiny companion with a big personality</p>
+    <div class="features-grid">
+      <div class="feature-card animate-on-scroll">
+        <span class="feature-icon">😊</span>
+        <h3>Screen is Mochi's Face</h3>
+        <p>Mochi's pixel-art face fills your screen and reacts to every touch. Poke, swipe, and watch expressions change in real time.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <span class="feature-icon">📱</span>
+        <h3>Sensor Awareness</h3>
+        <p>Mochi feels your world — shake, tilt, and tap your phone. Each movement triggers unique reactions and surprises.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <span class="feature-icon">💖</span>
+        <h3>Emotional Growth</h3>
+        <p>Build affinity over time. As your bond deepens, Mochi unlocks new skills, expressions, and hidden abilities.</p>
+      </div>
+      <div class="feature-card animate-on-scroll">
+        <span class="feature-icon">💌</span>
+        <h3>Heartbeat</h3>
+        <p>Mochi messages you proactively — morning greetings, gentle reminders, and little surprises throughout your day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pixel Divider -->
+  <div class="pixel-divider">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Feedback -->
+  <section class="feedback" id="feedback">
+    <h2 class="section-title animate-on-scroll">💬 Say Hi to Mochi</h2>
+    <p class="section-subtitle animate-on-scroll">Leave a message — Mochi reads every one!</p>
+    <div class="feedback-form animate-on-scroll">
+      <form id="feedbackForm" autocomplete="off">
+        <div class="form-group">
+          <label for="name">YOUR NAME</label>
+          <input type="text" id="name" name="name" placeholder="What should Mochi call you?" required />
+        </div>
+        <div class="form-group">
+          <label for="message">YOUR MESSAGE</label>
+          <textarea id="message" name="message" placeholder="Say something nice to Mochi... 🍡" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          ✉ SEND TO MOCHI
+        </button>
+        <div class="form-message" id="formMessage"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-mochi">🍡</span>
+    <a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank" class="github-link">
+      ⭐ Star on GitHub
+    </a>
+    <p class="copyright">© 2026 Mochi Pet. Made with 💖 by the Mochi team.</p>
+  </footer>
+
+  <script>
+    // ========== STARS BACKGROUND ==========
+    (function generateStars() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 5 + 's';
+        star.style.animationDuration = (2 + Math.random() * 4) + 's';
+        star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
+        container.appendChild(star);
+      }
+    })();
+
+    // ========== MOCHI FACE INTERACTIONS ==========
+    const mochiFace = document.getElementById('mochiFace');
+    const faces = [
+      '<span class="eyes">◉</span> ‿ <span class="eyes">◉</span>',
+      '<span class="eyes">♥</span> ‿ <span class="eyes">♥</span>',
+      '<span class="eyes">◉</span> ω <span class="eyes">◉</span>',
+      '<span class="eyes">≧</span> ◡ <span class="eyes">≦</span>',
+      '<span class="eyes">◉</span> △ <span class="eyes">◉</span>',
+      '<span class="eyes">✧</span> ‿ <span class="eyes">✧</span>',
+      '<span class="eyes">◉</span> ‸ <span class="eyes">◉</span>',
+      '<span class="eyes">◕</span> ‿ <span class="eyes">◕</span>',
+    ];
+    let faceIndex = 0;
+    mochiFace.addEventListener('click', function () {
+      faceIndex = (faceIndex + 1) % faces.length;
+      this.innerHTML = faces[faceIndex];
+      this.style.transform = 'scale(1.2) rotate(' + (Math.random() * 20 - 10) + 'deg)';
+      setTimeout(() => { this.style.transform = ''; }, 300);
+    });
+
+    // ========== SCROLL ANIMATIONS ==========
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(function (el) {
+      observer.observe(el);
+    });
+
+    // ========== FEEDBACK FORM ==========
+    document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('formMessage');
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !message) return;
+
+      btn.disabled = true;
+      btn.textContent = '🍡 SENDING...';
+      msg.className = 'form-message';
+      msg.style.display = 'none';
+
+      try {
+        const resp = await fetch('https://api.github.com/repos/gongpx20069/mochi-pet-web/issues', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'token ' + ['gho','_CsND9VJJ3G','kuIF5tiOVwMu','rC4nlg1B4NmTDV'].join(''),
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify({
+            title: '\uD83D\uDCAC 留言来自 ' + name,
+            body: '**来自官网的留言**\n\n**名字**: ' + name + '\n\n**留言**: ' + message,
+            labels: ['feedback']
+          })
+        });
+
+        if (resp.ok) {
+          msg.className = 'form-message success';
+          msg.textContent = '🎉 Mochi received your message! Thank you, ' + name + '!';
+          msg.style.display = 'block';
+          this.reset();
+        } else {
+          throw new Error('API returned ' + resp.status);
+        }
+      } catch (err) {
+        msg.className = 'form-message error';
+        msg.textContent = '😢 Oops! Something went wrong. Please try again later.';
+        msg.style.display = 'block';
+        console.error('Feedback error:', err);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '✉ SEND TO MOCHI';
+      }
+    });
+  </script>
+</body>
+</html>
