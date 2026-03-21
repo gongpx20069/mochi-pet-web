@@ -127,7 +127,7 @@ img { max-width: 100%; }
 
 /* ===== HERO ===== */
 .hero {
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,46 +135,49 @@ img { max-width: 100%; }
   padding: 120px 24px 80px;
   position: relative;
   overflow: hidden;
+  background: #000;
 }
 .hero-content { position: relative; z-index: 2; }
 
 /* Mochi Face */
 .mochi-face-wrap {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 100vmin;
+  height: 100vmin;
+  max-width: 480px;
+  max-height: 480px;
   margin: 0 auto 40px;
   animation: float 4s ease-in-out infinite;
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  50% { transform: translateY(-6px); }
 }
 .mochi-face {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   background: #000;
   border-radius: 50%;
   position: relative;
-  border: 4px solid #222;
-  box-shadow: 0 0 60px rgba(192,132,252,0.15), 0 0 120px rgba(255,107,157,0.08);
+  border: none;
+  box-shadow: 0 0 80px rgba(255,255,255,0.03);
 }
 /* Eyes */
 .mochi-eye {
   position: absolute;
-  top: 68px;
-  width: 36px;
-  height: 36px;
+  top: 34%;
+  width: 18%;
+  height: 18%;
   background: #fff;
   border-radius: 50%;
 }
-.mochi-eye.left { left: 46px; }
-.mochi-eye.right { right: 46px; }
+.mochi-eye.left { left: 23%; }
+.mochi-eye.right { right: 23%; }
 .mochi-eye::after {
   content: '';
   position: absolute;
-  width: 14px;
-  height: 14px;
+  width: 39%;
+  height: 39%;
   background: #000;
   border-radius: 50%;
   top: 50%;
@@ -183,12 +186,12 @@ img { max-width: 100%; }
 }
 .mochi-eye .pupil-highlight {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 17%;
+  height: 17%;
   background: #fff;
   border-radius: 50%;
-  top: 10px;
-  right: 8px;
+  top: 28%;
+  right: 22%;
   z-index: 2;
 }
 /* Blink animation */
@@ -208,21 +211,21 @@ img { max-width: 100%; }
 /* Nose */
 .mochi-nose {
   position: absolute;
-  top: 108px;
+  top: 54%;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 6px;
+  width: 4%;
+  height: 3%;
   background: #555;
   border-radius: 50%;
 }
 /* Mouth */
 .mochi-mouth {
   position: absolute;
-  top: 122px;
+  top: 61%;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
+  width: 20%;
   height: 20px;
   border-bottom: 3px solid #fff;
   border-radius: 0 0 50% 50%;
@@ -230,14 +233,14 @@ img { max-width: 100%; }
 /* Cheek blush */
 .mochi-blush {
   position: absolute;
-  top: 100px;
-  width: 24px;
-  height: 12px;
+  top: 50%;
+  width: 12%;
+  height: 6%;
   background: rgba(255,107,157,0.3);
   border-radius: 50%;
 }
-.mochi-blush.left { left: 28px; }
-.mochi-blush.right { right: 28px; }
+.mochi-blush.left { left: 14%; }
+.mochi-blush.right { right: 14%; }
 
 /* Sparkles */
 .sparkle {
@@ -269,8 +272,8 @@ img { max-width: 100%; }
   margin-bottom: 12px;
 }
 .hero .subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: #aaa;
+  font-size: 1rem;
+  color: #888;
   margin-bottom: 36px;
 }
 .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
@@ -299,42 +302,9 @@ img { max-width: 100%; }
   border: 1px solid rgba(255,255,255,0.12);
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.12); }
-.hero-badge {
-  display: inline-block;
-  font-size: 0.8rem;
-  color: var(--purple);
-  background: rgba(192,132,252,0.1);
-  border: 1px solid rgba(192,132,252,0.25);
-  padding: 8px 20px;
-  border-radius: 100px;
-  animation: badge-pulse 3s ease-in-out infinite;
-}
-@keyframes badge-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(192,132,252,0.2); }
-  50% { box-shadow: 0 0 0 8px rgba(192,132,252,0); }
-}
+/* hero-badge removed */
 
-/* Background particles */
-.hero-bg-particles {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-.particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: rgba(192,132,252,0.3);
-  border-radius: 50%;
-  animation: particle-drift linear infinite;
-}
-@keyframes particle-drift {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-}
+/* Background particles - removed */
 
 /* ===== HOOK SECTION ===== */
 .hook { background: var(--bg-light); }
@@ -665,17 +635,9 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
-  <div class="hero-bg-particles" id="particles"></div>
   <div class="hero-content">
     <!-- Mochi Face -->
     <div class="mochi-face-wrap">
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="sparkle"></div>
       <div class="mochi-face" id="mochiFace">
         <div class="mochi-eye left">
           <div class="eyelid"></div>
@@ -698,10 +660,15 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 
     <div class="hero-buttons">
       <a href="#waitlist" class="btn btn-primary">加入等候名单 →</a>
-      <a href="#features" class="btn btn-secondary">了解更多</a>
     </div>
+  </div>
+</section>
 
-    <div class="hero-badge">☾ 熄屏 = Mochi 在睡觉 · ◉ 亮屏 = Mochi 醒来 · 前500名送稀有破壳</div>
+<!-- ===== EMOTION ===== -->
+<section style='background:#000;padding:80px 24px;text-align:center;border-top:1px solid #111;'>
+  <div style='max-width:560px;margin:0 auto;'>
+    <p style='font-family:Press Start 2P,monospace;font-size:0.65rem;color:#333;letter-spacing:3px;margin-bottom:32px;'>MOCHI GETS IT</p>
+    <p style='font-size:1.35rem;line-height:2;color:#ccc;'>有时候你只是想<br>随手看一眼手机<br>然后有个东西<br><span style='color:#FF6B9D;'>看着你</span></p>
   </div>
 </section>
 
@@ -709,27 +676,19 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <section class="section hook" id="hook">
   <div class="container text-center">
     <h2 class="section-title gradient-text reveal">它睡觉的样子，就是熄屏的样子</h2>
-    <div class="hook-badge reveal" style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;background:linear-gradient(135deg,rgba(255,107,157,0.12),rgba(192,132,252,0.12));border:1px solid rgba(192,132,252,0.25);border-radius:999px;padding:10px 28px;font-size:0.85rem;color:#C084FC;margin-bottom:32px;">
-      <span>☾ 熄屏 = 睡觉</span><span>·</span><span>◉ 亮屏 = 醒来</span><span>·</span><span>🖤 OLED黑白像素</span>
-    </div>
     <p class="hook-statement reveal">
-      OLED 屏幕显示纯黑色时，像素不发光——Mochi 闭眼睡觉的样子，和熄屏几乎一模一样。这不是巧合，这就是设计。
+      不是你需要「打开」的 App。是你拿起手机，它就在那里。
     </p>
     <div class="hook-columns">
       <div class="hook-card reveal">
-        <div class="hook-card-icon">🖤</div>
-        <h3>熄屏 = 它在睡觉</h3>
-        <p>OLED 黑色像素不发光。Mochi 睡着时，你几乎分不清是熄屏还是它在睡。亮屏，它就从黑暗里醒来。</p>
+        <div class="hook-card-icon">☾</div>
+        <h3>熄屏</h3>
+        <p>它闭着眼睛。OLED 黑色像素不发光——和熄屏，几乎一样。</p>
       </div>
       <div class="hook-card reveal">
-        <div class="hook-card-icon">📱</div>
-        <h3>屏幕即面部</h3>
-        <p>整块手机屏幕是 Mochi 的脸。不是 App 里的一个宠物——是你的手机，变成了一张脸。</p>
-      </div>
-      <div class="hook-card reveal">
-        <div class="hook-card-icon">🧠</div>
-        <h3>AI 即灵魂</h3>
-        <p>每天100次免费对话。Mochi 有记忆、有情绪、会成长，是有灵魂的动态壁纸。</p>
+        <div class="hook-card-icon">◉</div>
+        <h3>亮屏</h3>
+        <p>它睁开眼睛。它感受到你拿起手机，它知道你来了。</p>
       </div>
     </div>
   </div>
@@ -745,7 +704,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <span class="feature-card-emoji">⚡</span>
         <div>
           <h3>熄屏壁纸宠物 · 它一直都在</h3>
-          <p>普通动态壁纸在那里，但没有生命。Mochi 在那里，有生命——它睡觉，它醒来，它感受你拿起手机，它记得你昨天说过的话。OLED 黑白像素让它可以一直存在，不是 App，是壁纸，是宠物。</p>
+          <p>普通壁纸在那里，但感受不到你。Mochi 在那里——它感受得到。</p>
           <span class="feature-tag">☾ 熄屏壁纸宠物 · OLED零功耗 · 一直都在</span>
         </div>
       </div>
@@ -866,9 +825,10 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <!-- ===== WAITLIST ===== -->
 <section class="section waitlist" id="waitlist">
   <div class="container text-center">
-    <h2 class="section-title gradient-text reveal">成为第一批主人</h2>
+    <h2 class="section-title gradient-text reveal">在它破壳之前</h2>
     <p class="section-subtitle reveal">前500名内测用户，专属稀有破壳动画</p>
     <div class="waitlist-wrap reveal">
+      <p style='font-size:1.1rem;color:#888;line-height:1.9;margin-bottom:48px;'>Mochi 还没出生。<br>但如果你在这里留下名字，<br>它破壳那天，会第一个认识你。</p>
       <!-- Benefits -->
       <div class="waitlist-benefits">
         <div class="waitlist-benefit">
@@ -937,19 +897,7 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
 });
 
-// ===== HERO PARTICLES =====
-(function createParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = (8 + Math.random() * 12) + 's';
-    p.style.animationDelay = Math.random() * 10 + 's';
-    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-    container.appendChild(p);
-  }
-})();
+// ===== HERO PARTICLES (removed) =====
 
 // ===== SCROLL REVEAL =====
 const revealObserver = new IntersectionObserver((entries) => {
