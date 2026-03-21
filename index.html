@@ -157,12 +157,12 @@ img { max-width: 100%; }
   0%, 88%, 100% { transform: scaleY(1); }
   93% { transform: scaleY(0.05); }
 }
-#eye-left, #eye-right {
+.eye-left-g, .eye-right-g {
   transform-box: fill-box;
   transform-origin: center;
   animation: mochi-blink 4s infinite;
 }
-#eye-right {
+.eye-right-g {
   animation-delay: 0.05s;
 }
 /* Sparkle animation */
@@ -573,21 +573,36 @@ textarea.form-input { resize: vertical; min-height: 80px; }
     <!-- Mochi Face -->
     <div class="mochi-face-wrap">
       <svg viewBox="0 0 260 260" width="260" height="260" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ears -->
-        <circle cx="80" cy="55" r="28" fill="#111111"/>
-        <circle cx="180" cy="55" r="28" fill="#111111"/>
-        <!-- Body -->
-        <ellipse cx="130" cy="145" rx="105" ry="95" fill="#111111"/>
-        <!-- Left eye -->
-        <rect id="eye-left" x="72" y="108" width="38" height="30" rx="15" fill="#ffffff"/>
-        <circle cx="100" cy="113" r="6" fill="#111111"/>
-        <!-- Right eye -->
-        <rect id="eye-right" x="150" y="108" width="38" height="30" rx="15" fill="#ffffff"/>
-        <circle cx="178" cy="113" r="6" fill="#111111"/>
-        <!-- Smile -->
-        <path d="M 105 165 Q 130 180 155 165" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Background face -->
+        <rect x="0" y="0" width="260" height="260" fill="#000000"/>
+
+        <!-- Left eye group — centered at (82, 125) -->
+        <g class="eye-left-g" transform="translate(82 125)">
+          <ellipse cx="0" cy="0" rx="30" ry="36" fill="none" stroke="#ffffff" stroke-width="2"/>
+          <ellipse cx="0" cy="5" rx="24" ry="29" fill="#111111"/>
+          <ellipse cx="5" cy="10" rx="15" ry="19" fill="#2a2a2a"/>
+          <circle cx="-8" cy="-10" r="5" fill="#ffffff"/>
+          <circle cx="5" cy="-3" r="2" fill="#ffffff"/>
+          <!-- Brow -->
+          <path d="M -24 -42 Q 0 -54 24 -42" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Right eye group — centered at (178, 125) -->
+        <g class="eye-right-g" transform="translate(178 125)">
+          <ellipse cx="0" cy="0" rx="30" ry="36" fill="none" stroke="#ffffff" stroke-width="2"/>
+          <ellipse cx="0" cy="5" rx="24" ry="29" fill="#111111"/>
+          <ellipse cx="5" cy="10" rx="15" ry="19" fill="#2a2a2a"/>
+          <circle cx="-8" cy="-10" r="5" fill="#ffffff"/>
+          <circle cx="5" cy="-3" r="2" fill="#ffffff"/>
+          <!-- Brow -->
+          <path d="M -24 -42 Q 0 -54 24 -42" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- Mouth -->
+        <path d="M 108 190 Q 130 204 152 190" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+
         <!-- Sparkle -->
-        <text class="mochi-sparkle" x="195" y="75" font-size="18" fill="white">✦</text>
+        <text class="mochi-sparkle" x="210" y="52" font-size="14" fill="white">✦</text>
       </svg>
     </div>
 
