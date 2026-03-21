@@ -131,17 +131,32 @@ img { max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   padding: 120px 24px 80px;
   position: relative;
   overflow: visible;
-  background: #000;
+  background: #0a0a12;
 }
-.hero-content { position: relative; z-index: 2; }
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero-left { flex-shrink: 0; }
+.hero-right { text-align: left; max-width: 480px; }
+@media (max-width: 900px) {
+  .hero-content { flex-direction: column; gap: 48px; }
+  .hero-right { text-align: center; }
+  .hero-buttons { justify-content: center; }
+}
 
 /* Phone Mockup */
 .phone-mockup {
-  margin: 0 auto 48px;
   display: flex;
   justify-content: center;
   animation: float 4s ease-in-out infinite;
@@ -672,7 +687,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
   <div class="hero-content">
-    <!-- Mochi Face -->
+    <div class="hero-left">
     <!-- Phone mockup -->
     <div class="phone-mockup">
       <!-- phone shell -->
@@ -687,8 +702,8 @@ textarea.form-input { resize: vertical; min-height: 80px; }
             <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <!-- Background -->
               <rect x="0" y="0" width="640" height="360" fill="#000000"/>
-              <!-- Left eye group — center (180, 180) -->
-              <g class="eye-left-g" transform="translate(180 180)">
+              <!-- Left eye group — center (180, 165) -->
+              <g class="eye-left-g" transform="translate(180 165)">
                 <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
                 <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
                 <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
@@ -696,8 +711,8 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                 <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
                 <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
               </g>
-              <!-- Right eye group — center (460, 180) -->
-              <g class="eye-right-g" transform="translate(460 180)">
+              <!-- Right eye group — center (460, 165) -->
+              <g class="eye-right-g" transform="translate(460 165)">
                 <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
                 <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
                 <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
@@ -706,7 +721,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                 <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
               </g>
               <!-- Mouth -->
-              <path d="M 268 290 Q 320 318 372 290" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+              <path d="M 268 272 Q 320 298 372 272" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
               <!-- Sparkle -->
               <text class="mochi-sparkle" x="580" y="60" font-size="22" fill="white">✦</text>
             </svg>
@@ -718,19 +733,22 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         </div>
       </div>
     </div>
+    </div>
 
+    <div class="hero-right">
     <p style="font-size:0.9rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;font-weight:600;">黑色脸 · 熄屏壁纸质感</p>
-    <h1 class="gradient-text">一直在那里 · 一直陪着你</h1>
+    <h1 class="gradient-text" style="font-size:clamp(1.4rem,4vw,2.2rem);">一直在那里<br>一直陪着你</h1>
     <p class="subtitle">Mochi 有自己的 24 小时——睡觉、玩耍、发呆。<br>你做你的事，它陪在屏幕上。想互动了，随时都在。</p>
 
     <div class="hero-buttons">
       <a href="#waitlist" class="btn btn-primary">加入等候名单 →</a>
     </div>
+    </div>
   </div>
 </section>
 
 <!-- ===== EMOTION ===== -->
-<section style='background:#000;padding:80px 24px;text-align:center;border-top:1px solid #111;'>
+<section style='background:var(--bg-light);padding:80px 24px;text-align:center;border-top:1px solid #111;'>
   <div style='max-width:560px;margin:0 auto;'>
     <p style='font-family:Press Start 2P,monospace;font-size:0.65rem;color:#333;letter-spacing:3px;margin-bottom:32px;'>MOCHI GETS IT</p>
     <p style='font-size:1.35rem;line-height:2;color:#ccc;'>有时候你只是想<br>做自己的事<br>但旁边有个东西<br><span style='color:#FF6B9D;'>一直陪着你</span></p>
@@ -901,16 +919,16 @@ textarea.form-input { resize: vertical; min-height: 80px; }
           <span>最早体验内测</span>
         </div>
         <div class="waitlist-benefit">
-          <span class="waitlist-benefit-icon">🚀</span>
-          <span>提前体验内测</span>
-        </div>
-        <div class="waitlist-benefit">
           <span class="waitlist-benefit-icon">💬</span>
           <span>影响产品方向</span>
         </div>
         <div class="waitlist-benefit">
           <span class="waitlist-benefit-icon">✨</span>
           <span>永久铭刻标记</span>
+        </div>
+        <div class="waitlist-benefit">
+          <span class="waitlist-benefit-icon">🎁</span>
+          <span>内测专属福利</span>
         </div>
       </div>
 
@@ -969,14 +987,6 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ===== MOCHI FACE INTERACTION =====
-const face = document.getElementById('mochiFace');
-face.addEventListener('click', () => {
-  face.style.transition = 'transform 0.15s';
-  face.style.transform = 'scale(1.08)';
-  setTimeout(() => { face.style.transform = 'scale(1)'; }, 200);
-});
 
 // ===== WAITLIST FORM =====
 document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
