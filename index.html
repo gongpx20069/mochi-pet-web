@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mochi もち — 住在你屏幕里的小宠物</title>
-<meta name="description" content="Mochi 是一只住在你手机屏幕里的 AI 小宠物。它有记忆、有情绪、会成长。加入等候名单，成为第一批主人。">
+<title>Mochi もち — 你的 AI 动态壁纸宠物 · 整天开着也不耗电</title>
+<meta name="description" content="Mochi 是一只住在你手机屏幕里的 AI 宠物。黑白像素 × OLED 超低功耗，整天开着当动态壁纸。有对话、有记忆、会成长。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -399,6 +399,23 @@ img { max-width: 100%; }
 .feature-card:hover { transform: translateY(-4px); border-color: rgba(255,107,157,0.15); }
 .feature-card:hover::before { opacity: 1; }
 .feature-card-emoji { font-size: 2rem; margin-bottom: 16px; display: block; }
+.feature-card-wide {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  text-align: left;
+}
+.feature-card-wide .feature-card-emoji {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .feature-card-wide {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 .feature-card h3 {
   font-family: 'Press Start 2P', monospace;
   font-size: 0.7rem;
@@ -675,45 +692,44 @@ textarea.form-input { resize: vertical; min-height: 80px; }
       </div>
     </div>
 
-    <h1 class="gradient-text">住在你屏幕里的小宠物</h1>
-    <p class="subtitle">每天一百次免费对话，超低功耗黑白像素，是智能AI动态壁纸的同时，也是默默陪伴你的宠物。</p>
+    <p style="font-size:0.9rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;font-weight:600;">AI 动态壁纸宠物</p>
+    <h1 class="gradient-text">整天开着，也不耗电 ⚡</h1>
+    <p class="subtitle">黑白像素 × OLED 零功耗 — Mochi 可以整天亮在你屏幕上，像动态壁纸一样存在，像真实宠物一样陪伴。</p>
 
     <div class="hero-buttons">
       <a href="#waitlist" class="btn btn-primary">加入等候名单 →</a>
       <a href="#features" class="btn btn-secondary">了解更多</a>
     </div>
 
-    <div class="hero-badge">✨ 限量内测 · 前500名送稀有破壳动画</div>
+    <div class="hero-badge">⚡ OLED黑白像素 · 开着不耗电 · 前500名送稀有破壳</div>
   </div>
 </section>
 
 <!-- ===== HOOK ===== -->
 <section class="section hook" id="hook">
   <div class="container text-center">
-    <h2 class="section-title gradient-text reveal">把你的手机变成一张脸</h2>
+    <h2 class="section-title gradient-text reveal">不是你偶尔打开的 App</h2>
     <div class="hook-badge reveal" style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;background:linear-gradient(135deg,rgba(255,107,157,0.12),rgba(192,132,252,0.12));border:1px solid rgba(192,132,252,0.25);border-radius:999px;padding:10px 28px;font-size:0.85rem;color:#C084FC;margin-bottom:32px;">
-      <span>🎁 每天100次免费对话</span><span>·</span><span>⚡ 黑白像素超低功耗</span><span>·</span><span>🖼️ AI动态壁纸 + 真实陪伴</span>
+      <span>⚡ 整天开着也不耗电</span><span>·</span><span>🖤 OLED黑白零功耗</span><span>·</span><span>🐾 AI宠物 + 动态壁纸</span>
     </div>
     <p class="hook-statement reveal">
-      不是一个放了宠物的 App。<br>
-      是整个屏幕，变成了 Mochi 的脸。<br>
-      传感器是它的感官，AI 是它的灵魂。
+      是整天亮在你屏幕上的 Mochi。黑白像素 × OLED 极致省电——手机屏幕变成了它的脸，你的手机变成了一个有生命的东西。
     </p>
     <div class="hook-columns">
       <div class="hook-card reveal">
-        <div class="hook-card-icon">📱</div>
-        <h3>屏幕即面部</h3>
-        <p>整块手机屏幕就是 Mochi 的脸。1-bit 黑白像素风格，大大的眼睛会眨会笑。</p>
+        <div class="hook-card-icon">🖤</div>
+        <h3>整天开着</h3>
+        <p>1-bit 黑白像素，OLED屏幕纯黑不发光 = 接近零功耗。它可以一直在，而不是你去找它。</p>
       </div>
       <div class="hook-card reveal">
-        <div class="hook-card-icon">🤚</div>
-        <h3>传感器即感官</h3>
-        <p>摸头会开心，摇晃会头晕，翻转会慌张。它能感受到你的每一个动作。</p>
+        <div class="hook-card-icon">📱</div>
+        <h3>屏幕即面部</h3>
+        <p>整块手机屏幕是 Mochi 的脸。不是 App 里的一个宠物——是你的手机，变成了一张脸。</p>
       </div>
       <div class="hook-card reveal">
         <div class="hook-card-icon">🧠</div>
         <h3>AI 即灵魂</h3>
-        <p>每天100次免费对话。Mochi 会记住你说的每一句话，像真正的伙伴一样成长。</p>
+        <p>每天100次免费对话。Mochi 有记忆、有情绪、会成长，是有灵魂的动态壁纸。</p>
       </div>
     </div>
   </div>
@@ -723,8 +739,16 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <section class="section" id="features">
   <div class="container text-center">
     <h2 class="section-title gradient-text reveal">发现 Mochi 的世界</h2>
-    <p class="section-subtitle reveal">每一个功能都让 Mochi 更像一个真正的生命</p>
+    <p class="section-subtitle reveal">因为可以整天开着，所以每一个功能都有意义</p>
     <div class="features-grid">
+      <div class="feature-card feature-card-wide reveal">
+        <span class="feature-card-emoji">⚡</span>
+        <div>
+          <h3>整天开着 · 几乎不耗电</h3>
+          <p>1-bit 黑白像素是关键：OLED 屏幕显示纯黑色时，对应像素完全不发光。Mochi 90%的时间都是黑白待机动画——这意味着它能整天亮在你屏幕上作为动态壁纸，而不是你偶尔才想起来打开的 App。这是它和所有其他宠物/陪伴 App 最本质的区别。</p>
+          <span class="feature-tag">⚡ 超低功耗 · OLED优化 · 可替代动态壁纸</span>
+        </div>
+      </div>
       <div class="feature-card reveal">
         <span class="feature-card-emoji">🐾</span>
         <h3>摸摸头 ◉ᴗ◉</h3>
@@ -742,12 +766,6 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <h3>100次/天免费对话</h3>
         <p>每天100次免费AI对话，Mochi 记得你的名字、生日、你们聊过的每个话题。有记忆、有温度的真实陪伴。</p>
         <span class="feature-tag">免费对话</span>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-card-emoji">🖤</span>
-        <h3>超低功耗 · 黑白像素 · OLED友好</h3>
-        <p>1-bit 黑白像素风格，OLED 屏幕纯黑省电，作为动态壁纸整天显示也几乎不耗电。</p>
-        <span class="feature-tag">超低功耗</span>
       </div>
       <div class="feature-card reveal">
         <span class="feature-card-emoji">💖</span>
@@ -804,7 +822,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <section class="section" id="compare">
   <div class="container text-center">
     <h2 class="section-title gradient-text reveal">为什么是 Mochi？</h2>
-    <p class="section-subtitle reveal">AI 有了灵魂，灵魂有了 AI</p>
+    <p class="section-subtitle reveal">整天开着 AI 宠物，有没有在耗你的电？</p>
     <div class="compare-grid reveal">
       <div class="compare-card">
         <div class="compare-card-icon">🤖</div>
@@ -815,6 +833,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
           <li><span class="icon cross">✗</span> 没有宠物感情</li>
           <li><span class="icon cross">✗</span> 没有传感器交互</li>
           <li><span class="icon cross">✗</span> 没有成长系统</li>
+          <li><span class="icon cross">✗</span> 不能整天开着（耗电/无壁纸模式）</li>
         </ul>
       </div>
       <div class="compare-card">
@@ -826,6 +845,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
           <li><span class="icon check">✓</span> 有宠物灵魂</li>
           <li><span class="icon cross">✗</span> 没有传感器</li>
           <li><span class="icon cross">✗</span> 没有真实记忆</li>
+          <li><span class="icon cross">✗</span> 硬件设备，不在你的手机上</li>
         </ul>
       </div>
       <div class="compare-card highlight">
@@ -833,10 +853,10 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <h3>Mochi</h3>
         <p class="tagline">Both — and more</p>
         <ul>
+          <li><span class="icon check">✓</span> OLED黑白 · 整天开着不耗电</li>
+          <li><span class="icon check">✓</span> AI动态壁纸 + 真实宠物陪伴</li>
           <li><span class="icon check">✓</span> 100次/天免费对话 + 记忆</li>
-          <li><span class="icon check">✓</span> 超低功耗 OLED黑白像素</li>
-          <li><span class="icon check">✓</span> 手机传感器感知</li>
-          <li><span class="icon check">✓</span> 成长系统 Lv1-5</li>
+          <li><span class="icon check">✓</span> 传感器感知 · 成长系统</li>
         </ul>
       </div>
     </div>
@@ -898,7 +918,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <footer class="footer">
   <div class="container">
     <div class="footer-face">🍡</div>
-    <p class="footer-tagline">住在你屏幕里的小宠物</p>
+    <p class="footer-tagline">⚡ 整天开着 · 也不耗电</p>
     <div class="footer-links">
       <a href="https://github.com/gongpx20069/mochi-pet-web" target="_blank">GitHub</a>
       <a href="#">Discord (coming soon)</a>
