@@ -139,14 +139,76 @@ img { max-width: 100%; }
 }
 .hero-content { position: relative; z-index: 2; }
 
-/* Mochi Face */
-.mochi-face-wrap {
-  position: relative;
-  width: 260px;
-  height: 325px;
+/* Phone Mockup */
+.phone-mockup {
   margin: 0 auto 48px;
   animation: float 4s ease-in-out infinite;
-  filter: drop-shadow(0 20px 60px rgba(255, 255, 255, 0.08));
+  filter: drop-shadow(0 32px 80px rgba(255,255,255,0.06));
+}
+.phone-shell {
+  width: 220px;
+  background: #1a1a1a;
+  border-radius: 36px;
+  border: 2px solid #333;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow:
+    inset 0 0 0 1px #444,
+    0 0 0 1px #111;
+}
+/* Top bar */
+.phone-topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 8px;
+}
+.phone-speaker {
+  width: 48px;
+  height: 5px;
+  background: #333;
+  border-radius: 99px;
+}
+.phone-camera {
+  width: 8px;
+  height: 8px;
+  background: #2a2a2a;
+  border-radius: 50%;
+  border: 1px solid #444;
+}
+/* Screen */
+.phone-screen {
+  width: 100%;
+  aspect-ratio: 9/17;
+  background: #000;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.mochi-face-wrap {
+  width: 100%;
+  height: 100%;
+}
+.mochi-face-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+/* Bottom bar */
+.phone-bottombar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+}
+.phone-home {
+  width: 60px;
+  height: 4px;
+  background: #333;
+  border-radius: 99px;
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -571,50 +633,51 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 <section class="hero" id="hero">
   <div class="hero-content">
     <!-- Mochi Face -->
-    <div class="mochi-face-wrap">
-      <!-- viewBox: 320×400, face centered, eyebrows visible at top, mouth at bottom -->
-      <svg viewBox="0 0 320 400" width="260" height="325" xmlns="http://www.w3.org/2000/svg">
-        <!-- Background -->
-        <rect x="0" y="0" width="320" height="400" fill="#000000"/>
-
-        <!-- Left eye group — center (96, 190) -->
-        <g class="eye-left-g" transform="translate(96 190)">
-          <!-- Brow -->
-          <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-          <!-- Outer outline -->
-          <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
-          <!-- Inner dark -->
-          <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
-          <!-- Iris grey -->
-          <ellipse cx="6" cy="16" rx="26" ry="32" fill="#2a2a2a"/>
-          <!-- Large highlight -->
-          <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
-          <!-- Small highlight -->
-          <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
-        </g>
-
-        <!-- Right eye group — center (224, 190) -->
-        <g class="eye-right-g" transform="translate(224 190)">
-          <!-- Brow -->
-          <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-          <!-- Outer outline -->
-          <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
-          <!-- Inner dark -->
-          <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
-          <!-- Iris grey -->
-          <ellipse cx="6" cy="16" rx="26" ry="32" fill="#2a2a2a"/>
-          <!-- Large highlight -->
-          <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
-          <!-- Small highlight -->
-          <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
-        </g>
-
-        <!-- Mouth -->
-        <path d="M 118 318 Q 160 348 202 318" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
-
-        <!-- Sparkle -->
-        <text class="mochi-sparkle" x="268" y="60" font-size="22" fill="white">✦</text>
-      </svg>
+    <!-- Phone mockup -->
+    <div class="phone-mockup">
+      <!-- phone shell -->
+      <div class="phone-shell">
+        <!-- top bar: speaker + camera -->
+        <div class="phone-topbar">
+          <div class="phone-speaker"></div>
+          <div class="phone-camera"></div>
+        </div>
+        <!-- screen -->
+        <div class="phone-screen">
+          <div class="mochi-face-wrap">
+            <svg viewBox="0 0 320 400" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background -->
+              <rect x="0" y="0" width="320" height="400" fill="#000000"/>
+              <!-- Left eye group — center (96, 190) -->
+              <g class="eye-left-g" transform="translate(96 190)">
+                <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+                <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
+                <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
+                <ellipse cx="6" cy="16" rx="26" ry="32" fill="#2a2a2a"/>
+                <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
+                <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
+              </g>
+              <!-- Right eye group — center (224, 190) -->
+              <g class="eye-right-g" transform="translate(224 190)">
+                <path d="M -36 -90 Q 0 -108 36 -90" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+                <ellipse cx="0" cy="0" rx="52" ry="62" fill="none" stroke="#ffffff" stroke-width="6"/>
+                <ellipse cx="0" cy="8" rx="42" ry="50" fill="#111111"/>
+                <ellipse cx="6" cy="16" rx="26" ry="32" fill="#2a2a2a"/>
+                <circle cx="-14" cy="-16" r="10" fill="#ffffff"/>
+                <circle cx="10" cy="-4" r="4" fill="#ffffff"/>
+              </g>
+              <!-- Mouth -->
+              <path d="M 118 318 Q 160 348 202 318" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+              <!-- Sparkle -->
+              <text class="mochi-sparkle" x="268" y="60" font-size="22" fill="white">✦</text>
+            </svg>
+          </div>
+        </div>
+        <!-- bottom bar: home indicator -->
+        <div class="phone-bottombar">
+          <div class="phone-home"></div>
+        </div>
+      </div>
     </div>
 
     <p style="font-size:0.9rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;font-weight:600;">黑色脸 · 熄屏壁纸质感</p>
