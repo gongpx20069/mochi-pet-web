@@ -142,105 +142,39 @@ img { max-width: 100%; }
 /* Mochi Face */
 .mochi-face-wrap {
   position: relative;
-  width: 100vmin;
-  height: 100vmin;
-  max-width: 480px;
-  max-height: 480px;
-  margin: 0 auto 40px;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto 48px;
   animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 20px 60px rgba(255, 107, 157, 0.25));
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
-.mochi-face {
-  width: 100%;
-  height: 100%;
-  background: #000;
-  border-radius: 50%;
-  position: relative;
-  border: none;
-  box-shadow: 0 0 80px rgba(255,255,255,0.03);
+/* Mochi blink animation */
+@keyframes mochi-blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.05); }
 }
-/* Eyes */
-.mochi-eye {
-  position: absolute;
-  top: 34%;
-  width: 18%;
-  height: 18%;
-  background: #fff;
-  border-radius: 50%;
+#eye-left, #eye-right {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mochi-blink 4s infinite;
 }
-.mochi-eye.left { left: 23%; }
-.mochi-eye.right { right: 23%; }
-.mochi-eye::after {
-  content: '';
-  position: absolute;
-  width: 39%;
-  height: 39%;
-  background: #000;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#eye-right {
+  animation-delay: 0.05s;
 }
-.mochi-eye .pupil-highlight {
-  position: absolute;
-  width: 17%;
-  height: 17%;
-  background: #fff;
-  border-radius: 50%;
-  top: 28%;
-  right: 22%;
-  z-index: 2;
+/* Sparkle animation */
+@keyframes sparkle-spin {
+  0%, 100% { opacity: 0.4; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(180deg) scale(1.3); }
 }
-/* Blink animation */
-.mochi-eye .eyelid {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 0%;
-  background: #000;
-  border-radius: 50%;
-  z-index: 3;
-  animation: blink 4s infinite;
+.mochi-sparkle {
+  animation: sparkle-spin 3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
 }
-@keyframes blink {
-  0%, 90%, 100% { height: 0%; }
-  95% { height: 100%; }
-}
-/* Nose */
-.mochi-nose {
-  position: absolute;
-  top: 54%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4%;
-  height: 3%;
-  background: #555;
-  border-radius: 50%;
-}
-/* Mouth */
-.mochi-mouth {
-  position: absolute;
-  top: 61%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20%;
-  height: 20px;
-  border-bottom: 3px solid #fff;
-  border-radius: 0 0 50% 50%;
-}
-/* Cheek blush */
-.mochi-blush {
-  position: absolute;
-  top: 50%;
-  width: 12%;
-  height: 6%;
-  background: rgba(255,107,157,0.3);
-  border-radius: 50%;
-}
-.mochi-blush.left { left: 14%; }
-.mochi-blush.right { right: 14%; }
 
 /* Sparkles */
 .sparkle {
@@ -638,20 +572,26 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   <div class="hero-content">
     <!-- Mochi Face -->
     <div class="mochi-face-wrap">
-      <div class="mochi-face" id="mochiFace">
-        <div class="mochi-eye left">
-          <div class="eyelid"></div>
-          <div class="pupil-highlight"></div>
-        </div>
-        <div class="mochi-eye right">
-          <div class="eyelid"></div>
-          <div class="pupil-highlight"></div>
-        </div>
-        <div class="mochi-nose"></div>
-        <div class="mochi-mouth"></div>
-        <div class="mochi-blush left"></div>
-        <div class="mochi-blush right"></div>
-      </div>
+      <svg viewBox="0 0 260 260" width="260" height="260" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ears -->
+        <circle cx="80" cy="55" r="28" fill="#EFEFEF"/>
+        <circle cx="180" cy="55" r="28" fill="#EFEFEF"/>
+        <!-- Body -->
+        <ellipse cx="130" cy="145" rx="105" ry="95" fill="#F5F5F5"/>
+        <!-- Left eye -->
+        <rect id="eye-left" x="72" y="108" width="38" height="30" rx="15" fill="#1a1a1a"/>
+        <circle cx="100" cy="113" r="6" fill="white"/>
+        <!-- Right eye -->
+        <rect id="eye-right" x="150" y="108" width="38" height="30" rx="15" fill="#1a1a1a"/>
+        <circle cx="178" cy="113" r="6" fill="white"/>
+        <!-- Smile -->
+        <path d="M 105 165 Q 130 180 155 165" stroke="#FFAAC8" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Blush -->
+        <ellipse cx="88" cy="158" rx="22" ry="12" fill="#FF6B9D" opacity="0.2"/>
+        <ellipse cx="172" cy="158" rx="22" ry="12" fill="#FF6B9D" opacity="0.2"/>
+        <!-- Sparkle -->
+        <text class="mochi-sparkle" x="195" y="75" font-size="18" fill="#C084FC">✦</text>
+      </svg>
     </div>
 
     <p style="font-size:0.9rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;font-weight:600;">熄屏壁纸宠物</p>
