@@ -275,12 +275,12 @@ img { max-width: 100%; }
   0%, 88%, 100% { transform: scaleY(1); }
   93% { transform: scaleY(0.05); }
 }
-.eye-left-g, .eye-right-g {
+#eye-left, #eye-right {
   transform-box: fill-box;
   transform-origin: center;
   animation: mochi-blink 4s infinite;
 }
-.eye-right-g {
+#eye-right {
   animation-delay: 0.05s;
 }
 /* Sparkle animation */
@@ -737,28 +737,28 @@ textarea.form-input { resize: vertical; min-height: 80px; }
             <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <!-- Background -->
               <rect x="0" y="0" width="640" height="360" fill="#000000"/>
-              <!-- Left eye group -->
-              <g class="eye-left-g" transform="translate(200 178)">
-                <path d="M -20 -46 Q 0 -56 20 -46" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-                <ellipse cx="0" cy="0" rx="26" ry="32" fill="none" stroke="#ffffff" stroke-width="4"/>
-                <ellipse cx="0" cy="4" rx="20" ry="25" fill="#111111"/>
-                <ellipse cx="3" cy="8" rx="13" ry="16" fill="#2a2a2a"/>
-                <circle cx="-7" cy="-8" r="5" fill="#ffffff"/>
-                <circle cx="5" cy="-2" r="2" fill="#ffffff"/>
-              </g>
-              <!-- Right eye group -->
-              <g class="eye-right-g" transform="translate(440 178)">
-                <path d="M -20 -46 Q 0 -56 20 -46" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-                <ellipse cx="0" cy="0" rx="26" ry="32" fill="none" stroke="#ffffff" stroke-width="4"/>
-                <ellipse cx="0" cy="4" rx="20" ry="25" fill="#111111"/>
-                <ellipse cx="3" cy="8" rx="13" ry="16" fill="#2a2a2a"/>
-                <circle cx="-7" cy="-8" r="5" fill="#ffffff"/>
-                <circle cx="5" cy="-2" r="2" fill="#ffffff"/>
-              </g>
-              <!-- Mouth -->
-              <path d="M 296 262 Q 320 276 344 262" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+              <!-- Left ear -->
+              <circle cx="155" cy="115" r="25" fill="none" stroke="#ffffff" stroke-width="5"/>
+              <!-- Right ear -->
+              <circle cx="485" cy="115" r="25" fill="none" stroke="#ffffff" stroke-width="5"/>
+              <!-- Left eye -->
+              <rect id="eye-left" x="180" y="140" width="80" height="60" rx="20" fill="none" stroke="#ffffff" stroke-width="6"/>
+              <circle cx="235" cy="158" r="10" fill="#ffffff"/>
+              <!-- Right eye -->
+              <rect id="eye-right" x="380" y="140" width="80" height="60" rx="20" fill="none" stroke="#ffffff" stroke-width="6"/>
+              <circle cx="395" cy="158" r="10" fill="#ffffff"/>
+              <!-- Nose -->
+              <circle cx="320" cy="200" r="5" fill="#ffffff"/>
+              <!-- Mouth (W-shape) -->
+              <path d="M 275 230 Q 295 250 320 235 Q 345 250 365 230" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Left cheek marks -->
+              <circle cx="185" cy="210" r="3" fill="#ffffff"/>
+              <circle cx="200" cy="220" r="3" fill="#ffffff"/>
+              <!-- Right cheek marks -->
+              <circle cx="440" cy="210" r="3" fill="#ffffff"/>
+              <circle cx="455" cy="220" r="3" fill="#ffffff"/>
               <!-- Sparkle -->
-              <text class="mochi-sparkle" x="530" y="55" font-size="14" fill="white">✦</text>
+              <text class="mochi-sparkle" x="500" y="80" font-size="20" fill="#ffffff">✦</text>
             </svg>
           </div>
         </div>
