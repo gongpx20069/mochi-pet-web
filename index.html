@@ -264,13 +264,16 @@ img { max-width: 100%; }
 }
 /* Mochi blink animation */
 @keyframes mochi-blink {
-  0%, 88%, 100% { fill: #ffffff; }
-  93% { fill: #000000; }
+  0%, 85%, 100% { transform: scaleY(1); }
+  92% { transform: scaleY(0.05); }
 }
-#eye-left, #eye-right {
+.eye-left-g, .eye-right-g {
+  transform-origin: center;
   animation: mochi-blink 4s infinite;
 }
-#eye-right {
+.eye-left-g { transform-origin: 228px 168px; }
+.eye-right-g { transform-origin: 412px 168px; }
+.eye-right-g {
   animation-delay: 0.07s;
 }
 /* Sparkle animation */
@@ -726,30 +729,28 @@ textarea.form-input { resize: vertical; min-height: 80px; }
             <svg width="392" height="221" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
               <!-- Background -->
               <rect width="640" height="360" fill="#000000"/>
-              <!-- Left ear -->
-              <circle cx="220" cy="108" r="30" fill="#000000" stroke="#ffffff" stroke-width="5"/>
-              <!-- Right ear -->
-              <circle cx="420" cy="108" r="30" fill="#000000" stroke="#ffffff" stroke-width="5"/>
-              <!-- Face oval -->
-              <ellipse cx="320" cy="195" rx="160" ry="120" fill="#000000" stroke="#ffffff" stroke-width="6"/>
-              <!-- Left eye -->
-              <ellipse id="eye-left" cx="258" cy="175" rx="32" ry="22" fill="#ffffff"/>
-              <!-- Left pupil -->
-              <circle cx="264" cy="178" r="10" fill="#000000"/>
-              <!-- Left highlight -->
-              <circle cx="255" cy="169" r="5" fill="#ffffff"/>
-              <!-- Right eye -->
-              <ellipse id="eye-right" cx="382" cy="175" rx="32" ry="22" fill="#ffffff"/>
-              <!-- Right pupil -->
-              <circle cx="388" cy="178" r="10" fill="#000000"/>
-              <!-- Right highlight -->
-              <circle cx="379" cy="169" r="5" fill="#ffffff"/>
-              <!-- Nose -->
-              <circle cx="320" cy="200" r="4" fill="#ffffff"/>
+              <!-- Left eyebrow -->
+              <path d="M 190 118 Q 230 100 265 112" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+              <!-- Right eyebrow -->
+              <path d="M 375 112 Q 410 100 450 118" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+              <!-- Left eye group -->
+              <g class="eye-left-g">
+                <circle id="eye-left" cx="228" cy="168" r="52" fill="#ffffff"/>
+                <circle cx="235" cy="174" r="26" fill="#000000"/>
+                <circle cx="218" cy="155" r="12" fill="#ffffff"/>
+                <circle cx="243" cy="172" r="5" fill="#ffffff"/>
+              </g>
+              <!-- Right eye group -->
+              <g class="eye-right-g">
+                <circle id="eye-right" cx="412" cy="168" r="52" fill="#ffffff"/>
+                <circle cx="419" cy="174" r="26" fill="#000000"/>
+                <circle cx="402" cy="155" r="12" fill="#ffffff"/>
+                <circle cx="427" cy="172" r="5" fill="#ffffff"/>
+              </g>
               <!-- Mouth -->
-              <path d="M 285 222 Q 320 245 355 222" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+              <path d="M 295 252 Q 320 272 345 252" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
               <!-- Sparkle -->
-              <text class="mochi-sparkle" x="500" y="80" font-size="20" fill="#ffffff">✦</text>
+              <text class="mochi-sparkle" x="510" y="75" font-size="22" fill="#ffffff">✦</text>
             </svg>
         </div>
         <!-- right bar: speaker -->
