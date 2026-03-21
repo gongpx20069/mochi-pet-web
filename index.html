@@ -146,10 +146,17 @@ img { max-width: 100%; }
   filter: drop-shadow(0 32px 80px rgba(255,255,255,0.06));
 }
 .phone-shell {
+  position: relative;
   width: 220px;
   background: #1a1a1a;
   border-radius: 36px;
-  border: 2px solid #333;
+  border: 2px solid transparent;
+  border-image: linear-gradient(160deg, #3a3a3a, #222) 1;
+  border-image: none;
+  border-color: #333;
+  background-image: linear-gradient(#1a1a1a, #1a1a1a), linear-gradient(160deg, #3a3a3a, #222);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   padding: 14px 10px;
   display: flex;
   flex-direction: column;
@@ -157,7 +164,29 @@ img { max-width: 100%; }
   gap: 10px;
   box-shadow:
     inset 0 0 0 1px #444,
-    0 0 0 1px #111;
+    0 0 0 1px #111,
+    0 4px 24px rgba(0,0,0,0.5);
+}
+/* Side buttons */
+.phone-shell::before {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 80px;
+  width: 3px;
+  height: 28px;
+  background: linear-gradient(180deg, #3a3a3a, #222);
+  border-radius: 0 2px 2px 0;
+}
+.phone-shell::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 120px;
+  width: 3px;
+  height: 48px;
+  background: linear-gradient(180deg, #3a3a3a, #222);
+  border-radius: 0 2px 2px 0;
 }
 /* Top bar */
 .phone-topbar {
@@ -183,11 +212,23 @@ img { max-width: 100%; }
 }
 /* Screen */
 .phone-screen {
+  position: relative;
   width: 100%;
   aspect-ratio: 9/17;
   background: #000;
   border-radius: 20px;
   overflow: hidden;
+}
+/* Screen glare overlay */
+.phone-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.02) 100%);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 20px;
 }
 .mochi-face-wrap {
   width: 100%;
@@ -196,6 +237,7 @@ img { max-width: 100%; }
 .mochi-face-wrap svg {
   width: 100%;
   height: 100%;
+  display: block;
 }
 /* Bottom bar */
 .phone-bottombar {
@@ -645,7 +687,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <!-- screen -->
         <div class="phone-screen">
           <div class="mochi-face-wrap">
-            <svg viewBox="0 0 320 400" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 320 400" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <!-- Background -->
               <rect x="0" y="0" width="320" height="400" fill="#000000"/>
               <!-- Left eye group — center (96, 190) -->
