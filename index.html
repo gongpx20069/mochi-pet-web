@@ -165,7 +165,7 @@ img { max-width: 100%; }
 }
 .phone-shell {
   position: relative;
-  width: 420px;
+  width: auto;
   height: auto;
   background: #1a1a1a;
   border-radius: 28px;
@@ -239,9 +239,9 @@ img { max-width: 100%; }
 /* Screen */
 .phone-screen {
   position: relative;
-  flex: 1;
-  aspect-ratio: 17/9;
-  width: 100%;
+  flex: none;
+  width: 392px;
+  height: 221px;
   background: #000;
   border-radius: 16px;
   overflow: hidden;
@@ -696,7 +696,8 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 /* ===== PHONE MOCKUP MOBILE ===== */
 @media (max-width: 600px) {
   .phone-mockup { width: 100%; }
-  .phone-shell { width: 100%; max-width: 360px; }
+  .phone-shell { width: auto; max-width: none; }
+  .phone-screen { width: 280px; height: 158px; }
 }
 </style>
 </head>
