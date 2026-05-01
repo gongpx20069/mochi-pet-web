@@ -1,0 +1,58 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+
+const compatIcons: Record<string, string> = {
+  'OpenAI': 'M',
+  'Azure OpenAI': 'A',
+  'Anthropic': '✦',
+  'DeepSeek': '🐳',
+  '通义千问': '通',
+  'Ollama': '🦙',
+  'vLLM': 'v',
+  'LM Studio': 'LM',
+};
+---
+<section id="byok" class="relative">
+  <div class="section">
+    <div class="rounded-3xl border border-mochi-purple/30 bg-gradient-to-br from-mochi-card/80 to-[#15152a]/80 p-8 md:p-14">
+      <span class="eyebrow">BYOK</span>
+      <h2 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight">
+        <span class="gradient-text">{s.byok.h2}</span>
+      </h2>
+      <p class="mt-4 text-mochi-muted max-w-2xl">{s.byok.sub}</p>
+
+      <div class="mt-12 grid md:grid-cols-3 gap-8">
+        {s.byok.steps.map((step) => (
+          <div class="flex gap-4">
+            <div class="shrink-0 w-14 h-14 rounded-full bg-mochi-gradient text-white font-bold text-2xl flex items-center justify-center shadow-glow">
+              {step.n}
+            </div>
+            <p class="text-sm text-mochi-text leading-relaxed pt-2">{step.title}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-14">
+        <h3 class="text-sm uppercase tracking-widest text-mochi-muted">{s.byok.compat_title}</h3>
+        <div class="mt-4 flex flex-wrap gap-3">
+          {s.byok.compat.map((name) => (
+            <div class="flex items-center gap-2 rounded-full border border-white/10 bg-mochi-bg/60 px-4 py-2 text-sm">
+              <span class="w-6 h-6 rounded-full bg-mochi-gradient/30 border border-white/10 flex items-center justify-center text-xs font-mono">
+                {compatIcons[name] ?? '·'}
+              </span>
+              <span>{name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div id="privacy" class="mt-12 rounded-2xl border border-mochi-pink/30 bg-mochi-pink/5 p-6 flex items-start gap-4">
+        <span class="text-2xl">🔒</span>
+        <p class="text-mochi-text leading-relaxed">{s.byok.privacy}</p>
+      </div>
+    </div>
+  </div>
+</section>
