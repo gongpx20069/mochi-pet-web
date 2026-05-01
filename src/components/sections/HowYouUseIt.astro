@@ -1,0 +1,18 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+---
+<section id="how" class="section pt-0">
+  <h2 class="h2 text-center">{s.howyouuse.h2}</h2>
+  <div class="mt-12 grid md:grid-cols-3 gap-6">
+    {s.howyouuse.items.map((it, i) => (
+      <a href={i === 2 ? '#byok' : '#'} class="card group hover:border-mochi-purple/40 transition-colors">
+        <div class="text-3xl">{it.icon}</div>
+        <h3 class="mt-3 text-lg font-semibold group-hover:text-mochi-purple transition-colors">{it.title}</h3>
+        <p class="mt-2 text-sm text-mochi-muted leading-relaxed">{it.body}</p>
+      </a>
+    ))}
+  </div>
+</section>
