@@ -1,0 +1,28 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const accents = ['border-mochi-pink/40', 'border-mochi-purple/40', 'border-white/10'];
+---
+<section id="roadmap" class="section">
+  <h2 class="h2 text-center">{s.roadmap.h2}</h2>
+  <div class="mt-12 grid md:grid-cols-3 gap-6">
+    {s.roadmap.cols.map((col, i) => (
+      <div class={`card ${accents[i]}`}>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-mono text-mochi-pink">{col.tag}</span>
+          <span class="text-xs text-mochi-muted">{col.title}</span>
+        </div>
+        <ul class="mt-4 space-y-2 text-sm text-mochi-text">
+          {col.items.map((it) => (
+            <li class="flex gap-2">
+              <span class="text-mochi-purple">▸</span>
+              <span>{it}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
