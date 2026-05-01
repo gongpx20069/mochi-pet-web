@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="#000000"/>
+
+  <!--
+    Target: face width = 1920 * 2/3 = 1280
+    Scale = 1280 / 1024 = 1.25
+    Center horizontally: x = (1920 - 1280)/2 = 320
+    Vertical placement:
+      scaled height = 1024*1.25=1280, larger than 1080 by 200px
+      so we shift up by 100px to center-crop: y = (1080 - 1280)/2 = -100
+      This yields a symmetrical crop top/bottom, keeping features centered.
+  -->
+  <g transform="translate(320,-100) scale(1.25)">
+    <!-- Eyes -->
+    <path d="M300 480 Q360 520 420 480"
+          stroke="#FFFFFF" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M604 480 Q664 520 724 480"
+          stroke="#FFFFFF" stroke-width="16" fill="none" stroke-linecap="round"/>
+
+    <!-- Eyelashes -->
+    <line x1="280" y1="450" x2="270" y2="440" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    <line x1="300" y1="450" x2="290" y2="440" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    <line x1="320" y1="450" x2="310" y2="440" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+
+    <line x1="704" y1="450" x2="714" y2="440" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    <line x1="724" y1="450" x2="734" y2="440" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+    <line x1="744" y1="450" x2="754" y2="440" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Mouth -->
+    <circle cx="512" cy="560" r="28" stroke="#FFFFFF" stroke-width="12" fill="none"/>
+
+    <!-- Drool -->
+    <path d="M512 590 Q520 640 512 680 Q504 640 512 590" fill="#FFFFFF"/>
+
+    <!-- Zzz -->
+    <text x="650" y="400" fill="#FFFFFF" font-size="64" font-family="Arial">Z</text>
+    <text x="700" y="360" fill="#FFFFFF" font-size="52" font-family="Arial">Z</text>
+    <text x="750" y="320" fill="#FFFFFF" font-size="40" font-family="Arial">Z</text>
+  </g>
+</svg>

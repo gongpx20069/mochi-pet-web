@@ -1,109 +1,79 @@
 ---
 interface Props {
-  expression?: 'happy' | 'sleepy' | 'wink';
+  expression?: 'happy' | 'excited' | 'sleepy' | 'sad' | 'angry' | 'neutral';
 }
 const { expression = 'happy' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const faceUrl = `${base}emotions/${expression}.svg`.replace(/\/+/g, '/');
 ---
-<div class="relative mx-auto w-full max-w-md aspect-[16/10]">
+<div class="phone-mockup relative mx-auto w-full max-w-md aspect-[16/10]">
   <!-- Phone shell (landscape) -->
-  <div class="absolute inset-0 rounded-[2.2rem] bg-[#111122] border border-white/10 shadow-2xl shadow-black/60 p-2.5">
-    <div class="relative h-full w-full rounded-[1.6rem] bg-gradient-to-br from-[#0e0e1a] to-[#161628] overflow-hidden flex items-center justify-center">
-      <!-- Side bars (camera / speaker hints) -->
-      <span class="absolute left-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/20"></span>
-      <span class="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-1 rounded-full bg-white/10"></span>
+  <div class="phone-shell absolute inset-0 rounded-[2.2rem] bg-[#111122] border border-white/10 shadow-2xl shadow-black/60 p-2.5">
+    <!-- Left side bar (camera dot) -->
+    <span class="phone-left-bar absolute left-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/20"></span>
+    <!-- Right side bar (speaker slot) -->
+    <span class="phone-right-bar absolute right-2 top-1/2 -translate-y-1/2 w-12 h-1 rounded-full bg-white/10"></span>
 
-      <!-- Floating sleep "💤" hint -->
-      <span class="mochi-zzz absolute left-[18%] top-[12%] text-mochi-purple/80 text-xl select-none">💤</span>
-
-      <!-- Floating yellow sparkle (✦) near the head -->
-      <span class="mochi-sparkle absolute right-[20%] top-[10%] text-[#FFE18B] text-xl select-none">✦</span>
-
-      <!-- The Mochi face: bobs as a whole group -->
-      <svg
-        viewBox="0 0 200 200"
-        class="mochi-face w-[60%] h-auto drop-shadow-[0_0_30px_rgba(255,225,139,0.18)]"
-        data-expression={expression}
-        role="img"
-        aria-label="Mochi — a soft round-faced AI pet"
-      >
-        <defs>
-          <radialGradient id="mochiCream" cx="50%" cy="42%" r="58%">
-            <stop offset="0%" stop-color="#FFFBEF"/>
-            <stop offset="70%" stop-color="#FEF6E4"/>
-            <stop offset="100%" stop-color="#F4E9CE"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Soft cream round face with a gentle outline -->
-        <circle cx="100" cy="100" r="74" fill="url(#mochiCream)" stroke="#7B8087" stroke-opacity="0.28" stroke-width="1.5"/>
-
-        <!-- Pink cheek blush -->
-        <ellipse cx="58" cy="120" rx="12" ry="6.5" fill="#FFB3C3" opacity="0.7"/>
-        <ellipse cx="142" cy="120" rx="12" ry="6.5" fill="#FFB3C3" opacity="0.7"/>
-
-        <!-- Eyes: big ovals, dark pupils, two highlights each -->
-        <g class="mochi-eyes">
-          <g class="mochi-eye mochi-eye-left">
-            <ellipse cx="72" cy="92" rx="10" ry="13" fill="#FFFCFA"/>
-            <ellipse cx="72" cy="93" rx="6.5" ry="9" fill="#111"/>
-            <circle cx="74.5" cy="88" r="2.6" fill="#fff"/>
-            <circle cx="69.5" cy="98" r="1" fill="#fff"/>
-          </g>
-          <g class="mochi-eye mochi-eye-right" style="animation-delay:0.05s">
-            <ellipse cx="128" cy="92" rx="10" ry="13" fill="#FFFCFA"/>
-            <ellipse cx="128" cy="93" rx="6.5" ry="9" fill="#111"/>
-            <circle cx="130.5" cy="88" r="2.6" fill="#fff"/>
-            <circle cx="125.5" cy="98" r="1" fill="#fff"/>
-          </g>
-        </g>
-
-        <!-- Curved smile, slightly thick, dark version of the mouth red so it works on cream -->
-        <path d="M82 128 Q100 144 118 128" stroke="#3a1a20" stroke-width="4" fill="none" stroke-linecap="round"/>
-      </svg>
+    <div class="phone-screen relative h-full w-full rounded-[1.6rem] bg-black overflow-hidden">
+      <img
+        id="mochi-face"
+        src={faceUrl}
+        alt="Mochi"
+        class="mochi-face w-full h-full object-cover select-none pointer-events-none"
+        data-base={base}
+      />
+      <div class="glass-overlay absolute inset-0 pointer-events-none bg-gradient-to-br from-white/[0.06] via-transparent to-white/[0.03]"></div>
     </div>
   </div>
+
+  <!-- Floating sleep "💤" hint above the phone -->
+  <span class="floating-zzz absolute left-[14%] -top-2 text-mochi-purple/80 text-2xl select-none">💤</span>
 </div>
 
 <style>
   .mochi-face {
     transform-origin: center;
     animation: mochi-bob 3s ease-in-out infinite;
+    transition: opacity 400ms ease;
   }
   @keyframes mochi-bob {
     0%, 100% { transform: translateY(-3px); }
     50%      { transform: translateY(3px); }
   }
 
-  .mochi-eye {
-    transform-origin: center;
-    transform-box: fill-box;
-    animation: mochi-blink 4s infinite;
-  }
-  @keyframes mochi-blink {
-    0%, 92%, 100% { transform: scaleY(1); }
-    94%, 96%      { transform: scaleY(0.08); }
-  }
-
-  .mochi-zzz {
-    animation: mochi-zzz 8s ease-in-out infinite;
+  .floating-zzz {
+    animation: floating-zzz 8s ease-in-out infinite;
     opacity: 0;
   }
-  @keyframes mochi-zzz {
+  @keyframes floating-zzz {
     0%, 70%, 100% { opacity: 0; transform: translateY(0); }
     20%           { opacity: 0.9; transform: translateY(-6px); }
     40%           { opacity: 0.5; transform: translateY(-12px); }
     55%           { opacity: 0; transform: translateY(-18px); }
   }
 
-  .mochi-sparkle {
-    animation: mochi-sparkle 2.6s ease-in-out infinite;
-  }
-  @keyframes mochi-sparkle {
-    0%, 100% { opacity: 0.35; transform: scale(0.85) rotate(0deg); }
-    50%      { opacity: 1;    transform: scale(1.1)  rotate(15deg); }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .mochi-face, .mochi-eye, .mochi-zzz, .mochi-sparkle { animation: none; }
+    .mochi-face, .floating-zzz { animation: none; }
   }
 </style>
+
+<script>
+  const face = document.getElementById('mochi-face') as HTMLImageElement | null;
+  if (face) {
+    const base = face.dataset.base || '/';
+    const join = (p: string) => `${base}${p}`.replace(/\/+/g, '/');
+    const cycle = [
+      join('emotions/happy.svg'),
+      join('emotions/excited.svg'),
+      join('emotions/happy.svg'),
+      join('emotions/sleepy.svg'),
+    ];
+    // Preload to avoid flicker between swaps
+    cycle.forEach((src) => { const i = new Image(); i.src = src; });
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % cycle.length;
+      face.src = cycle[i];
+    }, 6000);
+  }
+</script>

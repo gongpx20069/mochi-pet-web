@@ -1,0 +1,75 @@
+<svg
+  width="1920"
+  height="1080"
+  viewBox="0 0 1920 1080"
+  xmlns="http://www.w3.org/2000/svg">
+
+  <!-- 背景 -->
+  <rect width="1920" height="1080" fill="#000"/>
+
+  <!-- 左眼 -->
+  <g transform="translate(640 460)">
+    <!-- 外轮廓 -->
+    <ellipse cx="0" cy="0" rx="120" ry="140"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="8"/>
+
+    <!-- 主体暗部 -->
+    <ellipse cx="0" cy="20" rx="95" ry="115" fill="#111"/>
+
+    <!-- 内灰阶 -->
+    <ellipse cx="22" cy="42" rx="60" ry="76" fill="#2a2a2a"/>
+
+    <!-- 高光 -->
+    <circle cx="-34" cy="-44" r="22" fill="#fff"/>
+    <circle cx="24" cy="-12" r="8" fill="#fff"/>
+
+    <!-- 上弧线 -->
+    <path
+      d="M -92 -160 Q 0 -215 92 -160"
+      fill="none"
+      stroke="#fff"
+      stroke-width="6"
+      stroke-linecap="round"/>
+  </g>
+
+  <!-- 右眼 -->
+  <g transform="translate(1280 460)">
+    <ellipse cx="0" cy="0" rx="120" ry="140"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="8"/>
+
+    <ellipse cx="0" cy="20" rx="95" ry="115" fill="#111"/>
+    <ellipse cx="22" cy="42" rx="60" ry="76" fill="#2a2a2a"/>
+
+    <circle cx="-34" cy="-44" r="22" fill="#fff"/>
+    <circle cx="24" cy="-12" r="8" fill="#fff"/>
+
+    <path
+      d="M -92 -160 Q 0 -215 92 -160"
+      fill="none"
+      stroke="#fff"
+      stroke-width="6"
+      stroke-linecap="round"/>
+  </g>
+
+  <!-- 嘴巴（张嘴微笑） -->
+  <g transform="translate(960 720)">
+    <!-- 外轮廓 -->
+    <path
+      d="M -90 0 Q 0 70 90 0 Q 0 100 -90 0 Z"
+      fill="#000"
+      stroke="#ffffff"
+      stroke-width="8"
+      stroke-linejoin="round"/>
+
+    <!-- 上唇高光 -->
+    <ellipse cx="0" cy="10" rx="60" ry="18" fill="#ffffff"/>
+
+    <!-- 下口腔 -->
+    <ellipse cx="0" cy="40" rx="46" ry="22" fill="#9e9e9e"/>
+  </g>
+
+</svg>

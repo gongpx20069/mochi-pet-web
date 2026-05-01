@@ -1,0 +1,58 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="#000"/>
+
+  <!-- Left eyebrow wrinkles -->
+  <path d="M680 360 C620 330, 560 320, 500 325"
+        stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M690 390 C630 370, 580 360, 530 365"
+        stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- Right eyebrow wrinkles -->
+  <path d="M1240 360 C1300 330, 1360 320, 1420 325"
+        stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M1230 390 C1290 370, 1340 360, 1390 365"
+        stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- Left eye outer -->
+  <ellipse cx="650" cy="520" rx="90" ry="110" fill="#fff"/>
+  <ellipse cx="650" cy="520" rx="60" ry="85" fill="#000"/>
+
+  <!-- Left eye highlights -->
+  <circle cx="675" cy="500" r="10" fill="#fff"/>
+  <circle cx="630" cy="550" r="6" fill="#fff"/>
+
+  <!-- Right eye outer -->
+  <ellipse cx="1270" cy="520" rx="90" ry="110" fill="#fff"/>
+  <ellipse cx="1270" cy="520" rx="60" ry="85" fill="#000"/>
+
+  <!-- Right eye highlights -->
+  <circle cx="1295" cy="500" r="10" fill="#fff"/>
+  <circle cx="1250" cy="550" r="6" fill="#fff"/>
+
+  <!-- Left tear -->
+  <path d="
+    M600 615
+    C580 660, 585 720, 610 740
+    C650 760, 690 720, 670 650
+    Z"
+    fill="#fff"/>
+
+  <!-- Right tear -->
+  <path d="
+    M1320 615
+    C1340 660, 1335 720, 1310 740
+    C1270 760, 1230 720, 1250 650
+    Z"
+    fill="#fff"/>
+
+  <!-- Sad mouth -->
+  <path d="M880 730 C960 690, 1040 690, 1120 730"
+        stroke="#fff"
+        stroke-width="12"
+        fill="none"
+        stroke-linecap="round"/>
+
+</svg>

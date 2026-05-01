@@ -1,0 +1,75 @@
+<svg
+  width="1920"
+  height="1080"
+  viewBox="0 0 1920 1080"
+  xmlns="http://www.w3.org/2000/svg">
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#000000"/>
+
+  <!-- 左眼 -->
+  <g transform="translate(640 480)">
+    <!-- 外轮廓 -->
+    <ellipse cx="0" cy="0" rx="120" ry="140"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="8"/>
+
+    <!-- 眼白高光区域 -->
+    <ellipse cx="0" cy="20" rx="95" ry="115" fill="#111111"/>
+
+    <!-- 内灰阶 -->
+    <ellipse cx="20" cy="40" rx="60" ry="75" fill="#2a2a2a"/>
+
+    <!-- 大高光 -->
+    <circle cx="-30" cy="-40" r="20" fill="#ffffff"/>
+
+    <!-- 小高光 -->
+    <circle cx="20" cy="-10" r="8" fill="#ffffff"/>
+
+    <!-- 眉弧 -->
+    <path
+      d="M -90 -160 Q 0 -210 90 -160"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="6"
+      stroke-linecap="round"/>
+  </g>
+
+  <!-- 右眼 -->
+  <g transform="translate(1280 480)">
+    <!-- 外轮廓 -->
+    <ellipse cx="0" cy="0" rx="120" ry="140"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="8"/>
+
+    <!-- 眼白高光区域 -->
+    <ellipse cx="0" cy="20" rx="95" ry="115" fill="#111111"/>
+
+    <!-- 内灰阶 -->
+    <ellipse cx="20" cy="40" rx="60" ry="75" fill="#2a2a2a"/>
+
+    <!-- 大高光 -->
+    <circle cx="-30" cy="-40" r="20" fill="#ffffff"/>
+
+    <!-- 小高光 -->
+    <circle cx="20" cy="-10" r="8" fill="#ffffff"/>
+
+    <!-- 眉弧 -->
+    <path
+      d="M -90 -160 Q 0 -210 90 -160"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="6"
+      stroke-linecap="round"/>
+  </g>
+
+  <!-- 嘴巴 -->
+  <path
+    d="M 880 720 Q 960 760 1040 720"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="10"
+    stroke-linecap="round"/>
+</svg>
