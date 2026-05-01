@@ -1,0 +1,50 @@
+---
+interface Props {
+  expression?: 'happy' | 'sleepy' | 'wink';
+}
+const { expression = 'happy' } = Astro.props;
+---
+<div class="relative mx-auto w-full max-w-md aspect-[16/10] animate-float">
+  <span class="absolute -left-4 top-2 text-mochi-pink text-xl animate-sparkle">✦</span>
+  <span class="absolute right-2 -top-3 text-mochi-purple text-2xl animate-sparkle" style="animation-delay:.6s">✦</span>
+  <span class="absolute -right-2 bottom-6 text-white/70 text-lg animate-sparkle" style="animation-delay:1.2s">✦</span>
+  <span class="absolute left-8 -bottom-4 text-mochi-pink/70 text-base animate-sparkle" style="animation-delay:1.8s">✦</span>
+
+  <div class="absolute inset-0 rounded-[2.2rem] bg-[#111122] border border-white/10 shadow-2xl shadow-black/60 p-2.5">
+    <div class="relative h-full w-full rounded-[1.6rem] bg-[#0b0b16] overflow-hidden flex items-center justify-center">
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/20"></span>
+      <span class="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-1 rounded-full bg-white/10"></span>
+
+      <svg viewBox="0 0 200 200" class="w-[58%] h-auto drop-shadow-[0_0_30px_rgba(255,107,157,0.25)]" data-expression={expression} aria-label="Mochi face">
+        <defs>
+          <radialGradient id="mochiFace" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#FFFBEF"/>
+            <stop offset="100%" stop-color="#FEF6E4"/>
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="74" fill="url(#mochiFace)"/>
+        <ellipse cx="58" cy="118" rx="11" ry="6" fill="#FFB7C5" opacity="0.85"/>
+        <ellipse cx="142" cy="118" rx="11" ry="6" fill="#FFB7C5" opacity="0.85"/>
+        <g fill="#1a1a2e" class="mochi-eyes">
+          <ellipse class="mochi-eye" cx="74" cy="92" rx="7" ry="9"/>
+          <ellipse class="mochi-eye" cx="126" cy="92" rx="7" ry="9"/>
+          <circle cx="76" cy="88" r="2" fill="#fff"/>
+          <circle cx="128" cy="88" r="2" fill="#fff"/>
+        </g>
+        <path d="M84 124 Q100 138 116 124" stroke="#1a1a2e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mochi-eye {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: mochi-blink 5.2s infinite;
+  }
+  @keyframes mochi-blink {
+    0%, 92%, 100% { transform: scaleY(1); }
+    94%, 96% { transform: scaleY(0.1); }
+  }
+</style>

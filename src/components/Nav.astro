@@ -1,0 +1,42 @@
+---
+import { t, type Lang, languages } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL;
+const langPaths: Record<string, string> = {
+  zh: base,
+  en: `${base}en/`.replace(/\/+/g, '/'),
+  ja: `${base}ja/`.replace(/\/+/g, '/'),
+};
+---
+<header class="sticky top-0 z-40 backdrop-blur-md bg-mochi-bg/70 border-b border-white/5">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center gap-6">
+    <a href={langPaths[lang]} class="font-bold text-lg flex items-center gap-2 shrink-0">
+      <span class="text-2xl">🍡</span>
+      <span class="gradient-text">Mochi</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-6 text-sm text-mochi-muted">
+      <a href="#pillars" class="hover:text-mochi-text transition-colors">{s.nav.features}</a>
+      <a href="#byok" class="hover:text-mochi-text transition-colors">{s.nav.byok}</a>
+      <a href="#roadmap" class="hover:text-mochi-text transition-colors">{s.nav.roadmap}</a>
+      <a href="#waitlist" class="hover:text-mochi-text transition-colors">{s.nav.download}</a>
+      <a href="https://github.com/gongpx20069/mochi-pet-web" class="hover:text-mochi-text transition-colors" rel="noopener">{s.nav.github}</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-3">
+      <div class="flex items-center text-xs rounded-full border border-white/10 overflow-hidden">
+        {(Object.keys(languages) as Lang[]).map((code) => (
+          <a
+            href={langPaths[code]}
+            class:list={[
+              'px-2.5 py-1 transition-colors',
+              code === lang ? 'bg-mochi-purple/30 text-mochi-text' : 'text-mochi-muted hover:text-mochi-text',
+            ]}
+            aria-current={code === lang ? 'page' : undefined}
+          >{languages[code]}</a>
+        ))}
+      </div>
+      <a href="#waitlist" class="btn-primary !py-2 !px-4 text-sm">{s.nav.cta}</a>
+    </div>
+  </div>
+</header>

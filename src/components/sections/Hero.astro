@@ -1,0 +1,23 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import PhoneMockup from '../PhoneMockup.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+---
+<section class="section pt-12 md:pt-20 grid md:grid-cols-2 gap-12 items-center">
+  <div>
+    <span class="eyebrow">{s.hero.eyebrow}</span>
+    <h1 class="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
+      <span class="gradient-text">{s.hero.h1}</span>
+    </h1>
+    <p class="mt-6 text-lg text-mochi-muted max-w-xl">{s.hero.subtitle}</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="#waitlist" class="btn-primary">{s.hero.cta_primary}</a>
+      <a href="#byok" class="btn-secondary">{s.hero.cta_secondary}</a>
+    </div>
+  </div>
+  <div class="relative">
+    <PhoneMockup expression="happy" />
+  </div>
+</section>
