@@ -1,0 +1,97 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+// TODO: Replace YOUR_FORMSPREE_ID with a real Formspree form ID once provisioned.
+// Free Formspree tier allows 50 submissions/month — sufficient for a waitlist MVP.
+// Until then, the inline script falls back to a mailto: link.
+const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
+const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
+---
+<section id="waitlist" class="section">
+  <div class="rounded-3xl border border-mochi-pink/30 bg-gradient-to-br from-[#1a1a2e]/90 to-[#160a1d]/90 p-8 md:p-14 max-w-3xl mx-auto">
+    <h2 class="h2 text-center"><span class="gradient-text">{s.waitlist.h2}</span></h2>
+    <ul class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-mochi-muted">
+      {s.waitlist.perks.map((p) => <li>{p}</li>)}
+    </ul>
+
+    <form
+      id="waitlist-form"
+      class="mt-10 space-y-4"
+      action={formAction}
+      method="POST"
+      data-success={s.waitlist.success}
+      data-error={s.waitlist.error}
+    >
+      <div>
+        <label for="wl-email" class="block text-sm text-mochi-muted mb-1">{s.waitlist.email_label}</label>
+        <input
+          id="wl-email"
+          name="email"
+          type="email"
+          required
+          placeholder={s.waitlist.email_placeholder}
+          class="w-full rounded-xl bg-mochi-bg/80 border border-white/10 px-4 py-3 text-mochi-text placeholder:text-mochi-muted/60 focus:outline-none focus:border-mochi-pink/60 transition-colors"
+        />
+      </div>
+      <div>
+        <label for="wl-msg" class="block text-sm text-mochi-muted mb-1">{s.waitlist.msg_label}</label>
+        <textarea
+          id="wl-msg"
+          name="message"
+          rows="3"
+          placeholder={s.waitlist.msg_placeholder}
+          class="w-full rounded-xl bg-mochi-bg/80 border border-white/10 px-4 py-3 text-mochi-text placeholder:text-mochi-muted/60 focus:outline-none focus:border-mochi-purple/60 transition-colors"
+        ></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="New Mochi waitlist signup" />
+      <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+      <button type="submit" class="btn-primary w-full text-base">{s.waitlist.submit}</button>
+      <p id="wl-status" class="text-center text-sm hidden"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('waitlist-form') as HTMLFormElement | null;
+  const status = document.getElementById('wl-status') as HTMLParagraphElement | null;
+  if (form && status) {
+    form.addEventListener('submit', async (e) => {
+      const action = form.getAttribute('action') ?? '';
+      if (action.includes('YOUR_FORMSPREE_ID')) {
+        e.preventDefault();
+        const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+        const msg = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
+        const body = encodeURIComponent(`Email: ${email}\n\n${msg}`);
+        window.location.href = `mailto:hi@mochi.pet?subject=Mochi%20waitlist&body=${body}`;
+        return;
+      }
+      e.preventDefault();
+      status.classList.remove('hidden');
+      status.classList.remove('text-mochi-pink', 'text-emerald-400');
+      status.classList.add('text-mochi-muted');
+      status.textContent = '...';
+      try {
+        const data = new FormData(form);
+        const res = await fetch(action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          status.textContent = form.dataset.success ?? 'OK';
+          status.classList.remove('text-mochi-muted');
+          status.classList.add('text-emerald-400');
+          form.reset();
+        } else {
+          throw new Error('bad status');
+        }
+      } catch {
+        status.textContent = form.dataset.error ?? 'Error';
+        status.classList.remove('text-mochi-muted');
+        status.classList.add('text-mochi-pink');
+      }
+    });
+  }
+</script>
