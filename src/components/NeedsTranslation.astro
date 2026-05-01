@@ -1,0 +1,14 @@
+---
+import { t, type Lang } from '../i18n/ui';
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const label = t(lang).needs_translation;
+---
+<span class="block italic text-mochi-muted">
+  <slot />
+  <span class="ml-2 inline-block text-[10px] uppercase tracking-widest text-mochi-pink/80 border border-mochi-pink/40 rounded-full px-2 py-0.5">
+    {label}
+  </span>
+</span>

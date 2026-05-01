@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+import { t, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const htmlLang = lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en';
+const base = import.meta.env.BASE_URL;
+const ogImage = `${base}og-image.svg`.replace(/\/+/g, '/');
+const siteOrigin = (Astro.site ?? new URL('https://gongpx20069.github.io')).origin;
+---
+<!doctype html>
+<html lang={htmlLang} class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d0d1a" />
+    <title>{s.meta.title}</title>
+    <meta name="description" content={s.meta.description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? 'https://gongpx20069.github.io').toString()} />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`.replace(/\/+/g, '/')} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={s.meta.title} />
+    <meta property="og:description" content={s.meta.description} />
+    <meta property="og:image" content={`${siteOrigin}${ogImage}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={s.meta.title} />
+    <meta name="twitter:description" content={s.meta.description} />
+    <meta name="twitter:image" content={`${siteOrigin}${ogImage}`} />
+
+    <link rel="alternate" hreflang="zh-CN" href={`${siteOrigin}${base}`.replace(/\/+$/, '/')} />
+    <link rel="alternate" hreflang="en" href={`${siteOrigin}${base}en/`.replace(/\/+/g, '/').replace(':/', '://')} />
+    <link rel="alternate" hreflang="ja" href={`${siteOrigin}${base}ja/`.replace(/\/+/g, '/').replace(':/', '://')} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <slot />
+  </body>
+</html>

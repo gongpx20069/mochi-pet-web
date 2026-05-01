@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d0d1a"/>
+      <stop offset="1" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF6B9D"/>
+      <stop offset="1" stop-color="#C084FC"/>
+    </linearGradient>
+    <radialGradient id="face" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFBEF"/>
+      <stop offset="100%" stop-color="#FEF6E4"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="220" fill="url(#grad)" font-family="Inter, system-ui, sans-serif" font-size="86" font-weight="800">Hi Mochi 👋</text>
+  <text x="80" y="300" fill="#f4f4f8" font-family="Inter, sans-serif" font-size="38" font-weight="600">像素风 AI 宠物伴侣</text>
+  <text x="80" y="360" fill="#9ca3b4" font-family="Inter, sans-serif" font-size="26">本地唤醒 · 像素表情 · BYOK</text>
+  <g transform="translate(880,180)">
+    <circle cx="120" cy="120" r="120" fill="url(#face)"/>
+    <ellipse cx="80" cy="150" rx="14" ry="8" fill="#FFB7C5"/>
+    <ellipse cx="160" cy="150" rx="14" ry="8" fill="#FFB7C5"/>
+    <ellipse cx="92" cy="110" rx="9" ry="12" fill="#1a1a2e"/>
+    <ellipse cx="148" cy="110" rx="9" ry="12" fill="#1a1a2e"/>
+    <path d="M92 160 Q120 184 148 160" stroke="#1a1a2e" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>
