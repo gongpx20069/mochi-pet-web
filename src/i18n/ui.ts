@@ -108,6 +108,7 @@ const zh: Strings = {
     tier_a: [
       { icon: '🎙', title: '随叫随到', body: '不用解锁,不用打开 App。喊一声 Hi Mochi 就来 · 本地唤醒,飞行模式也响应。' },
       { icon: '🔋', title: '低功耗常驻', body: '优化的待机功耗,可以挂在桌面一整天不掉电太多 · 真正的 always-on 而不是噱头。' },
+      { icon: '🕐', title: '秒变桌面时钟', body: '旧手机横屏一放,Mochi 让到一边,出现一个大号像素风时钟 · 平时是床头 / 办公桌时钟,喊一声又变回 AI 宠物。' },
       { icon: '🌙', title: '躺床上也能用', body: '睡前不想动手?让 Mochi 调闹钟、设白噪音、放个故事 · 黑暗里语音就够了。' },
       { icon: '🎨', title: '有表情的陪伴', body: 'EmotionFace 表情系统 · 喜怒哀乐都画在脸上 · 不是冰冷工具,是有性格的伙伴。' },
     ],
@@ -145,9 +146,9 @@ const zh: Strings = {
     privacy: '你的对话不经过我们的服务器。我们不存,看不到,也不能要。',
   },
   sleep: {
-    eyebrow: '🌙 新功能预告',
-    h2: '睡眠陪伴模式',
-    body: '晚上躺下不想动手?Mochi 会陪你入睡 · 助眠白噪音 · 梦境记录 · 早晨温柔唤醒。',
+    eyebrow: '🏠 下一站',
+    h2: '智能家居中控',
+    body: '让旧手机变成你家的语音中控台 · 一句话开关灯、调空调、控窗帘 · Mochi 坐镇桌面,成为全屋智能的入口。',
     tag: 'Coming Next 🚧',
   },
   roadmap: {
@@ -161,7 +162,7 @@ const zh: Strings = {
       {
         tag: 'Next 🚧',
         title: '规划中',
-        items: ['iOS', '微信登录(Phase 2 主推)', '🌙 睡眠陪伴模式(主打新功能)', '更多表情包'],
+        items: ['🏠 智能家居中控(主打新功能)', 'iOS', '微信登录(Phase 2 主推)', '更多表情包'],
       },
       {
         tag: 'Later 🔮',
@@ -232,6 +233,7 @@ const en: Strings = {
     tier_a: [
       { icon: '🎙', title: 'Always within earshot', body: 'No unlock, no app launch. Say "Hi Mochi" and it’s there · On-device wake word, works in airplane mode.' },
       { icon: '🔋', title: 'Low-power, always-on', body: 'Optimized standby — leave it on your desk all day without draining the battery · Real always-on, not a gimmick.' },
+      { icon: '🕐', title: 'A desk clock in a flick', body: 'Lay the old phone in landscape and Mochi steps aside for a big pixel-style clock · A nightstand / desk clock by default, an AI pet the moment you call it.' },
       { icon: '🌙', title: 'Use it from bed', body: 'Don’t want to touch the phone before sleep? Ask Mochi to set an alarm, play white noise, tell a story.' },
       { icon: '🎨', title: 'A face that has feelings', body: 'EmotionFace expression system · Joy, calm, sleepy — all written on its face. A companion with personality.' },
     ],
@@ -263,16 +265,16 @@ const en: Strings = {
     privacy: 'Your conversations never touch our servers. We don’t store them, see them, or have any way to ask for them.',
   },
   sleep: {
-    eyebrow: '🌙 Coming soon',
-    h2: 'Sleep companion mode',
-    body: 'Don’t want to lift a finger before bed? Mochi will help you fall asleep · soothing white noise · dream journaling · gentle morning wake-up.',
+    eyebrow: '🏠 Coming next',
+    h2: 'Smart-home control hub',
+    body: 'Turn the old phone into your home’s voice control hub · toggle lights, AC, curtains with a sentence · Mochi sits on your desk as the gateway to your whole smart home.',
     tag: 'Coming Next 🚧',
   },
   roadmap: {
     h2: 'Roadmap',
     cols: [
       { tag: 'Now ✅', title: 'Android beta', items: ['Pixel Mochi', 'Wake word', 'Voice chat', 'BYOK', 'Email signup', 'zh / en / ja', 'Client tools'] },
-      { tag: 'Next 🚧', title: 'Planned', items: ['iOS', 'WeChat login (Phase 2 push)', '🌙 Sleep companion mode (flagship next feature)', 'More expression packs'] },
+      { tag: 'Next 🚧', title: 'Planned', items: ['🏠 Smart-home control hub (flagship next feature)', 'iOS', 'WeChat login (Phase 2 push)', 'More expression packs'] },
       { tag: 'Later 🔮', title: 'Long term', items: ['Study companion mode', 'More platforms, more model adapters'] },
     ],
   },
@@ -337,6 +339,7 @@ const ja: Strings = {
     tier_a: [
       { icon: '🎙', title: '呼べばすぐ来る', body: 'ロック解除もアプリ起動も不要。「Hi Mochi」と言うだけ · オンデバイス起動語、機内モードでも応答。' },
       { icon: '🔋', title: '低消費電力で常時待機', body: '最適化された待機電力 · 一日机の上に置いてもバッテリーが大きく減らない。本物の always-on。' },
+      { icon: '🕐', title: 'すぐに置き時計に', body: '古いスマホを横向きに置くと、Mochi が脇によけて大きなピクセル時計に · 普段はベッドサイド / 机の置き時計、呼べば AI ペットに戻る。' },
       { icon: '🌙', title: 'ベッドからでも使える', body: '寝る前に手を動かしたくない?Mochi にアラーム・ホワイトノイズ・物語を頼もう。' },
       { icon: '🎨', title: '表情のある相棒', body: 'EmotionFace 表情システム · 喜怒哀楽が顔に出る · 冷たい道具ではなく、性格のあるペット。' },
     ],
@@ -368,16 +371,16 @@ const ja: Strings = {
     privacy: '会話は私たちのサーバーを通りません。保存しないし、見られないし、要求もできません。',
   },
   sleep: {
-    eyebrow: '🌙 新機能予告',
-    h2: '睡眠コンパニオンモード',
-    body: '夜、横になって手を動かしたくない?Mochi が入眠をサポート · ホワイトノイズ · 夢の記録 · 朝はやさしく起こします。',
+    eyebrow: '🏠 次の一手',
+    h2: 'スマートホーム コントロールハブ',
+    body: '古いスマホを家の音声コントロールハブに · 一言で照明・エアコン・カーテンを操作 · Mochi が机の上から、全部屋スマート化の入口になる。',
     tag: 'Coming Next 🚧',
   },
   roadmap: {
     h2: 'ロードマップ',
     cols: [
       { tag: 'Now ✅', title: 'Android ベータ', items: ['ピクセル Mochi', '起動語', '音声対話', 'BYOK', 'メール登録', '中英日', 'クライアントツール'] },
-      { tag: 'Next 🚧', title: '計画中', items: ['iOS', 'WeChat ログイン(Phase 2 主軸)', '🌙 睡眠コンパニオンモード(目玉新機能)', '表情パック追加'] },
+      { tag: 'Next 🚧', title: '計画中', items: ['🏠 スマートホーム コントロールハブ(目玉新機能)', 'iOS', 'WeChat ログイン(Phase 2 主軸)', '表情パック追加'] },
       { tag: 'Later 🔮', title: '将来', items: ['学習コンパニオンモード', 'より多くのプラットフォーム・モデル対応'] },
     ],
   },
