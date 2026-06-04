@@ -21,6 +21,7 @@ type Strings = {
     eyebrow: string;
     h1: string;
     subtitle: string;
+    free_badge: string;
     cta_primary: string;
     cta_secondary: string;
   };
@@ -81,8 +82,8 @@ type Strings = {
 
 const zh: Strings = {
   meta: {
-    title: 'Mochi · 低功耗语音 AI 宠物伴侣',
-    description: '不用动手,喊一声它就在那里。低功耗 always-on 语音唤醒、有表情的 AI 宠物伴侣。',
+    title: 'Mochi · 旧手机改造的低功耗语音 AI 桌面宠物',
+    description: '把闲置旧手机改造成 AI 桌面宠物。不用动手,喊一声它就在那里。低功耗 always-on 语音唤醒、有表情的 AI 宠物伴侣。',
   },
   nav: {
     features: 'Mochi 能做什么',
@@ -93,9 +94,10 @@ const zh: Strings = {
     cta: '加入等候名单',
   },
   hero: {
-    eyebrow: '🚧 Android 内测进行中',
-    h1: '不用动手,它就在那里',
-    subtitle: '一个低功耗、随叫随到的语音 AI 伴侣 · 你不用动手,它就在那里 · 像 OpenClaw 一样轻,像宠物一样懂你',
+    eyebrow: '🚧 Android 内测进行中 · 旧手机改造',
+    h1: '让闲置旧手机,变成 AI 桌面宠物',
+    subtitle: '把抽屉里的旧手机改造成一只 AI 桌面宠物 · 低功耗、随叫随到的语音伴侣 · 像超轻量级 OpenClaw 一样轻,像宠物一样懂你',
+    free_badge: '✨ 每天 50 次官方 AI 对话,完全免费',
     cta_primary: '加入等候名单',
     cta_secondary: '了解自定义模型 (BYOK)',
   },
@@ -125,8 +127,8 @@ const zh: Strings = {
     h2: '三种使用方式',
     items: [
       { icon: '🎮', title: '游客', body: '不注册不联网也能玩 Mochi 本体,但云端对话不可用。' },
-      { icon: '📧', title: '邮箱注册', body: '用官方 Mochi 云。Phase 1 只支持邮箱+密码,后续会加微信 / Google。' },
-      { icon: '🔑', title: '自带模型 (BYOK)', body: '填你自己的 OpenAI 兼容 endpoint + key,数据完全自主。点这里跳到 BYOK 详情。' },
+      { icon: '📧', title: '邮箱注册', body: '用官方 Mochi 云,每天 50 次 AI 对话完全免费 · Phase 1 只支持邮箱+密码,后续会加微信 / Google。' },
+      { icon: '🔑', title: '自带模型 (BYOK)', body: '免费额度用完会自动停止,但 BYOK 永久可用 · 填你自己的 OpenAI 兼容 endpoint + key,服务器不保存任何信息。点这里跳到 BYOK 详情。' },
     ],
   },
   byok: {
@@ -204,8 +206,8 @@ const zh: Strings = {
 const en: Strings = {
   ...zh,
   meta: {
-    title: 'Mochi · A low-power, voice-first AI pet companion',
-    description: 'Hands-free, always-on. Just speak — Mochi is there. A low-power voice AI pet that lives on your desk.',
+    title: 'Mochi · Turn an old phone into a low-power voice AI desktop pet',
+    description: 'Repurpose a spare old phone into an AI desktop pet. Hands-free, always-on. Just speak — Mochi is there. A low-power voice AI pet that lives on your desk.',
   },
   nav: {
     features: 'What Mochi can do',
@@ -216,9 +218,10 @@ const en: Strings = {
     cta: 'Join the waitlist',
   },
   hero: {
-    eyebrow: '🚧 Android closed beta',
-    h1: 'Hands-free. Just speak — it’s there.',
-    subtitle: 'A low-power, always-listening, voice-first AI companion · As light as OpenClaw, as warm as a pet.',
+    eyebrow: '🚧 Android closed beta · Repurpose an old phone',
+    h1: 'Turn your old phone into an AI desktop pet',
+    subtitle: 'Repurpose that spare phone in your drawer into an AI desktop pet · low-power, always-listening voice companion · as light as an ultra-lightweight OpenClaw, as warm as a pet.',
+    free_badge: '✨ 50 free official AI chats every day — completely free',
     cta_primary: 'Join the waitlist',
     cta_secondary: 'Bring your own model (BYOK)',
   },
@@ -308,8 +311,8 @@ const en: Strings = {
 const ja: Strings = {
   ...zh,
   meta: {
-    title: 'Mochi · 低消費電力 音声 AI ペット',
-    description: 'ハンズフリー、いつでも待機。呼べば、そこにいる。低消費電力の音声 AI ペット。',
+    title: 'Mochi · 古いスマホを再活用した低消費電力 音声 AI デスクトップペット',
+    description: '古いスマホを AI デスクトップペットに再活用。ハンズフリー、いつでも待機。呼べば、そこにいる。低消費電力の音声 AI ペット。',
   },
   nav: {
     features: 'Mochi にできること',
@@ -320,9 +323,10 @@ const ja: Strings = {
     cta: 'ウェイトリストに参加',
   },
   hero: {
-    eyebrow: '🚧 Android クローズドベータ中',
-    h1: '触らなくていい。呼べば、そこにいる。',
-    subtitle: '低消費電力で常時待機する、声で動く AI コンパニオン · OpenClaw のように軽く、ペットのように寄り添う。',
+    eyebrow: '🚧 Android クローズドベータ中 · 古いスマホを再活用',
+    h1: '使わない古いスマホを、AI デスクトップペットに',
+    subtitle: '引き出しに眠る古いスマホを AI デスクトップペットに再活用 · 低消費電力で常時待機する音声コンパニオン · 超軽量な OpenClaw のように軽く、ペットのように寄り添う。',
+    free_badge: '✨ 毎日 50 回の公式 AI 対話が完全無料',
     cta_primary: 'ウェイトリストに参加',
     cta_secondary: 'カスタムモデル (BYOK) について',
   },
