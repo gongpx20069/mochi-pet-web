@@ -126,13 +126,13 @@ const zh: Strings = {
     items: [
       { icon: '🎮', title: '游客', body: '不注册不联网也能玩 Mochi 本体,但云端对话不可用。' },
       { icon: '📧', title: '邮箱注册', body: '用官方 Mochi 云,每天 50 次 AI 对话完全免费 · Phase 1 只支持邮箱+密码,后续会加微信 / Google。' },
-      { icon: '🔑', title: '自带模型 (BYOK)', body: '免费额度用完会自动停止,但 BYOK 永久可用 · 填你自己的 OpenAI 兼容 endpoint + key,服务器不保存任何信息。点这里跳到 BYOK 详情。' },
+      { icon: '🔑', title: '自带模型 (BYOK)', body: '所有用户都能用,不是高级玩家专属 · 免费额度用完会自动停止,但 BYOK 永久可用 · 填你自己的 OpenAI 风格 RESTful API endpoint + key,服务器不保存任何信息。点这里跳到 BYOK 详情。' },
     ],
   },
   byok: {
-    eyebrow_badge: '🔑 高级用户',
+    eyebrow_badge: '🔑 所有用户可用',
     h2: '你的 Mochi,你的 LLM',
-    sub: '把 Mochi 接到任何 OpenAI 兼容的服务,数据走你自己的 endpoint。给愿意自己折腾的人。',
+    sub: '把 Mochi 接到任何 OpenAI 风格的 RESTful API,数据走你自己的 endpoint。不是高级玩家专属 —— 每位用户都能用。',
     steps: [
       { n: 1, title: '在设置里粘贴 base URL + API key' },
       { n: 2, title: '选模型(gpt-4o-mini / claude-haiku / 自部署 / qwen / deepseek 任选)' },
@@ -256,9 +256,9 @@ const en: Strings = {
   },
   byok: {
     ...zh.byok,
-    eyebrow_badge: '🔑 Power users',
+    eyebrow_badge: '🔑 Available to everyone',
     h2: 'Your Mochi, your LLM',
-    sub: 'Point Mochi at any OpenAI-compatible endpoint. Your data, your route. For people happy to wire things up themselves.',
+    sub: 'Point Mochi at any OpenAI-style RESTful API. Your data, your route. Not a power-user perk — every user gets it.',
     compat_title: 'Verified compatible',
     privacy: 'Your conversations never touch our servers. We don’t store them, see them, or have any way to ask for them.',
   },
@@ -363,9 +363,9 @@ const ja: Strings = {
   },
   byok: {
     ...zh.byok,
-    eyebrow_badge: '🔑 上級ユーザー向け',
+    eyebrow_badge: '🔑 全ユーザー利用可',
     h2: 'あなたの Mochi、あなたの LLM',
-    sub: 'OpenAI 互換のどんなエンドポイントにも繋げます。データはあなたの経路を通る。自分でセットアップを楽しめる人向け。',
+    sub: 'OpenAI 形式のどんな RESTful API にも繋げます。データはあなたの経路を通る。上級者専用ではなく、すべてのユーザーが使えます。',
     compat_title: '動作確認済み',
     privacy: '会話は私たちのサーバーを通りません。保存しないし、見られないし、要求もできません。',
   },
