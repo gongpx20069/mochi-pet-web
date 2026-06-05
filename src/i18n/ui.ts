@@ -90,7 +90,8 @@ type Strings = {
     title: string;
     intro: string;
     toc_title: string;
-    sections: { id: string; icon: string; title: string; intro?: string; steps?: string[]; note?: string }[];
+    providers_doc_label: string;
+    sections: { id: string; icon: string; title: string; intro?: string; steps?: string[]; note?: string; providers_title?: string; providers?: { name: string; base: string; doc: string }[]; providers_note?: string }[];
     faq_title: string;
     faq: { q: string; a: string }[];
     updated: string;
@@ -235,6 +236,7 @@ const zh: Strings = {
     title: '装好之后,这样玩转 Mochi',
     intro: '下面是从装好 APK 到用顺手的完整流程。照着走,3 分钟就能跟 Mochi 说上第一句话。',
     toc_title: '目录',
+    providers_doc_label: '官方文档',
     sections: [
       {
         id: 'install',
@@ -260,6 +262,16 @@ const zh: Strings = {
           'BYOK(所有用户可用):在「设置 → 模型」粘贴你自己的 base URL + API Key,支持任意 OpenAI 风格的 RESTful API(OpenAI / Azure / DeepSeek / 通义千问 / Ollama / vLLM 等)',
         ],
         note: 'BYOK 模式下对话直连你填的 endpoint,不经过 Mochi 服务器,我们不存储任何内容。',
+        providers_title: '常见服务商 base URL 速查(OpenAI 风格端点统一填到 /v1)',
+        providers: [
+          { name: 'OpenAI', base: 'https://api.openai.com/v1', doc: 'https://platform.openai.com/docs/api-reference' },
+          { name: 'DeepSeek', base: 'https://api.deepseek.com', doc: 'https://api-docs.deepseek.com/' },
+          { name: '通义千问(阿里百炼)', base: 'https://dashscope.aliyuncs.com/compatible-mode/v1', doc: 'https://help.aliyun.com/zh/model-studio/compatibility-of-openai-with-dashscope' },
+          { name: 'Ollama(本地)', base: 'http://localhost:11434/v1', doc: 'https://docs.ollama.com/api/openai-compatibility' },
+          { name: 'vLLM(自建)', base: 'http://localhost:8000/v1', doc: 'https://docs.vllm.ai/en/stable/serving/openai_compatible_server/' },
+          { name: 'Azure OpenAI', base: 'https://{资源名}.openai.azure.com/openai/v1/', doc: 'https://learn.microsoft.com/azure/ai-services/openai/reference' },
+        ],
+        providers_note: 'Azure 与标准 OpenAI 略有差异:用部署名而非模型名、需 api-version 参数、鉴权头是 api-key。本地类(Ollama/vLLM)若用旧手机访问,把 localhost 换成运行模型那台机器的局域网 IP,API Key 可随便填非空。',
       },
       {
         id: 'wake',
@@ -447,6 +459,7 @@ const en: Strings = {
     title: 'After install, here’s how to use Mochi',
     intro: 'A full walkthrough from a fresh APK to a smooth daily setup. Follow along and you’ll be talking to Mochi in 3 minutes.',
     toc_title: 'Contents',
+    providers_doc_label: 'Docs',
     sections: [
       {
         id: 'install',
@@ -472,6 +485,16 @@ const en: Strings = {
           'BYOK (everyone): in Settings → Model, paste your own base URL + API key. Works with any OpenAI-style RESTful API (OpenAI / Azure / DeepSeek / Qwen / Ollama / vLLM, etc.)',
         ],
         note: 'In BYOK mode, chats go straight to your endpoint — never through Mochi’s servers, and we store nothing.',
+        providers_title: 'Common provider base URLs (OpenAI-style endpoints all end in /v1)',
+        providers: [
+          { name: 'OpenAI', base: 'https://api.openai.com/v1', doc: 'https://platform.openai.com/docs/api-reference' },
+          { name: 'DeepSeek', base: 'https://api.deepseek.com', doc: 'https://api-docs.deepseek.com/' },
+          { name: 'Qwen (Alibaba Model Studio)', base: 'https://dashscope.aliyuncs.com/compatible-mode/v1', doc: 'https://www.alibabacloud.com/help/en/model-studio/compatibility-of-openai-with-dashscope' },
+          { name: 'Ollama (local)', base: 'http://localhost:11434/v1', doc: 'https://docs.ollama.com/api/openai-compatibility' },
+          { name: 'vLLM (self-hosted)', base: 'http://localhost:8000/v1', doc: 'https://docs.vllm.ai/en/stable/serving/openai_compatible_server/' },
+          { name: 'Azure OpenAI', base: 'https://{resource}.openai.azure.com/openai/v1/', doc: 'https://learn.microsoft.com/azure/ai-services/openai/reference' },
+        ],
+        providers_note: 'Azure differs slightly from standard OpenAI: it uses a deployment name (not a model name), needs an api-version parameter, and authenticates with an api-key header. For local options (Ollama/vLLM) accessed from an old phone, replace localhost with the LAN IP of the machine running the model; the API key can be any non-empty string.',
       },
       {
         id: 'wake',
@@ -657,6 +680,7 @@ const ja: Strings = {
     title: 'インストール後、Mochi を使いこなす',
     intro: 'APK を入れてから快適に使うまでの全手順。沿って進めれば 3 分で最初の一言を話せます。',
     toc_title: '目次',
+    providers_doc_label: '公式ドキュメント',
     sections: [
       {
         id: 'install',
@@ -682,6 +706,16 @@ const ja: Strings = {
           'BYOK(全ユーザー可):設定 → モデルで自分の base URL + API Key を貼り付け。OpenAI 形式の RESTful API なら何でも対応(OpenAI / Azure / DeepSeek / 通義千問 / Ollama / vLLM など)',
         ],
         note: 'BYOK では対話はあなたの endpoint に直接接続し、Mochi のサーバーを通りません。何も保存しません。',
+        providers_title: '主要プロバイダの base URL 早見表(OpenAI 形式の endpoint はすべて /v1 で終わる)',
+        providers: [
+          { name: 'OpenAI', base: 'https://api.openai.com/v1', doc: 'https://platform.openai.com/docs/api-reference' },
+          { name: 'DeepSeek', base: 'https://api.deepseek.com', doc: 'https://api-docs.deepseek.com/' },
+          { name: '通義千問(Alibaba Model Studio)', base: 'https://dashscope.aliyuncs.com/compatible-mode/v1', doc: 'https://www.alibabacloud.com/help/en/model-studio/compatibility-of-openai-with-dashscope' },
+          { name: 'Ollama(ローカル)', base: 'http://localhost:11434/v1', doc: 'https://docs.ollama.com/api/openai-compatibility' },
+          { name: 'vLLM(セルフホスト)', base: 'http://localhost:8000/v1', doc: 'https://docs.vllm.ai/en/stable/serving/openai_compatible_server/' },
+          { name: 'Azure OpenAI', base: 'https://{リソース名}.openai.azure.com/openai/v1/', doc: 'https://learn.microsoft.com/azure/ai-services/openai/reference' },
+        ],
+        providers_note: 'Azure は標準 OpenAI と少し異なります:モデル名ではなくデプロイ名を使用し、api-version パラメータが必要で、認証ヘッダーは api-key です。ローカル系(Ollama/vLLM)を旧スマホから使う場合は、localhost をモデル実行マシンの LAN IP に置き換えてください。API Key は空でなければ何でも構いません。',
       },
       {
         id: 'wake',
