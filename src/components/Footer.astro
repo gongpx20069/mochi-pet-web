@@ -3,6 +3,14 @@ import { t, type Lang } from '../i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const s = t(lang);
+const base = import.meta.env.BASE_URL;
+const home = `${base}${lang === 'zh' ? '' : lang + '/'}`.replace(/\/+/g, '/');
+// Resolve in-site hrefs against the language home so footer works on subpages (e.g. /docs/).
+const resolve = (href: string) => {
+  if (/^https?:|^mailto:/.test(href)) return href;
+  if (href.startsWith('#')) return `${home}${href}`;
+  return `${home}${href}`.replace(/\/+/g, '/');
+};
 ---
 <footer class="border-t border-white/5 mt-16">
   <div class="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-3 gap-10">
@@ -10,7 +18,7 @@ const s = t(lang);
       <h4 class="text-sm font-semibold text-mochi-text mb-3">{s.footer.links_title}</h4>
       <ul class="space-y-2 text-sm text-mochi-muted">
         {s.footer.links.map((l) => (
-          <li><a class="hover:text-mochi-text" href={l.href}>{l.label}</a></li>
+          <li><a class="hover:text-mochi-text" href={resolve(l.href)}>{l.label}</a></li>
         ))}
       </ul>
     </div>
@@ -18,7 +26,7 @@ const s = t(lang);
       <h4 class="text-sm font-semibold text-mochi-text mb-3">{s.footer.community_title}</h4>
       <ul class="space-y-2 text-sm text-mochi-muted">
         {s.footer.community.map((l) => (
-          <li><a class="hover:text-mochi-text" href={l.href} rel="noopener">{l.label}</a></li>
+          <li><a class="hover:text-mochi-text" href={resolve(l.href)} rel="noopener">{l.label}</a></li>
         ))}
       </ul>
     </div>
@@ -26,7 +34,7 @@ const s = t(lang);
       <h4 class="text-sm font-semibold text-mochi-text mb-3">{s.footer.legal_title}</h4>
       <ul class="space-y-2 text-sm text-mochi-muted">
         {s.footer.legal.map((l) => (
-          <li><a class="hover:text-mochi-text" href={l.href}>{l.label}</a></li>
+          <li><a class="hover:text-mochi-text" href={resolve(l.href)}>{l.label}</a></li>
         ))}
       </ul>
     </div>

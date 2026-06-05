@@ -13,6 +13,7 @@ type Strings = {
     features: string;
     byok: string;
     roadmap: string;
+    docs: string;
     download: string;
     github: string;
     cta: string;
@@ -69,6 +70,31 @@ type Strings = {
     success: string;
     error: string;
   };
+  download: {
+    eyebrow: string;
+    h2: string;
+    sub: string;
+    ready_cta: string;
+    notready_cta: string;
+    notready_note: string;
+    meta_fallback: string;
+    safety_title: string;
+    safety: string[];
+    no_store: string;
+  };
+  docs: {
+    meta_title: string;
+    meta_desc: string;
+    back: string;
+    eyebrow: string;
+    title: string;
+    intro: string;
+    toc_title: string;
+    sections: { id: string; icon: string; title: string; intro?: string; steps?: string[]; note?: string }[];
+    faq_title: string;
+    faq: { q: string; a: string }[];
+    updated: string;
+  };
   footer: {
     links_title: string;
     community_title: string;
@@ -90,7 +116,8 @@ const zh: Strings = {
     features: 'Mochi 能做什么',
     byok: '自定义模型',
     roadmap: '路线图',
-    download: '下载',
+    docs: '使用文档',
+    download: '下载 APK',
     github: 'GitHub',
     cta: '加入等候名单',
   },
@@ -184,14 +211,125 @@ const zh: Strings = {
     success: '✓ 已收到!我们会优先邮件你',
     error: '提交失败,请稍后再试或直接发邮件给我们。',
   },
+  download: {
+    eyebrow: '📦 直接从官网下载,不上应用商店',
+    h2: '下载 Mochi APK',
+    sub: '我们不走 Google Play —— APK 直接放官网,扫一眼安全提示就能装。',
+    ready_cta: '⬇️ 下载 APK',
+    notready_cta: '安装包打包中…',
+    notready_note: '安装包还在打包,加入等候名单,做好我们第一时间通知你。',
+    meta_fallback: 'Android 8.0+ · 国内可直连下载',
+    safety_title: '安装小贴士',
+    safety: [
+      '下载后在「设置 → 安全」里允许「安装未知来源应用」',
+      '只从本官网或官方 GitHub Releases 下载,认准链接',
+      '装好后打开《使用文档》,3 分钟跑通第一句对话',
+    ],
+    no_store: '为什么不上架?上架商店成本高、审核慢 —— 官网直发能让你更快拿到新版本。',
+  },
+  docs: {
+    meta_title: 'Mochi 使用文档 · 安装后如何上手',
+    meta_desc: '装好 Mochi 之后怎么用?从授予权限、唤醒对话、接入自定义模型到开启工具能力,手把手带你 3 分钟跑通第一句对话。',
+    back: '← 回首页',
+    eyebrow: '📖 使用文档',
+    title: '装好之后,这样玩转 Mochi',
+    intro: '下面是从装好 APK 到用顺手的完整流程。照着走,3 分钟就能跟 Mochi 说上第一句话。',
+    toc_title: '目录',
+    sections: [
+      {
+        id: 'install',
+        icon: '📦',
+        title: '一、安装 APK',
+        intro: 'Mochi 通过官网直接发布,不走应用商店。',
+        steps: [
+          '从官网「下载」区或官方 GitHub Releases 下载 .apk 文件',
+          '首次安装会提示「未知来源」,到「设置 → 安全」里允许「安装未知来源应用」',
+          '点开下载好的 APK,按提示完成安装',
+          '建议用一台闲置旧手机长期插电运行,效果最好',
+        ],
+        note: '只从本官网或官方 GitHub 下载,不要装来路不明的安装包。',
+      },
+      {
+        id: 'permissions',
+        icon: '🔐',
+        title: '二、首次启动 · 授予权限',
+        intro: '第一次打开 Mochi,会按需申请权限。每一项都是为了对应功能,可随时在系统设置里关闭。',
+        steps: [
+          '麦克风:语音唤醒和对话必需',
+          '悬浮窗 / 显示在其他应用上层:让桌宠常驻桌面',
+          '通知:推送提醒、日程',
+          '电池优化里把 Mochi 设为「不受限制」,避免被系统杀后台(这样才能 always-on)',
+          '后续要用打电话 / 短信 / 日历 / 联系人等能力时,会单独再问一次',
+        ],
+      },
+      {
+        id: 'model',
+        icon: '🧠',
+        title: '三、选择大脑(账号 / 自定义模型)',
+        intro: 'Mochi 需要一个「大脑」(大模型)才能聪明对话。三种方式任选:',
+        steps: [
+          '游客:不注册也能玩桌宠本体,但云端对话不可用',
+          '邮箱注册:用官方 Mochi 云,每天 50 次 AI 对话完全免费',
+          'BYOK(所有用户可用):在「设置 → 模型」粘贴你自己的 base URL + API Key,支持任意 OpenAI 风格的 RESTful API(OpenAI / Azure / DeepSeek / 通义千问 / Ollama / vLLM 等)',
+        ],
+        note: 'BYOK 模式下对话直连你填的 endpoint,不经过 Mochi 服务器,我们不存储任何内容。',
+      },
+      {
+        id: 'wake',
+        icon: '🎙',
+        title: '四、唤醒并开始对话',
+        intro: '一切就绪后,试试你的第一句话:',
+        steps: [
+          '喊一声唤醒词(默认「Hi Mochi」),屏幕上的 Mochi 会有反应',
+          '听到 / 看到它进入聆听状态后,直接说出你的需求',
+          '例如:「现在几点」「帮我定个 8 点的闹钟」「导航到最近的咖啡店」',
+          '说完稍等,Mochi 会多轮推理后回答或动手执行',
+        ],
+      },
+      {
+        id: 'tools',
+        icon: '🧰',
+        title: '五、开启工具能力',
+        intro: 'Mochi 能接管手机做事,但所有工具默认全关,需要你亲手打勾授权。',
+        steps: [
+          '进入「设置 → 工具 / 客户端工具」',
+          '按需打开:闹钟计时器、日历、联系人 / 打电话、发短信、打开网址、内置百度地图、分享到微信 QQ、通知与触觉等',
+          '每开一项,Mochi 的大脑才能调用对应能力',
+          '不需要的能力保持关闭,更安全',
+        ],
+        note: '建议先只开你常用的几项,用熟了再逐步放开。',
+      },
+      {
+        id: 'clock',
+        icon: '🕐',
+        title: '六、桌面时钟模式',
+        intro: '把旧手机变成床头 / 办公桌时钟:',
+        steps: [
+          '横屏时向左滑,或竖屏时向下滑,Mochi 会让到一边,显示大号像素时钟 + 日历 + 天气',
+          '语音对话依旧在后台待命,喊一声又变回 AI 桌宠',
+          '插上电源,就是一台会聊天的智能时钟',
+        ],
+      },
+    ],
+    faq_title: '常见问题',
+    faq: [
+      { q: '装好后不响应唤醒词?', a: '检查麦克风权限是否授予,并在电池优化里把 Mochi 设为不受限制,避免被系统杀后台。' },
+      { q: '免费额度用完了怎么办?', a: '官方云每天 50 次免费对话用完会暂停;切换到 BYOK 填自己的 API Key 即可继续无限使用。' },
+      { q: 'BYOK 支持哪些模型?', a: '任何 OpenAI 风格的 RESTful API 都行,包括 OpenAI、Azure、Anthropic、DeepSeek、通义千问,以及 Ollama / vLLM / LM Studio 等本地部署。' },
+      { q: '我的对话数据安全吗?', a: 'BYOK 模式下对话直连你自己的 endpoint,不经过我们的服务器,我们不存储、看不到。' },
+      { q: '一定要用旧手机吗?', a: '不强制,但 Mochi 为 always-on 常驻设计,用一台闲置旧手机插电长期运行体验最好。' },
+    ],
+    updated: '最后更新:2026-06',
+  },
   footer: {
     links_title: '链接',
     community_title: '社区',
     legal_title: '法律',
     links: [
       { label: 'Mochi 能做什么', href: '#whatmochi' },
+      { label: '使用文档', href: 'docs/' },
+      { label: '下载 APK', href: '#download' },
       { label: '路线图', href: '#roadmap' },
-      { label: '隐私', href: '#privacy' },
     ],
     community: [
       { label: 'GitHub', href: 'https://github.com/gongpx20069/mochi-pet-web' },
@@ -216,7 +354,8 @@ const en: Strings = {
     features: 'What Mochi can do',
     byok: 'Custom Model',
     roadmap: 'Roadmap',
-    download: 'Download',
+    docs: 'Docs',
+    download: 'Download APK',
     github: 'GitHub',
     cta: 'Join the waitlist',
   },
@@ -293,6 +432,116 @@ const en: Strings = {
     success: '✓ Got it! We’ll email you first.',
     error: 'Submission failed. Please try again later.',
   },
+  download: {
+    eyebrow: '📦 Download straight from the site — no app store',
+    h2: 'Download the Mochi APK',
+    sub: 'We skip Google Play — the APK lives right here. Glance at the safety notes and install.',
+    ready_cta: '⬇️ Download APK',
+    notready_cta: 'Build in progress…',
+    notready_note: 'The build is still baking. Join the waitlist and we’ll ping you the moment it’s ready.',
+    meta_fallback: 'Android 8.0+ · direct download',
+    safety_title: 'Install tips',
+    safety: [
+      'After downloading, allow “Install unknown apps” in Settings → Security',
+      'Only download from this site or our official GitHub Releases',
+      'Once installed, open the Docs and run your first chat in 3 minutes',
+    ],
+    no_store: 'Why no store? Listing is costly and slow to review — direct downloads get you new versions faster.',
+  },
+  docs: {
+    meta_title: 'Mochi Docs · Getting started after install',
+    meta_desc: 'Just installed Mochi? Grant permissions, wake it up, connect your own model, and enable tools — get your first chat running in 3 minutes.',
+    back: '← Back to home',
+    eyebrow: '📖 Docs',
+    title: 'After install, here’s how to use Mochi',
+    intro: 'A full walkthrough from a fresh APK to a smooth daily setup. Follow along and you’ll be talking to Mochi in 3 minutes.',
+    toc_title: 'Contents',
+    sections: [
+      {
+        id: 'install',
+        icon: '📦',
+        title: '1 · Install the APK',
+        intro: 'Mochi ships directly from the website, not an app store.',
+        steps: [
+          'Download the .apk from the site’s Download section or our official GitHub Releases',
+          'First install will warn about “unknown sources” — allow “Install unknown apps” in Settings → Security',
+          'Open the downloaded APK and follow the prompts to install',
+          'For best results, run it on a spare old phone kept plugged in',
+        ],
+        note: 'Only download from this site or our official GitHub — never sideload an APK from an unknown source.',
+      },
+      {
+        id: 'permissions',
+        icon: '🔐',
+        title: '2 · First launch · Grant permissions',
+        intro: 'On first launch Mochi requests permissions as needed. Each maps to a feature and can be revoked anytime in system settings.',
+        steps: [
+          'Microphone: required for voice wake and chat',
+          'Display over other apps: lets the pet stay on your desktop',
+          'Notifications: reminders and schedule pushes',
+          'Set Mochi to “unrestricted” in battery optimization so the system won’t kill it (needed for always-on)',
+          'Calls / SMS / calendar / contacts are requested separately when you first use them',
+        ],
+      },
+      {
+        id: 'model',
+        icon: '🧠',
+        title: '3 · Pick a brain (account / custom model)',
+        intro: 'Mochi needs a “brain” (an LLM) to chat smartly. Choose one of three:',
+        steps: [
+          'Guest: play with the pet itself without signup, but cloud chat is unavailable',
+          'Email signup: use the official Mochi cloud — 50 free AI chats every day',
+          'BYOK (everyone): in Settings → Model, paste your own base URL + API key. Works with any OpenAI-style RESTful API (OpenAI / Azure / DeepSeek / Qwen / Ollama / vLLM, etc.)',
+        ],
+        note: 'In BYOK mode, chats go straight to your endpoint — never through Mochi’s servers, and we store nothing.',
+      },
+      {
+        id: 'wake',
+        icon: '🎙',
+        title: '4 · Wake it and start talking',
+        intro: 'Once set up, try your first sentence:',
+        steps: [
+          'Say the wake word (default “Hi Mochi”) and the on-screen Mochi reacts',
+          'When it enters listening state, just say what you need',
+          'e.g. “What time is it?”, “Set an alarm for 8”, “Navigate to the nearest café”',
+          'Pause a moment — Mochi reasons across turns, then answers or acts',
+        ],
+      },
+      {
+        id: 'tools',
+        icon: '🧰',
+        title: '5 · Enable tools',
+        intro: 'Mochi can take over your phone, but every tool is off by default and needs your explicit opt-in.',
+        steps: [
+          'Open Settings → Tools / Client tools',
+          'Turn on what you need: alarms & timers, calendar, contacts / calls, SMS, open URLs, built-in Baidu Maps, share to WeChat & QQ, notifications & haptics',
+          'Only after you enable a tool can Mochi’s brain use it',
+          'Keep what you don’t need switched off — it’s safer',
+        ],
+        note: 'Start with just a few you use often, then open up more as you get comfortable.',
+      },
+      {
+        id: 'clock',
+        icon: '🕐',
+        title: '6 · Desk clock mode',
+        intro: 'Turn the old phone into a nightstand / desk clock:',
+        steps: [
+          'Swipe left in landscape, or down in portrait — Mochi steps aside for a big pixel clock + calendar + weather',
+          'Voice chat stays on standby in the background; call it and the AI pet returns',
+          'Plug it in and you’ve got a smart clock that talks back',
+        ],
+      },
+    ],
+    faq_title: 'FAQ',
+    faq: [
+      { q: 'It doesn’t respond to the wake word?', a: 'Check that the microphone permission is granted and set Mochi to unrestricted in battery optimization so it isn’t killed in the background.' },
+      { q: 'What if I run out of free quota?', a: 'The official cloud’s 50 free daily chats pause when used up; switch to BYOK with your own API key to keep going unlimited.' },
+      { q: 'Which models does BYOK support?', a: 'Any OpenAI-style RESTful API — OpenAI, Azure, Anthropic, DeepSeek, Qwen, plus local setups like Ollama / vLLM / LM Studio.' },
+      { q: 'Is my chat data safe?', a: 'In BYOK mode, chats connect straight to your own endpoint, never touching our servers — we store nothing and can’t see it.' },
+      { q: 'Do I have to use an old phone?', a: 'Not required, but Mochi is built for always-on. A spare old phone kept plugged in gives the best experience.' },
+    ],
+    updated: 'Last updated: 2026-06',
+  },
   footer: {
     ...zh.footer,
     links_title: 'Links',
@@ -300,8 +549,9 @@ const en: Strings = {
     legal_title: 'Legal',
     links: [
       { label: 'What Mochi can do', href: '#whatmochi' },
+      { label: 'Docs', href: 'docs/' },
+      { label: 'Download APK', href: '#download' },
       { label: 'Roadmap', href: '#roadmap' },
-      { label: 'Privacy', href: '#privacy' },
     ],
     community: zh.footer.community.map((c) => ({ ...c, label: c.label === '反馈' ? 'Feedback' : c.label })),
     legal: [
@@ -323,7 +573,8 @@ const ja: Strings = {
     features: 'Mochi にできること',
     byok: 'カスタムモデル',
     roadmap: 'ロードマップ',
-    download: 'ダウンロード',
+    docs: '使い方ガイド',
+    download: 'APK をダウンロード',
     github: 'GitHub',
     cta: 'ウェイトリストに参加',
   },
@@ -400,6 +651,116 @@ const ja: Strings = {
     success: '✓ 受け取りました!優先でメールします',
     error: '送信に失敗しました。後でもう一度お試しください。',
   },
+  download: {
+    eyebrow: '📦 アプリストアではなく公式サイトから直接',
+    h2: 'Mochi APK をダウンロード',
+    sub: 'Google Play は使いません — APK はここに。安全のヒントを見てインストール。',
+    ready_cta: '⬇️ APK をダウンロード',
+    notready_cta: 'ビルド中…',
+    notready_note: 'ビルドはまだ準備中です。ウェイトリストに参加すれば、でき次第すぐお知らせします。',
+    meta_fallback: 'Android 8.0+ · 直接ダウンロード',
+    safety_title: 'インストールのヒント',
+    safety: [
+      'ダウンロード後、設定 → セキュリティで「提供元不明のアプリ」を許可',
+      'このサイトか公式 GitHub Releases からのみダウンロード',
+      'インストールしたら使い方ガイドを開き、3 分で最初の対話を',
+    ],
+    no_store: 'なぜストアに出さない?審査は高コストで遅い — 直接配布なら新版をより速くお届けできます。',
+  },
+  docs: {
+    meta_title: 'Mochi 使い方ガイド · インストール後の始め方',
+    meta_desc: 'Mochi を入れたら?権限付与・ウェイク対話・カスタムモデル接続・ツール有効化まで、3 分で最初の対話を。',
+    back: '← ホームに戻る',
+    eyebrow: '📖 使い方ガイド',
+    title: 'インストール後、Mochi を使いこなす',
+    intro: 'APK を入れてから快適に使うまでの全手順。沿って進めれば 3 分で最初の一言を話せます。',
+    toc_title: '目次',
+    sections: [
+      {
+        id: 'install',
+        icon: '📦',
+        title: '1 · APK をインストール',
+        intro: 'Mochi はアプリストアではなく公式サイトから直接配布します。',
+        steps: [
+          'サイトのダウンロード欄、または公式 GitHub Releases から .apk を入手',
+          '初回は「提供元不明」と警告 — 設定 → セキュリティで「提供元不明のアプリ」を許可',
+          'ダウンロードした APK を開き、指示に従ってインストール',
+          '使わない古いスマホを電源につないで常時稼働させると最適',
+        ],
+        note: 'このサイトか公式 GitHub からのみ入手し、出所不明の APK は入れないでください。',
+      },
+      {
+        id: 'permissions',
+        icon: '🔐',
+        title: '2 · 初回起動 · 権限付与',
+        intro: '初回起動時、必要に応じて権限を求めます。各機能のためのもので、いつでもシステム設定で無効化できます。',
+        steps: [
+          'マイク:音声ウェイクと対話に必須',
+          '他のアプリの上に表示:ペットをデスクトップに常駐',
+          '通知:リマインドや予定のプッシュ',
+          'バッテリー最適化で Mochi を「制限なし」に設定し、バックグラウンドで止められないように(always-on に必要)',
+          '電話 / SMS / カレンダー / 連絡先は、初めて使うときに個別に確認します',
+        ],
+      },
+      {
+        id: 'model',
+        icon: '🧠',
+        title: '3 · 頭脳を選ぶ(アカウント / カスタムモデル)',
+        intro: 'Mochi には賢く話すための「頭脳」(LLM)が必要です。3 つから選択:',
+        steps: [
+          'ゲスト:登録なしでペット本体は遊べるが、クラウド対話は不可',
+          'メール登録:公式 Mochi クラウドを使用、毎日 50 回の AI 対話が無料',
+          'BYOK(全ユーザー可):設定 → モデルで自分の base URL + API Key を貼り付け。OpenAI 形式の RESTful API なら何でも対応(OpenAI / Azure / DeepSeek / 通義千問 / Ollama / vLLM など)',
+        ],
+        note: 'BYOK では対話はあなたの endpoint に直接接続し、Mochi のサーバーを通りません。何も保存しません。',
+      },
+      {
+        id: 'wake',
+        icon: '🎙',
+        title: '4 · 起動して対話を始める',
+        intro: '準備ができたら、最初の一言を:',
+        steps: [
+          'ウェイクワード(既定は「Hi Mochi」)を呼ぶと、画面の Mochi が反応',
+          'リッスン状態になったら、そのまま要望を話す',
+          '例:「今何時?」「8 時にアラームを設定して」「最寄りのカフェへナビして」',
+          '少し待つと、Mochi がマルチターン推論の後に回答・実行します',
+        ],
+      },
+      {
+        id: 'tools',
+        icon: '🧰',
+        title: '5 · ツールを有効化',
+        intro: 'Mochi はスマホを操作できますが、全ツールは初期状態でオフ。自分で許可が必要です。',
+        steps: [
+          '設定 → ツール / クライアントツールを開く',
+          '必要なものをオン:アラーム & タイマー、カレンダー、連絡先 / 通話、SMS、URL を開く、Baidu マップ内蔵、WeChat & QQ へ共有、通知 & 触覚',
+          '有効化して初めて、Mochi の頭脳が対応機能を使えます',
+          '不要なものはオフのままに — その方が安全',
+        ],
+        note: 'まずよく使う数個だけオンにし、慣れたら広げるのがおすすめ。',
+      },
+      {
+        id: 'clock',
+        icon: '🕐',
+        title: '6 · 置き時計モード',
+        intro: '古いスマホをベッドサイド / 机の時計に:',
+        steps: [
+          '横向きで左へ、縦向きで下へスワイプ — Mochi が脇によけ、大きなピクセル時計 + カレンダー + 天気を表示',
+          '音声対話はバックグラウンドで待機。呼べば AI ペットに戻る',
+          '電源につなげば、おしゃべりするスマート時計に',
+        ],
+      },
+    ],
+    faq_title: 'よくある質問',
+    faq: [
+      { q: 'ウェイクワードに反応しない?', a: 'マイク権限を確認し、バッテリー最適化で Mochi を制限なしに設定して、バックグラウンドで止められないようにしてください。' },
+      { q: '無料枠を使い切ったら?', a: '公式クラウドの毎日 50 回の無料対話は使い切ると一時停止します。BYOK に切り替えて自分の API Key を使えば無制限で継続できます。' },
+      { q: 'BYOK はどのモデルに対応?', a: 'OpenAI 形式の RESTful API なら何でも — OpenAI、Azure、Anthropic、DeepSeek、通義千問、さらに Ollama / vLLM / LM Studio などのローカル構成も。' },
+      { q: '会話データは安全?', a: 'BYOK では対話は自分の endpoint に直接接続し、私たちのサーバーを通りません。保存もせず、見ることもできません。' },
+      { q: '古いスマホは必須?', a: '必須ではありませんが、Mochi は always-on 設計。使わない古いスマホを電源につないで常時稼働させるのが最適です。' },
+    ],
+    updated: '最終更新:2026-06',
+  },
   footer: {
     ...zh.footer,
     links_title: 'リンク',
@@ -407,8 +768,9 @@ const ja: Strings = {
     legal_title: '法的事項',
     links: [
       { label: 'Mochi にできること', href: '#whatmochi' },
+      { label: '使い方ガイド', href: 'docs/' },
+      { label: 'APK をダウンロード', href: '#download' },
       { label: 'ロードマップ', href: '#roadmap' },
-      { label: 'プライバシー', href: '#privacy' },
     ],
     community: zh.footer.community.map((c) => ({ ...c, label: c.label === '反馈' ? 'フィードバック' : c.label })),
     legal: [

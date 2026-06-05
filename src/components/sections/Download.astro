@@ -1,0 +1,46 @@
+---
+import { t, type Lang } from '../../i18n/ui';
+import { APK_URL, APK_META, APK_READY } from '../../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL;
+const docsHref = `${base}${lang === 'zh' ? '' : lang + '/'}docs/`.replace(/\/+/g, '/');
+const meta = APK_META || s.download.meta_fallback;
+---
+<section id="download" class="section">
+  <div class="rounded-3xl border border-emerald-400/30 bg-gradient-to-br from-emerald-950/40 via-[#14132a]/80 to-[#160a1d]/80 p-8 md:p-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="eyebrow !text-emerald-200/90">{s.download.eyebrow}</span>
+      <h2 class="h2 mt-2"><span class="gradient-text">{s.download.h2}</span></h2>
+      <p class="mt-4 text-mochi-muted">{s.download.sub}</p>
+
+      <div class="mt-8 flex flex-col items-center gap-3">
+        {APK_READY ? (
+          <a href={APK_URL} class="btn-primary text-base !px-8" rel="noopener">{s.download.ready_cta}</a>
+        ) : (
+          <button type="button" disabled class="btn-primary text-base !px-8 opacity-60 cursor-not-allowed">{s.download.notready_cta}</button>
+        )}
+        <p class="text-xs font-mono text-mochi-muted">{meta}</p>
+        {!APK_READY && (
+          <p class="text-sm text-mochi-muted max-w-md">
+            {s.download.notready_note} <a href="#waitlist" class="text-mochi-pink hover:underline">{s.nav.cta} →</a>
+          </p>
+        )}
+      </div>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+      <div class="card !p-5">
+        <h3 class="text-sm font-semibold flex items-center gap-2">🛡 {s.download.safety_title}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-mochi-muted list-disc list-inside">
+          {s.download.safety.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="card !p-5 flex flex-col justify-between">
+        <p class="text-sm text-mochi-muted leading-relaxed">{s.download.no_store}</p>
+        <a href={docsHref} class="btn-secondary mt-4 self-start text-sm">📖 {s.nav.docs} →</a>
+      </div>
+    </div>
+  </div>
+</section>

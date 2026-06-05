@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { t, type Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL;
+const homeHref = `${base}${lang === 'zh' ? '' : lang + '/'}`.replace(/\/+/g, '/');
+const d = s.docs;
+---
+<Layout lang={lang} title={d.meta_title} description={d.meta_desc}>
+  <Nav lang={lang} />
+  <main class="flex-1">
+    <section class="section pt-12 md:pt-16">
+      <a href={homeHref} class="text-sm text-mochi-muted hover:text-mochi-text transition-colors">{d.back}</a>
+      <span class="eyebrow mt-4 block">{d.eyebrow}</span>
+      <h1 class="mt-2 text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+        <span class="gradient-text">{d.title}</span>
+      </h1>
+      <p class="mt-5 text-lg text-mochi-muted max-w-2xl">{d.intro}</p>
+
+      <!-- TOC -->
+      <nav class="mt-8 card !p-5 max-w-2xl">
+        <h2 class="text-xs uppercase tracking-widest text-mochi-purple/90 font-semibold">{d.toc_title}</h2>
+        <ol class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+          {d.sections.map((sec) => (
+            <li>
+              <a href={`#${sec.id}`} class="text-mochi-muted hover:text-mochi-text transition-colors">
+                {sec.icon} {sec.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <!-- Sections -->
+      <div class="mt-12 space-y-12 max-w-2xl">
+        {d.sections.map((sec) => (
+          <div id={sec.id} class="scroll-mt-24">
+            <h2 class="text-xl md:text-2xl font-bold tracking-tight flex items-center gap-2">
+              <span>{sec.icon}</span><span>{sec.title}</span>
+            </h2>
+            {sec.intro && <p class="mt-3 text-mochi-muted">{sec.intro}</p>}
+            {sec.steps && (
+              <ol class="mt-4 space-y-2">
+                {sec.steps.map((step, i) => (
+                  <li class="flex gap-3 text-mochi-text/90">
+                    <span class="shrink-0 w-6 h-6 rounded-full bg-mochi-purple/20 text-mochi-purple text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
+                    <span class="text-[15px] leading-relaxed">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
+            {sec.note && (
+              <p class="mt-4 rounded-xl border border-amber-400/25 bg-amber-400/5 px-4 py-3 text-sm text-amber-200/90">💡 {sec.note}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <!-- FAQ -->
+      <div class="mt-16 max-w-2xl">
+        <h2 class="text-xl md:text-2xl font-bold tracking-tight">{d.faq_title}</h2>
+        <div class="mt-6 space-y-3">
+          {d.faq.map((item) => (
+            <details class="card !p-5 group">
+              <summary class="cursor-pointer font-semibold text-[15px] list-none flex items-center justify-between gap-3">
+                <span>{item.q}</span>
+                <span class="text-mochi-muted group-open:rotate-45 transition-transform text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm text-mochi-muted leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      <p class="mt-12 text-xs text-mochi-muted">{d.updated}</p>
+    </section>
+  </main>
+  <Footer lang={lang} />
+</Layout>
