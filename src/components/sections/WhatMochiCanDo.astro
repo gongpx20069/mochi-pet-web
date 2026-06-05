@@ -22,13 +22,16 @@ const s = t(lang);
     ))}
   </div>
 
-  <!-- Tier B: small action cards -->
+  <!-- Tier B: brain capability cards (now with body copy) -->
   <h3 class="mt-16 text-xs uppercase tracking-widest text-mochi-purple/90 font-semibold text-center">{s.whatmochi.tier_b_label}</h3>
-  <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+  <div class="mt-6 grid sm:grid-cols-2 gap-4">
     {s.whatmochi.tier_b.map((it) => (
-      <div class="card flex flex-col items-center text-center !p-4 hover:border-mochi-purple/40 transition-colors">
-        <div class="text-2xl">{it.icon}</div>
-        <p class="mt-2 text-xs md:text-sm">{it.title}</p>
+      <div class="card !p-5 hover:border-mochi-purple/40 transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="text-2xl">{it.icon}</div>
+          <h4 class="text-base font-bold tracking-tight">{it.title}</h4>
+        </div>
+        <p class="mt-2 text-sm text-mochi-muted leading-relaxed">{it.body}</p>
       </div>
     ))}
   </div>

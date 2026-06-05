@@ -31,7 +31,7 @@ type Strings = {
     tier_a_label: string;
     tier_a: { icon: string; title: string; body: string }[];
     tier_b_label: string;
-    tier_b: { icon: string; title: string }[];
+    tier_b: { icon: string; title: string; body: string }[];
     foot: string;
   };
   howyouuse: {
@@ -52,6 +52,7 @@ type Strings = {
     h2: string;
     body: string;
     tag: string;
+    more: { icon: string; title: string; body: string }[];
   };
   roadmap: {
     h2: string;
@@ -103,26 +104,22 @@ const zh: Strings = {
   },
   whatmochi: {
     h2: '🌟 Mochi 能为你做什么',
-    sub: '一个有表情的语音伙伴 — 不只是工具,而是一直陪在桌面、床头、办公桌上的小宠物。',
-    tier_a_label: '核心能力',
+    sub: '一只住在桌面上的 AI 桌宠 —— 会卖萌、会聊天,还会帮你动手干活。',
+    tier_a_label: '核心体验',
     tier_a: [
-      { icon: '🎙', title: '随叫随到', body: '不用解锁,不用打开 App。喊一声 Hi Mochi 就来 · 本地唤醒,飞行模式也响应。' },
-      { icon: '🔋', title: '低功耗常驻', body: '优化的待机功耗,可以挂在桌面一整天不掉电太多 · 真正的 always-on 而不是噱头。' },
-      { icon: '🕐', title: '秒变桌面时钟', body: '旧手机横屏一放,Mochi 让到一边,出现一个大号像素风时钟 · 平时是床头 / 办公桌时钟,喊一声又变回 AI 宠物。' },
-      { icon: '🌙', title: '躺床上也能用', body: '睡前不想动手?让 Mochi 调闹钟、设白噪音、放个故事 · 黑暗里语音就够了。' },
-      { icon: '🎨', title: '有表情的陪伴', body: 'EmotionFace 表情系统 · 喜怒哀乐都画在脸上 · 不是冰冷工具,是有性格的伙伴。' },
+      { icon: '🐱', title: '会卖萌的桌宠', body: '有表情、有性格的像素小宠物,陪在桌面、床头、办公桌 · 不是冰冷工具,是会跟你互动的伙伴。' },
+      { icon: '🎙', title: '喊一声就来', body: '不用解锁、不用打开 App,喊一声 Hi Mochi 就响应 · 本地语音唤醒,低功耗常驻一整天。' },
+      { icon: '🕐', title: '桌面日历时钟', body: '旧手机横屏一放,Mochi 让到一边,变成大号像素时钟 + 日历 + 天气 · 喊一声又变回 AI 桌宠。' },
+      { icon: '✅', title: '智能任务看板', body: '随口一句「提醒我下午三点开会」,自动整理成待办上墙 · 你的事它都帮你记着。' },
     ],
-    tier_b_label: '它能帮你做的事',
+    tier_b_label: '一颗会动手的聪明大脑',
     tier_b: [
-      { icon: '⏰', title: '设闹钟 / 计时器' },
-      { icon: '📅', title: '安排日历' },
-      { icon: '👥', title: '找联系人 / 打电话' },
-      { icon: '🔗', title: '打开网址' },
-      { icon: '🗺', title: '打开地图' },
-      { icon: '💬', title: '分享内容到微信、QQ、邮件等' },
-      { icon: '🔔', title: '通知 + 触觉提醒(默认开)' },
+      { icon: '🧠', title: '类 OpenClaw 智能系统', body: '一个会自己调用工具的智能体大脑,听懂你要什么,自己分步骤搞定。' },
+      { icon: '🔁', title: '多轮推理超强智能', body: '复杂需求也能想得深、拆得清,多轮推理一步步把事办对。' },
+      { icon: '📱', title: '接管你的手机', body: '帮你打电话、发短信、分享到微信 QQ,动嘴不动手。' },
+      { icon: '🗺', title: '内置百度地图', body: '专属百度地图 subagent,一句话查地点、规划路线、直接导航。' },
     ],
-    foot: '默认全关。每个能力都要你主动打勾才会暴露给 Mochi 大脑。',
+    foot: '所有能力默认全关,每一项都要你亲手打勾,才会开放给 Mochi。',
   },
   howyouuse: {
     h2: '三种使用方式',
@@ -146,23 +143,28 @@ const zh: Strings = {
     privacy: '你的对话不经过我们的服务器。我们不存,看不到,也不能要。',
   },
   sleep: {
-    eyebrow: '🏠 下一站',
-    h2: '智能家居中控',
-    body: '让旧手机变成你家的语音中控台 · 一句话开关灯、调空调、控窗帘 · Mochi 坐镇桌面,成为全屋智能的入口。',
+    eyebrow: '🚧 下一站',
+    h2: '让旧手机继续进化',
+    body: 'Mochi 不止于桌面。下一步,它会成为你家的智能入口,还能戴上眼镜跟你出门。',
     tag: 'Coming Next 🚧',
+    more: [
+      { icon: '🔐', title: '微信 / 谷歌登录', body: '一键登录,告别邮箱密码 · 你的 Mochi 跟着账号走。' },
+      { icon: '🏠', title: 'Matter 智能家居中控', body: '一句话开关灯、调空调、控窗帘 · 旧手机坐镇桌面,成为全屋智能的入口。' },
+      { icon: '👓', title: '超低价 AR 眼镜', body: '接入 200 元以内的 AR 眼镜 · 让 Mochi 戴在眼前,陪你走出书桌。' },
+    ],
   },
   roadmap: {
     h2: '路线图',
     cols: [
       {
         tag: 'Now ✅',
-        title: 'Android 内测',
-        items: ['像素 Mochi', '唤醒词', '语音对话', 'BYOK', '邮箱注册', '中英日', '客户端工具'],
+        title: '现在就能用',
+        items: ['桌宠互动', '语音唤醒对话', '桌面日历时钟', '智能任务看板', '类 OpenClaw 智能系统', '接管短信 / 电话 / 微信', '内置百度地图', '多轮推理大脑'],
       },
       {
         tag: 'Next 🚧',
         title: '规划中',
-        items: ['🏠 智能家居中控(主打新功能)', 'iOS', '微信登录(Phase 2 主推)', '更多表情包'],
+        items: ['微信 / 谷歌登录', '🏠 Matter 智能家居中控', '👓 超低价 AR 眼镜接入(200 元内)'],
       },
       {
         tag: 'Later 🔮',
@@ -228,26 +230,22 @@ const en: Strings = {
   },
   whatmochi: {
     h2: '🌟 What Mochi can do for you',
-    sub: 'An expressive voice companion — not just a tool, but a tiny pet that lives on your desk, your nightstand, your workspace.',
-    tier_a_label: 'Core capabilities',
+    sub: 'An AI desktop pet that lives on your screen — it’s cute, it chats, and it actually gets things done for you.',
+    tier_a_label: 'Core experience',
     tier_a: [
-      { icon: '🎙', title: 'Always within earshot', body: 'No unlock, no app launch. Say "Hi Mochi" and it’s there · On-device wake word, works in airplane mode.' },
-      { icon: '🔋', title: 'Low-power, always-on', body: 'Optimized standby — leave it on your desk all day without draining the battery · Real always-on, not a gimmick.' },
-      { icon: '🕐', title: 'A desk clock in a flick', body: 'Lay the old phone in landscape and Mochi steps aside for a big pixel-style clock · A nightstand / desk clock by default, an AI pet the moment you call it.' },
-      { icon: '🌙', title: 'Use it from bed', body: 'Don’t want to touch the phone before sleep? Ask Mochi to set an alarm, play white noise, tell a story.' },
-      { icon: '🎨', title: 'A face that has feelings', body: 'EmotionFace expression system · Joy, calm, sleepy — all written on its face. A companion with personality.' },
+      { icon: '🐱', title: 'An expressive desk pet', body: 'A pixel pet with feelings and personality, living on your desk, nightstand, workspace · not a cold tool, but a companion that interacts with you.' },
+      { icon: '🎙', title: 'Just call its name', body: 'No unlock, no app launch — say "Hi Mochi" and it’s there · on-device wake word, low-power and always-on all day.' },
+      { icon: '🕐', title: 'Desk clock & calendar', body: 'Lay the old phone in landscape and Mochi steps aside into a big pixel clock + calendar + weather · call it and the AI pet is back.' },
+      { icon: '✅', title: 'Smart task board', body: 'Just say "remind me about the 3pm meeting" and it lands on your board automatically · Mochi remembers everything for you.' },
     ],
-    tier_b_label: 'Things it can do for you',
+    tier_b_label: 'A clever brain that takes action',
     tier_b: [
-      { icon: '⏰', title: 'Set alarms & timers' },
-      { icon: '📅', title: 'Manage your calendar' },
-      { icon: '👥', title: 'Find contacts & call' },
-      { icon: '🔗', title: 'Open links' },
-      { icon: '🗺', title: 'Open maps' },
-      { icon: '💬', title: 'Share to WeChat, QQ, email & more' },
-      { icon: '🔔', title: 'Notifications + haptics (on by default)' },
+      { icon: '🧠', title: 'OpenClaw-style AI system', body: 'An agentic brain that calls tools on its own — understands what you want and works through the steps to do it.' },
+      { icon: '🔁', title: 'Powerful multi-turn reasoning', body: 'Even complex requests get thought through and broken down — multi-turn reasoning gets it right step by step.' },
+      { icon: '📱', title: 'Takes over your phone', body: 'Makes calls, sends texts, shares to WeChat & QQ — hands-free, all by voice.' },
+      { icon: '🗺', title: 'Built-in Baidu Maps', body: 'A dedicated Baidu Maps subagent — find a place, plan a route, start navigation, all in one sentence.' },
     ],
-    foot: 'All off by default. Every capability requires an explicit toggle before being exposed to Mochi’s brain.',
+    foot: 'Everything is off by default. Each capability requires your explicit toggle before Mochi can use it.',
   },
   howyouuse: {
     h2: 'Three ways to use it',
@@ -265,16 +263,21 @@ const en: Strings = {
     privacy: 'Your conversations never touch our servers. We don’t store them, see them, or have any way to ask for them.',
   },
   sleep: {
-    eyebrow: '🏠 Coming next',
-    h2: 'Smart-home control hub',
-    body: 'Turn the old phone into your home’s voice control hub · toggle lights, AC, curtains with a sentence · Mochi sits on your desk as the gateway to your whole smart home.',
+    eyebrow: '🚧 Coming next',
+    h2: 'The old phone keeps evolving',
+    body: 'Mochi doesn’t stop at your desk. Next, it becomes the gateway to your smart home — and even rides along on glasses when you head out.',
     tag: 'Coming Next 🚧',
+    more: [
+      { icon: '🔐', title: 'WeChat / Google login', body: 'One-tap sign-in, no more email & password · your Mochi follows your account.' },
+      { icon: '🏠', title: 'Matter smart-home hub', body: 'Toggle lights, AC, curtains with a sentence · the old phone on your desk becomes the gateway to your whole smart home.' },
+      { icon: '👓', title: 'Ultra-cheap AR glasses', body: 'Connect AR glasses under ¥200 · put Mochi right in front of your eyes and take it beyond the desk.' },
+    ],
   },
   roadmap: {
     h2: 'Roadmap',
     cols: [
-      { tag: 'Now ✅', title: 'Android beta', items: ['Pixel Mochi', 'Wake word', 'Voice chat', 'BYOK', 'Email signup', 'zh / en / ja', 'Client tools'] },
-      { tag: 'Next 🚧', title: 'Planned', items: ['🏠 Smart-home control hub (flagship next feature)', 'iOS', 'WeChat login (Phase 2 push)', 'More expression packs'] },
+      { tag: 'Now ✅', title: 'Available now', items: ['Desk-pet interaction', 'Voice wake & chat', 'Desk clock & calendar', 'Smart task board', 'OpenClaw-style AI system', 'Texts / calls / WeChat', 'Built-in Baidu Maps', 'Multi-turn reasoning brain'] },
+      { tag: 'Next 🚧', title: 'Planned', items: ['WeChat / Google login', '🏠 Matter smart-home hub', '👓 Ultra-cheap AR glasses (under ¥200)'] },
       { tag: 'Later 🔮', title: 'Long term', items: ['Study companion mode', 'More platforms, more model adapters'] },
     ],
   },
@@ -334,26 +337,22 @@ const ja: Strings = {
   },
   whatmochi: {
     h2: '🌟 Mochi にできること',
-    sub: '表情のある音声コンパニオン — 道具ではなく、机の上やベッドサイドに住む小さなペット。',
-    tier_a_label: 'コア機能',
+    sub: '画面に住む AI デスクトップペット — 可愛くて、おしゃべりして、ちゃんと用事もこなす。',
+    tier_a_label: 'コア体験',
     tier_a: [
-      { icon: '🎙', title: '呼べばすぐ来る', body: 'ロック解除もアプリ起動も不要。「Hi Mochi」と言うだけ · オンデバイス起動語、機内モードでも応答。' },
-      { icon: '🔋', title: '低消費電力で常時待機', body: '最適化された待機電力 · 一日机の上に置いてもバッテリーが大きく減らない。本物の always-on。' },
-      { icon: '🕐', title: 'すぐに置き時計に', body: '古いスマホを横向きに置くと、Mochi が脇によけて大きなピクセル時計に · 普段はベッドサイド / 机の置き時計、呼べば AI ペットに戻る。' },
-      { icon: '🌙', title: 'ベッドからでも使える', body: '寝る前に手を動かしたくない?Mochi にアラーム・ホワイトノイズ・物語を頼もう。' },
-      { icon: '🎨', title: '表情のある相棒', body: 'EmotionFace 表情システム · 喜怒哀楽が顔に出る · 冷たい道具ではなく、性格のあるペット。' },
+      { icon: '🐱', title: '表情豊かなデスクペット', body: '感情と個性のあるピクセルペット · 机・ベッドサイド・デスクに寄り添う、冷たい道具ではなく一緒に過ごす相棒。' },
+      { icon: '🎙', title: '呼べばすぐ来る', body: 'ロック解除もアプリ起動も不要 ·「Hi Mochi」と言うだけ · オンデバイス起動語、低消費電力で一日中待機。' },
+      { icon: '🕐', title: '置き時計とカレンダー', body: '古いスマホを横向きに置くと、Mochi が脇によけて大きなピクセル時計 + カレンダー + 天気に · 呼べば AI ペットに戻る。' },
+      { icon: '✅', title: 'スマートタスクボード', body: '「15 時の会議をリマインドして」と一言で、自動的にボードに整理 · あなたの予定を全部覚えておく。' },
     ],
-    tier_b_label: 'やってくれること',
+    tier_b_label: '行動できる賢い頭脳',
     tier_b: [
-      { icon: '⏰', title: 'アラーム / タイマー' },
-      { icon: '📅', title: 'カレンダー管理' },
-      { icon: '👥', title: '連絡先 / 通話' },
-      { icon: '🔗', title: 'URL を開く' },
-      { icon: '🗺', title: '地図を開く' },
-      { icon: '💬', title: 'WeChat、QQ、メールなどに共有' },
-      { icon: '🔔', title: '通知 + 触覚フィードバック(初期 ON)' },
+      { icon: '🧠', title: 'OpenClaw 風の知能システム', body: '自らツールを呼び出すエージェント頭脳 · あなたの意図を理解し、手順を踏んで実行する。' },
+      { icon: '🔁', title: '強力なマルチターン推論', body: '複雑な要望も深く考え、分解 · マルチターン推論で一歩ずつ正しくこなす。' },
+      { icon: '📱', title: 'スマホを操作', body: '電話・SMS・WeChat や QQ への共有 · 手を使わず声だけで。' },
+      { icon: '🗺', title: 'Baidu マップ内蔵', body: '専用の Baidu マップ subagent · 一言で場所検索・経路案内・ナビ開始。' },
     ],
-    foot: '初期状態は全てオフ。各機能は自分でチェックを入れて初めて Mochi の頭脳に公開されます。',
+    foot: '初期状態は全てオフ。各機能は自分でチェックを入れて初めて Mochi が使えます。',
   },
   howyouuse: {
     h2: '3 つの使い方',
@@ -371,16 +370,21 @@ const ja: Strings = {
     privacy: '会話は私たちのサーバーを通りません。保存しないし、見られないし、要求もできません。',
   },
   sleep: {
-    eyebrow: '🏠 次の一手',
-    h2: 'スマートホーム コントロールハブ',
-    body: '古いスマホを家の音声コントロールハブに · 一言で照明・エアコン・カーテンを操作 · Mochi が机の上から、全部屋スマート化の入口になる。',
+    eyebrow: '🚧 次の一手',
+    h2: '古いスマホはさらに進化する',
+    body: 'Mochi は机の上だけでは終わらない。次はスマートホームの入口になり、メガネに乗って外にも連れ出せる。',
     tag: 'Coming Next 🚧',
+    more: [
+      { icon: '🔐', title: 'WeChat / Google ログイン', body: 'ワンタップでサインイン、メール & パスワード不要 · あなたの Mochi はアカウントと共に。' },
+      { icon: '🏠', title: 'Matter スマートホームハブ', body: '一言で照明・エアコン・カーテンを操作 · 机の上の古いスマホが全部屋スマート化の入口に。' },
+      { icon: '👓', title: '超低価格 AR グラス', body: '¥200 以内の AR グラスに接続 · Mochi を目の前に、机を飛び出して一緒に。' },
+    ],
   },
   roadmap: {
     h2: 'ロードマップ',
     cols: [
-      { tag: 'Now ✅', title: 'Android ベータ', items: ['ピクセル Mochi', '起動語', '音声対話', 'BYOK', 'メール登録', '中英日', 'クライアントツール'] },
-      { tag: 'Next 🚧', title: '計画中', items: ['🏠 スマートホーム コントロールハブ(目玉新機能)', 'iOS', 'WeChat ログイン(Phase 2 主軸)', '表情パック追加'] },
+      { tag: 'Now ✅', title: '今すぐ使える', items: ['デスクペット', '音声ウェイク & 対話', '置き時計 & カレンダー', 'スマートタスクボード', 'OpenClaw 風知能システム', 'SMS / 通話 / WeChat', 'Baidu マップ内蔵', 'マルチターン推論の頭脳'] },
+      { tag: 'Next 🚧', title: '計画中', items: ['WeChat / Google ログイン', '🏠 Matter スマートホームハブ', '👓 超低価格 AR グラス(¥200 以内)'] },
       { tag: 'Later 🔮', title: '将来', items: ['学習コンパニオンモード', 'より多くのプラットフォーム・モデル対応'] },
     ],
   },
