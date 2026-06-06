@@ -59,13 +59,14 @@ type Strings = {
     h2: string;
     cols: { tag: string; title: string; items: string[] }[];
   };
-  waitlist: {
+  feedback: {
     h2: string;
-    perks: string[];
-    email_label: string;
-    email_placeholder: string;
+    sub: string;
     msg_label: string;
     msg_placeholder: string;
+    email_label: string;
+    email_placeholder: string;
+    email_hint: string;
     submit: string;
     success: string;
     error: string;
@@ -124,14 +125,14 @@ const zh: Strings = {
     docs: '使用文档',
     download: '下载 APK',
     github: 'GitHub',
-    cta: '加入等候名单',
+    cta: '⬇️ 下载',
   },
   hero: {
     eyebrow: '🚧 Android 内测进行中 · 旧手机改造',
     h1: '让闲置旧手机,变成 AI 桌面宠物',
     subtitle: '把抽屉里的旧手机改造成一只 AI 桌面宠物 · 低功耗、随叫随到的语音伴侣 · 像超轻量级 OpenClaw 一样轻,像宠物一样懂你',
     free_badge: '✨ 每天 30 次官方 AI 对话,完全免费',
-    cta_primary: '加入等候名单',
+    cta_primary: '⬇️ 立即下载',
     cta_secondary: '了解自定义模型 (BYOK)',
   },
   whatmochi: {
@@ -205,15 +206,16 @@ const zh: Strings = {
       },
     ],
   },
-  waitlist: {
-    h2: '加入等候名单,优先拿到内测包',
-    perks: ['🥚 优先内测', '💬 反馈影响产品', '✨ 永久铭刻早期用户标记'],
-    email_label: '邮箱',
+  feedback: {
+    h2: '用着怎么样?告诉我们一句',
+    sub: '内测期间,你的每一条反馈都直接影响 Mochi 的下一步。遇到 bug、想要的功能、吐槽都欢迎。',
+    msg_label: '你的反馈',
+    msg_placeholder: '我希望 Mochi 能... / 我遇到了...',
+    email_label: '邮箱(可选,方便我们回复你)',
     email_placeholder: 'you@example.com',
-    msg_label: '一句话告诉我们你期待什么(可选)',
-    msg_placeholder: '我希望 Mochi 能...',
-    submit: '加入等候名单',
-    success: '✓ 已收到!我们会优先邮件你',
+    email_hint: '留空也能提交,留了我们才好回信。',
+    submit: '提交反馈',
+    success: '✓ 已收到,谢谢你的反馈!',
     error: '提交失败,请稍后再试或直接发邮件给我们。',
   },
   download: {
@@ -222,7 +224,7 @@ const zh: Strings = {
     sub: '我们不走 Google Play —— APK 直接放官网,扫一眼安全提示就能装。',
     ready_cta: '⬇️ 下载 APK',
     notready_cta: '安装包打包中…',
-    notready_note: '安装包还在打包,加入等候名单,做好我们第一时间通知你。',
+    notready_note: '安装包还在打包,有问题或想要的功能,欢迎到下方给我们留反馈。',
     meta_fallback: 'Android 8.0+ · 国内可直连下载',
     safety_title: '安装小贴士',
     safety: [
@@ -386,14 +388,14 @@ const en: Strings = {
     docs: 'Docs',
     download: 'Download APK',
     github: 'GitHub',
-    cta: 'Join the waitlist',
+    cta: '⬇️ Download',
   },
   hero: {
     eyebrow: '🚧 Android closed beta · Repurpose an old phone',
     h1: 'Turn your old phone into an AI desktop pet',
     subtitle: 'Repurpose that spare phone in your drawer into an AI desktop pet · low-power, always-listening voice companion · as light as an ultra-lightweight OpenClaw, as warm as a pet.',
     free_badge: '✨ 30 free official AI chats every day — completely free',
-    cta_primary: 'Join the waitlist',
+    cta_primary: '⬇️ Download now',
     cta_secondary: 'Bring your own model (BYOK)',
   },
   whatmochi: {
@@ -449,16 +451,17 @@ const en: Strings = {
       { tag: 'Later 🔮', title: 'Long term', items: ['Study companion mode', 'More platforms, more model adapters'] },
     ],
   },
-  waitlist: {
-    ...zh.waitlist,
-    h2: 'Join the waitlist for priority beta access',
-    perks: ['🥚 Priority beta', '💬 Shape the product', '✨ Permanent early-user badge'],
-    email_label: 'Email',
+  feedback: {
+    ...zh.feedback,
+    h2: 'How’s it going? Send us a line',
+    sub: 'During the beta, every piece of feedback shapes what Mochi does next. Bugs, wishes, gripes — all welcome.',
+    msg_label: 'Your feedback',
+    msg_placeholder: 'I’d love it if Mochi could... / I ran into...',
+    email_label: 'Email (optional, so we can reply)',
     email_placeholder: 'you@example.com',
-    msg_label: 'Tell us what you’re hoping for (optional)',
-    msg_placeholder: 'I’d love it if Mochi could...',
-    submit: 'Join the waitlist',
-    success: '✓ Got it! We’ll email you first.',
+    email_hint: 'Leave it blank to submit anonymously, or add it so we can write back.',
+    submit: 'Send feedback',
+    success: '✓ Got it — thanks for the feedback!',
     error: 'Submission failed. Please try again later.',
   },
   download: {
@@ -467,7 +470,7 @@ const en: Strings = {
     sub: 'We skip Google Play — the APK lives right here. Glance at the safety notes and install.',
     ready_cta: '⬇️ Download APK',
     notready_cta: 'Build in progress…',
-    notready_note: 'The build is still baking. Join the waitlist and we’ll ping you the moment it’s ready.',
+    notready_note: 'The build is still baking. Got a question or a wish? Drop us a line in the feedback section below.',
     meta_fallback: 'Android 8.0+ · direct download',
     safety_title: 'Install tips',
     safety: [
@@ -629,14 +632,14 @@ const ja: Strings = {
     docs: '使い方ガイド',
     download: 'APK をダウンロード',
     github: 'GitHub',
-    cta: 'ウェイトリストに参加',
+    cta: '⬇️ ダウンロード',
   },
   hero: {
     eyebrow: '🚧 Android クローズドベータ中 · 古いスマホを再活用',
     h1: '使わない古いスマホを、AI デスクトップペットに',
     subtitle: '引き出しに眠る古いスマホを AI デスクトップペットに再活用 · 低消費電力で常時待機する音声コンパニオン · 超軽量な OpenClaw のように軽く、ペットのように寄り添う。',
     free_badge: '✨ 毎日 30 回の公式 AI 対話が完全無料',
-    cta_primary: 'ウェイトリストに参加',
+    cta_primary: '⬇️ 今すぐダウンロード',
     cta_secondary: 'カスタムモデル (BYOK) について',
   },
   whatmochi: {
@@ -692,16 +695,17 @@ const ja: Strings = {
       { tag: 'Later 🔮', title: '将来', items: ['学習コンパニオンモード', 'より多くのプラットフォーム・モデル対応'] },
     ],
   },
-  waitlist: {
-    ...zh.waitlist,
-    h2: 'ウェイトリストに参加して優先ベータ枠へ',
-    perks: ['🥚 優先ベータ', '💬 フィードバックで方向を決める', '✨ 永久アーリーユーザー印'],
-    email_label: 'メール',
+  feedback: {
+    ...zh.feedback,
+    h2: '使い心地はどう?一言ください',
+    sub: 'ベータ期間中、あなたのフィードバックが Mochi の次を決めます。バグ・要望・ぐち、なんでも歓迎。',
+    msg_label: 'フィードバック',
+    msg_placeholder: 'Mochi に〇〇してほしい... / 〇〇で困った...',
+    email_label: 'メール(任意・返信用)',
     email_placeholder: 'you@example.com',
-    msg_label: '期待していることを一言(任意)',
-    msg_placeholder: 'Mochi に〇〇してほしい...',
-    submit: 'ウェイトリストに参加',
-    success: '✓ 受け取りました!優先でメールします',
+    email_hint: '空欄でも送信できます。入力いただければ返信できます。',
+    submit: 'フィードバックを送る',
+    success: '✓ 受け取りました。ありがとうございます!',
     error: '送信に失敗しました。後でもう一度お試しください。',
   },
   download: {
@@ -710,7 +714,7 @@ const ja: Strings = {
     sub: 'Google Play は使いません — APK はここに。安全のヒントを見てインストール。',
     ready_cta: '⬇️ APK をダウンロード',
     notready_cta: 'ビルド中…',
-    notready_note: 'ビルドはまだ準備中です。ウェイトリストに参加すれば、でき次第すぐお知らせします。',
+    notready_note: 'ビルドはまだ準備中です。質問やご要望は、下のフィードバック欄からお寄せください。',
     meta_fallback: 'Android 8.0+ · 直接ダウンロード',
     safety_title: 'インストールのヒント',
     safety: [
