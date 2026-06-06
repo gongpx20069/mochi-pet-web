@@ -91,7 +91,7 @@ type Strings = {
     intro: string;
     toc_title: string;
     providers_doc_label: string;
-    sections: { id: string; icon: string; title: string; intro?: string; steps?: string[]; note?: string; providers_title?: string; providers?: { name: string; base: string; doc: string }[]; providers_note?: string }[];
+    sections: { id: string; icon: string; title: string; intro?: string; steps?: string[]; shots?: { src: string; alt: string }[]; note?: string; providers_title?: string; providers?: { name: string; base: string; doc: string }[]; providers_note?: string }[];
     faq_title: string;
     faq: { q: string; a: string }[];
     updated: string;
@@ -262,6 +262,11 @@ const zh: Strings = {
           'BYOK(所有用户可用):在「设置 → 模型」粘贴你自己的 base URL + API Key,支持任意 OpenAI 风格的 RESTful API(OpenAI / Azure / DeepSeek / 通义千问 / Ollama / vLLM 等)',
         ],
         note: 'BYOK 模式下对话直连你填的 endpoint,不经过 Mochi 服务器,我们不存储任何内容。',
+        shots: [
+          { src: 'screens/login_page.jpg', alt: '登录 / 注册界面' },
+          { src: 'screens/account_page.jpg', alt: '账户与每日免费额度' },
+          { src: 'screens/BYOK.jpg', alt: 'BYOK:填入自己的 base URL + API Key' },
+        ],
         providers_title: '常见服务商 base URL 速查(OpenAI 风格端点统一填到 /v1)',
         providers: [
           { name: 'OpenAI', base: 'https://api.openai.com/v1', doc: 'https://platform.openai.com/docs/api-reference' },
@@ -287,6 +292,10 @@ const zh: Strings = {
           '说完稍等,Mochi 会多轮推理后回答或动手执行',
         ],
         note: '第一次启动会申请麦克风权限(语音唤醒 + 对话必需);再到电池优化里把 Mochi 设为「不受限制」,避免被系统杀后台,才能 always-on 常驻。',
+        shots: [
+          { src: 'screens/mochi_page.jpg', alt: '桌宠主界面' },
+          { src: 'screens/conversation_mochi_page.jpg', alt: '语音对话界面' },
+        ],
       },
       {
         id: 'tools',
@@ -301,6 +310,9 @@ const zh: Strings = {
           '每开一项,Mochi 才能调用;真正用到时系统弹窗,你点「允许」即可,不需要的保持关闭更安全',
         ],
         note: '通知、触觉反馈、今日待办是常驻能力,无需单独开关。拨号和发短信始终要你在系统界面手动确认,Mochi 不会自动拨出或发送。所有权限都可随时在系统设置里关闭。',
+        shots: [
+          { src: 'screens/toolssetting_page.jpg', alt: '客户端工具与按需权限设置' },
+        ],
       },
       {
         id: 'clock',
@@ -487,6 +499,11 @@ const en: Strings = {
           'BYOK (everyone): in Settings → Model, paste your own base URL + API key. Works with any OpenAI-style RESTful API (OpenAI / Azure / DeepSeek / Qwen / Ollama / vLLM, etc.)',
         ],
         note: 'In BYOK mode, chats go straight to your endpoint — never through Mochi’s servers, and we store nothing.',
+        shots: [
+          { src: 'screens/login_page.jpg', alt: 'Sign-up / login screen' },
+          { src: 'screens/account_page.jpg', alt: 'Account & daily free quota' },
+          { src: 'screens/BYOK.jpg', alt: 'BYOK: paste your own base URL + API key' },
+        ],
         providers_title: 'Common provider base URLs (OpenAI-style endpoints all end in /v1)',
         providers: [
           { name: 'OpenAI', base: 'https://api.openai.com/v1', doc: 'https://platform.openai.com/docs/api-reference' },
@@ -512,6 +529,10 @@ const en: Strings = {
           'Pause a moment — Mochi reasons across turns, then answers or acts',
         ],
         note: 'First launch asks for the microphone permission (required for voice wake + chat). Then set Mochi to “unrestricted” in battery optimization so the system won’t kill it — that’s what makes it always-on.',
+        shots: [
+          { src: 'screens/mochi_page.jpg', alt: 'The desktop pet (home) screen' },
+          { src: 'screens/conversation_mochi_page.jpg', alt: 'Voice conversation screen' },
+        ],
       },
       {
         id: 'tools',
@@ -526,6 +547,9 @@ const en: Strings = {
           'Only after you enable a tool can Mochi use it; tap “Allow” on the system prompt when it actually runs — keep what you don’t need off',
         ],
         note: 'Notifications, haptics and today’s to-dos are always-on and need no toggle. Dialing and sending SMS always require your manual confirmation in the system UI — Mochi never auto-dials or auto-sends. Every permission can be revoked anytime in system settings.',
+        shots: [
+          { src: 'screens/toolssetting_page.jpg', alt: 'Client tools & opt-in permissions' },
+        ],
       },
       {
         id: 'clock',
@@ -710,6 +734,11 @@ const ja: Strings = {
           'BYOK(全ユーザー可):設定 → モデルで自分の base URL + API Key を貼り付け。OpenAI 形式の RESTful API なら何でも対応(OpenAI / Azure / DeepSeek / 通義千問 / Ollama / vLLM など)',
         ],
         note: 'BYOK では対話はあなたの endpoint に直接接続し、Mochi のサーバーを通りません。何も保存しません。',
+        shots: [
+          { src: 'screens/login_page.jpg', alt: 'ログイン / 新規登録画面' },
+          { src: 'screens/account_page.jpg', alt: 'アカウントと毎日の無料枠' },
+          { src: 'screens/BYOK.jpg', alt: 'BYOK:自分の base URL + API Key を入力' },
+        ],
         providers_title: '主要プロバイダの base URL 早見表(OpenAI 形式の endpoint はすべて /v1 で終わる)',
         providers: [
           { name: 'OpenAI', base: 'https://api.openai.com/v1', doc: 'https://platform.openai.com/docs/api-reference' },
@@ -735,6 +764,10 @@ const ja: Strings = {
           '少し待つと、Mochi がマルチターン推論の後に回答・実行します',
         ],
         note: '初回起動でマイク権限を要求(音声ウェイク + 対話に必須)。さらにバッテリー最適化で Mochi を「制限なし」にして、システムに止められないように — これで always-on になります。',
+        shots: [
+          { src: 'screens/mochi_page.jpg', alt: 'デスクトップペット(ホーム)画面' },
+          { src: 'screens/conversation_mochi_page.jpg', alt: '音声対話画面' },
+        ],
       },
       {
         id: 'tools',
@@ -749,6 +782,9 @@ const ja: Strings = {
           '有効化して初めて Mochi が使えます。実行時にシステムのダイアログで「許可」を — 不要なものはオフのままが安全',
         ],
         note: '通知・触覚フィードバック・今日のTo-Doは常時オンで切り替え不要。発信や SMS 送信はシステム画面での手動確認が必須 — Mochi が自動で発信・送信することはありません。すべての権限はいつでもシステム設定で無効化できます。',
+        shots: [
+          { src: 'screens/toolssetting_page.jpg', alt: 'クライアントツールと必要に応じた権限' },
+        ],
       },
       {
         id: 'clock',

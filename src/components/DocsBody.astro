@@ -53,6 +53,22 @@ const d = s.docs;
                 ))}
               </ol>
             )}
+            {sec.shots && (
+              <div class="mt-5 flex flex-wrap items-start gap-4">
+                {sec.shots.map((shot) => (
+                  <figure class="m-0 flex flex-col items-center">
+                    <img
+                      src={`${base}${shot.src}`.replace(/([^:])\/\/+/g, '$1/')}
+                      alt={shot.alt}
+                      loading="lazy"
+                      decoding="async"
+                      class="rounded-xl border border-white/10 max-h-80 max-w-full w-auto h-auto object-contain bg-black/20"
+                    />
+                    <figcaption class="mt-2 text-xs text-mochi-muted text-center">{shot.alt}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
             {sec.note && (
               <p class="mt-4 rounded-xl border border-amber-400/25 bg-amber-400/5 px-4 py-3 text-sm text-amber-200/90">💡 {sec.note}</p>
             )}
