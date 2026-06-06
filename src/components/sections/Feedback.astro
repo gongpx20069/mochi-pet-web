@@ -3,10 +3,12 @@ import { t, type Lang } from '../../i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const s = t(lang);
-// Feedback submissions are delivered straight to the owner's inbox via Web3Forms
-// (no backend, no signup). Free tier = 250 submissions/month. The access key is
-// public by design — it only authorizes sending to the verified inbox below.
-const WEB3FORMS_KEY = '5cc5a6b7-d3d1-4ba2-aa69-412f961718ea';
+// Feedback submissions are delivered to the owner's inbox via FormSubmit.co
+// (no backend, no signup). The first submission triggers a one-time activation
+// email to the address below — click the link once and all future messages
+// arrive automatically. The AJAX endpoint returns JSON so we never leave the page.
+const FEEDBACK_EMAIL = 'gongpx20069@vip.qq.com';
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${FEEDBACK_EMAIL}`;
 ---
 <section id="feedback" class="section">
   <div class="rounded-3xl border border-mochi-pink/30 bg-gradient-to-br from-[#1a1a2e]/90 to-[#160a1d]/90 p-8 md:p-14 max-w-3xl mx-auto">
@@ -16,7 +18,7 @@ const WEB3FORMS_KEY = '5cc5a6b7-d3d1-4ba2-aa69-412f961718ea';
     <form
       id="feedback-form"
       class="mt-10 space-y-4"
-      action="https://api.web3forms.com/submit"
+      action={FORM_ENDPOINT}
       method="POST"
       data-success={s.feedback.success}
       data-error={s.feedback.error}
@@ -43,10 +45,10 @@ const WEB3FORMS_KEY = '5cc5a6b7-d3d1-4ba2-aa69-412f961718ea';
         />
         <p class="mt-1.5 text-xs text-mochi-muted">{s.feedback.email_hint}</p>
       </div>
-      <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-      <input type="hidden" name="subject" value="🐾 New Mochi feedback" />
-      <input type="hidden" name="from_name" value="Mochi 官网反馈" />
-      <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+      <input type="hidden" name="_subject" value="🐾 New Mochi feedback" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="text" name="_honey" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
       <button type="submit" class="btn-primary w-full text-base">{s.feedback.submit}</button>
       <p id="fb-status" class="text-center text-sm hidden"></p>
     </form>
@@ -76,7 +78,8 @@ const WEB3FORMS_KEY = '5cc5a6b7-d3d1-4ba2-aa69-412f961718ea';
           body: JSON.stringify(payload),
         });
         const result = await res.json().catch(() => ({ success: false }));
-        if (res.ok && result.success) {
+        const ok = res.ok && (result.success === true || result.success === 'true');
+        if (ok) {
           status.textContent = form.dataset.success ?? 'OK';
           status.classList.remove('text-mochi-muted');
           status.classList.add('text-emerald-400');
