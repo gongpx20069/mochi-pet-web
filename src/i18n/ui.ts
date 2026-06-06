@@ -326,6 +326,10 @@ const zh: Strings = {
           '语音对话始终后台待命,反方向滑回来、或喊一声唤醒词,就变回 AI 桌宠',
         ],
         note: '插上电源,就是一台会聊天、会记事的智能时钟。',
+        shots: [
+          { src: 'screens/mochi_clock_page.jpg', alt: 'Mochi 让到一边,大号像素时钟' },
+          { src: 'screens/clock_todo_page.jpg', alt: '今日待办看板' },
+        ],
       },
     ],
     faq_title: '常见问题',
@@ -563,6 +567,10 @@ const en: Strings = {
           'Voice chat stays on standby in the background; swipe back the other way or call the wake word to return to the AI pet',
         ],
         note: 'Plug it in and you’ve got a smart clock that talks back and remembers things.',
+        shots: [
+          { src: 'screens/mochi_clock_page.jpg', alt: 'Mochi steps aside for a big pixel clock' },
+          { src: 'screens/clock_todo_page.jpg', alt: 'Today’s to-do board' },
+        ],
       },
     ],
     faq_title: 'FAQ',
@@ -798,6 +806,10 @@ const ja: Strings = {
           '音声対話はバックグラウンドで待機。逆方向にスワイプ、またはウェイクワードを呼べば AI ペットに戻る',
         ],
         note: '電源につなげば、おしゃべりしてメモも取るスマート時計に。',
+        shots: [
+          { src: 'screens/mochi_clock_page.jpg', alt: 'Mochi が脇によけ、大きなピクセル時計' },
+          { src: 'screens/clock_todo_page.jpg', alt: '今日のTo-Doボード' },
+        ],
       },
     ],
     faq_title: 'よくある質問',

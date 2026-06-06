@@ -3,12 +3,33 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { t, type Lang } from '../i18n/ui';
+import fs from 'node:fs';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const s = t(lang);
 const base = import.meta.env.BASE_URL;
 const homeHref = `${base}${lang === 'zh' ? '' : lang + '/'}`.replace(/\/+/g, '/');
 const d = s.docs;
+
+// Resolve a public asset URL under the configured base path.
+const shotSrc = (src: string) => `${base}${src}`.replace(/([^:])\/\/+/g, '$1/');
+// Read JPEG dimensions at build time so portrait/landscape shots render at the right size.
+function jpegSize(p: string): { w: number; h: number } | null {
+  try {
+    const buf = fs.readFileSync(p);
+    let o = 2;
+    while (o < buf.length - 8) {
+      if (buf[o] !== 0xff) { o++; continue; }
+      const m = buf[o + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+        return { h: buf.readUInt16BE(o + 5), w: buf.readUInt16BE(o + 7) };
+      }
+      o += 2 + buf.readUInt16BE(o + 2);
+    }
+  } catch { /* ignore */ }
+  return null;
+}
+const isWide = (src: string) => { const dim = jpegSize(`public/${src}`); return dim ? dim.w >= dim.h : false; };
 ---
 <Layout lang={lang} title={d.meta_title} description={d.meta_desc}>
   <Nav lang={lang} />
@@ -22,13 +43,14 @@ const d = s.docs;
       <p class="mt-5 text-lg text-mochi-muted max-w-2xl">{d.intro}</p>
 
       <!-- TOC -->
-      <nav class="mt-8 card !p-5 max-w-2xl">
+      <nav class="mt-10 card !p-6 max-w-3xl">
         <h2 class="text-xs uppercase tracking-widest text-mochi-purple/90 font-semibold">{d.toc_title}</h2>
-        <ol class="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+        <ol class="mt-4 grid sm:grid-cols-2 gap-x-8 gap-y-2.5 text-sm">
           {d.sections.map((sec) => (
             <li>
-              <a href={`#${sec.id}`} class="text-mochi-muted hover:text-mochi-text transition-colors">
-                {sec.icon} {sec.title}
+              <a href={`#${sec.id}`} class="group flex items-center gap-2.5 text-mochi-muted hover:text-mochi-text transition-colors">
+                <span class="shrink-0 text-base opacity-90 group-hover:scale-110 transition-transform">{sec.icon}</span>
+                <span class="border-b border-transparent group-hover:border-mochi-purple/40">{sec.title}</span>
               </a>
             </li>
           ))}
@@ -36,15 +58,16 @@ const d = s.docs;
       </nav>
 
       <!-- Sections -->
-      <div class="mt-12 space-y-12 max-w-2xl">
+      <div class="mt-12 space-y-8 max-w-3xl">
         {d.sections.map((sec) => (
-          <div id={sec.id} class="scroll-mt-24">
-            <h2 class="text-xl md:text-2xl font-bold tracking-tight flex items-center gap-2">
-              <span>{sec.icon}</span><span>{sec.title}</span>
+          <section id={sec.id} class="scroll-mt-24 card !p-6 md:!p-8">
+            <h2 class="text-xl md:text-2xl font-bold tracking-tight flex items-center gap-3">
+              <span class="shrink-0 grid place-items-center w-10 h-10 rounded-xl bg-mochi-purple/15 text-xl">{sec.icon}</span>
+              <span>{sec.title}</span>
             </h2>
-            {sec.intro && <p class="mt-3 text-mochi-muted">{sec.intro}</p>}
+            {sec.intro && <p class="mt-4 text-mochi-muted leading-relaxed">{sec.intro}</p>}
             {sec.steps && (
-              <ol class="mt-4 space-y-2">
+              <ol class="mt-5 space-y-2.5">
                 {sec.steps.map((step, i) => (
                   <li class="flex gap-3 text-mochi-text/90">
                     <span class="shrink-0 w-6 h-6 rounded-full bg-mochi-purple/20 text-mochi-purple text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
@@ -54,27 +77,27 @@ const d = s.docs;
               </ol>
             )}
             {sec.shots && (
-              <div class="mt-5 flex flex-wrap items-start gap-4">
+              <div class="mt-6 flex flex-wrap items-end justify-center gap-4 sm:gap-5">
                 {sec.shots.map((shot) => (
-                  <figure class="m-0 flex flex-col items-center">
+                  <figure class={`group m-0 flex flex-col items-center ${isWide(shot.src) ? 'w-full sm:w-[420px]' : ''}`}>
                     <img
-                      src={`${base}${shot.src}`.replace(/([^:])\/\/+/g, '$1/')}
+                      src={shotSrc(shot.src)}
                       alt={shot.alt}
                       loading="lazy"
                       decoding="async"
-                      class="rounded-xl border border-white/10 max-h-80 max-w-full w-auto h-auto object-contain bg-black/20"
+                      class={`rounded-2xl border border-white/10 ring-1 ring-black/20 shadow-lg object-contain bg-black/30 transition-transform duration-300 group-hover:-translate-y-1 ${isWide(shot.src) ? 'w-full h-auto' : 'h-72 sm:h-[22rem] w-auto'}`}
                     />
-                    <figcaption class="mt-2 text-xs text-mochi-muted text-center">{shot.alt}</figcaption>
+                    <figcaption class="mt-2.5 text-xs text-mochi-muted text-center max-w-[16rem] leading-snug">{shot.alt}</figcaption>
                   </figure>
                 ))}
               </div>
             )}
             {sec.note && (
-              <p class="mt-4 rounded-xl border border-amber-400/25 bg-amber-400/5 px-4 py-3 text-sm text-amber-200/90">💡 {sec.note}</p>
+              <p class="mt-5 rounded-xl border border-amber-400/25 bg-amber-400/5 px-4 py-3 text-sm text-amber-200/90 leading-relaxed">💡 {sec.note}</p>
             )}
             {sec.providers && (
-              <details class="mt-5 card !p-0 group overflow-hidden">
-                <summary class="cursor-pointer list-none flex items-center justify-between gap-3 px-4 py-3.5">
+              <details class="mt-5 rounded-xl border border-white/10 bg-black/15 group overflow-hidden">
+                <summary class="cursor-pointer list-none flex items-center justify-between gap-3 px-4 py-3.5 hover:bg-white/[0.03] transition-colors">
                   <span class="text-sm font-semibold text-mochi-text/90">{sec.providers_title}</span>
                   <span class="shrink-0 text-mochi-muted group-open:rotate-45 transition-transform text-lg leading-none">+</span>
                 </summary>
@@ -83,7 +106,7 @@ const d = s.docs;
                     <table class="w-full text-sm border-collapse">
                       <tbody>
                         {sec.providers.map((p) => (
-                          <tr class="border-b border-white/5 last:border-0">
+                          <tr class="border-b border-white/5 last:border-0 hover:bg-white/[0.02]">
                             <td class="px-4 py-3 align-top font-semibold whitespace-nowrap">{p.name}</td>
                             <td class="px-4 py-3 align-top">
                               <code class="text-[13px] text-mochi-purple/90 break-all">{p.base}</code>
@@ -99,17 +122,17 @@ const d = s.docs;
                     </table>
                   </div>
                   {sec.providers_note && (
-                    <p class="mt-4 rounded-xl border border-sky-400/25 bg-sky-400/5 px-4 py-3 text-sm text-sky-200/90">ℹ️ {sec.providers_note}</p>
+                    <p class="mt-4 rounded-xl border border-sky-400/25 bg-sky-400/5 px-4 py-3 text-sm text-sky-200/90 leading-relaxed">ℹ️ {sec.providers_note}</p>
                   )}
                 </div>
               </details>
             )}
-          </div>
+          </section>
         ))}
       </div>
 
       <!-- FAQ -->
-      <div class="mt-16 max-w-2xl">
+      <div class="mt-16 max-w-3xl">
         <h2 class="text-xl md:text-2xl font-bold tracking-tight">{d.faq_title}</h2>
         <div class="mt-6 space-y-3">
           {d.faq.map((item) => (
