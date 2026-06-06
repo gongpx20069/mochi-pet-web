@@ -1,12 +1,14 @@
 ---
-interface Props {
-  expression?: 'happy' | 'excited' | 'sleepy' | 'sad' | 'angry' | 'neutral';
-}
-const { expression = 'happy' } = Astro.props;
+// Landscape phone mockup that cross-fades between two REAL app screenshots:
+// the side-clock view (Mochi + big clock) and the clock + today's TODO board.
 const base = import.meta.env.BASE_URL;
-const faceUrl = `${base}emotions/${expression}.svg`.replace(/\/+/g, '/');
+const shot = (name: string) => `${base}screens/${name}`.replace(/\/+/g, '/');
+const shots = [
+  { src: shot('mochi_clock_page.jpg'), alt: 'Mochi side-clock mode — pet steps aside, big pixel clock' },
+  { src: shot('clock_todo_page.jpg'), alt: 'Clock with today\'s TODO board' },
+];
 ---
-<div class="phone-mockup relative mx-auto w-full max-w-md aspect-[16/10]">
+<div class="phone-mockup relative mx-auto w-full max-w-md aspect-[20/9]">
   <!-- Phone shell (landscape) -->
   <div class="phone-shell absolute inset-0 rounded-[2.2rem] bg-[#111122] border border-white/10 shadow-2xl shadow-black/60 p-2.5">
     <!-- Left side bar (camera dot) -->
@@ -15,31 +17,35 @@ const faceUrl = `${base}emotions/${expression}.svg`.replace(/\/+/g, '/');
     <span class="phone-right-bar absolute right-2 top-1/2 -translate-y-1/2 w-12 h-1 rounded-full bg-white/10"></span>
 
     <div class="phone-screen relative h-full w-full rounded-[1.6rem] bg-black overflow-hidden">
-      <img
-        id="mochi-face"
-        src={faceUrl}
-        alt="Mochi"
-        class="mochi-face w-full h-full object-cover select-none pointer-events-none"
-        data-base={base}
-      />
+      {shots.map((sh, i) => (
+        <img
+          src={sh.src}
+          alt={sh.alt}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          class:list={['mochi-shot absolute inset-0 w-full h-full object-cover select-none pointer-events-none', i === 0 ? 'is-active' : '']}
+          data-shot={i}
+        />
+      ))}
       <div class="glass-overlay absolute inset-0 pointer-events-none bg-gradient-to-br from-white/[0.06] via-transparent to-white/[0.03]"></div>
     </div>
   </div>
 
-  <!-- Floating sleep "💤" hint above the phone -->
-  <span class="floating-zzz absolute left-[14%] -top-2 text-mochi-purple/80 text-2xl select-none">💤</span>
+  <!-- Floating "swipe" hint above the phone -->
+  <span class="floating-zzz absolute left-[14%] -top-2 text-mochi-purple/80 text-2xl select-none">🕐</span>
 </div>
 
 <style>
-  .mochi-face {
-    transform-origin: center;
-    animation: mochi-bob 3s ease-in-out infinite;
-    transition: opacity 400ms ease;
-  }
+  .phone-mockup { animation: mochi-bob 4s ease-in-out infinite; }
   @keyframes mochi-bob {
     0%, 100% { transform: translateY(-3px); }
     50%      { transform: translateY(3px); }
   }
+
+  .mochi-shot {
+    opacity: 0;
+    transition: opacity 700ms ease;
+  }
+  .mochi-shot.is-active { opacity: 1; }
 
   .floating-zzz {
     animation: floating-zzz 8s ease-in-out infinite;
@@ -53,27 +59,19 @@ const faceUrl = `${base}emotions/${expression}.svg`.replace(/\/+/g, '/');
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mochi-face, .floating-zzz { animation: none; }
+    .phone-mockup, .floating-zzz { animation: none; }
+    .mochi-shot { transition: none; }
   }
 </style>
 
 <script>
-  const face = document.getElementById('mochi-face') as HTMLImageElement | null;
-  if (face) {
-    const base = face.dataset.base || '/';
-    const join = (p: string) => `${base}${p}`.replace(/\/+/g, '/');
-    const cycle = [
-      join('emotions/happy.svg'),
-      join('emotions/excited.svg'),
-      join('emotions/happy.svg'),
-      join('emotions/sleepy.svg'),
-    ];
-    // Preload to avoid flicker between swaps
-    cycle.forEach((src) => { const i = new Image(); i.src = src; });
+  const shots = Array.from(document.querySelectorAll<HTMLImageElement>('.mochi-shot'));
+  if (shots.length > 1) {
     let i = 0;
     setInterval(() => {
-      i = (i + 1) % cycle.length;
-      face.src = cycle[i];
-    }, 6000);
+      shots[i].classList.remove('is-active');
+      i = (i + 1) % shots.length;
+      shots[i].classList.add('is-active');
+    }, 4500);
   }
 </script>
