@@ -81,6 +81,10 @@ type Strings = {
     safety_title: string;
     safety: string[];
     no_store: string;
+    others_title: string;
+    others_hint: string;
+    recommended_tag: string;
+    variant_labels: { armeabi: string };
   };
   docs: {
     meta_title: string;
@@ -227,6 +231,10 @@ const zh: Strings = {
       '装好后打开《使用文档》,3 分钟跑通第一句对话',
     ],
     no_store: '为什么不上架?上架商店成本高、审核慢 —— 官网直发能让你更快拿到新版本。',
+    others_title: '其他版本',
+    others_hint: '不确定选哪个?默认 arm64 适配近几年绝大多数手机,装好闪退或提示不兼容再试老手机版。',
+    recommended_tag: '推荐',
+    variant_labels: { armeabi: '老手机版 · armeabi-v7a(32 位,适配较旧机型)' },
   },
   docs: {
     meta_title: 'Mochi 使用文档 · 安装后如何上手',
@@ -468,6 +476,10 @@ const en: Strings = {
       'Once installed, open the Docs and run your first chat in 3 minutes',
     ],
     no_store: 'Why no store? Listing is costly and slow to review — direct downloads get you new versions faster.',
+    others_title: 'Other versions',
+    others_hint: 'Not sure which to pick? The default arm64 fits almost every phone from recent years. If it crashes or says “incompatible,” try the older-phone build.',
+    recommended_tag: 'Recommended',
+    variant_labels: { armeabi: 'Older phones · armeabi-v7a (32-bit, for legacy devices)' },
   },
   docs: {
     meta_title: 'Mochi Docs · Getting started after install',
@@ -707,6 +719,10 @@ const ja: Strings = {
       'インストールしたら使い方ガイドを開き、3 分で最初の対話を',
     ],
     no_store: 'なぜストアに出さない?審査は高コストで遅い — 直接配布なら新版をより速くお届けできます。',
+    others_title: 'その他のバージョン',
+    others_hint: 'どれを選ぶか迷ったら?標準の arm64 はここ数年のほぼ全ての端末に対応。起動できない・非対応と出る場合は旧端末版をお試しください。',
+    recommended_tag: 'おすすめ',
+    variant_labels: { armeabi: '旧端末版 · armeabi-v7a(32 ビット、古い機種向け)' },
   },
   docs: {
     meta_title: 'Mochi 使い方ガイド · インストール後の始め方',
