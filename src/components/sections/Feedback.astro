@@ -65,19 +65,24 @@ const WEB3FORMS_KEY = '5cc5a6b7-d3d1-4ba2-aa69-412f961718ea';
       status.classList.add('text-mochi-muted');
       status.textContent = '...';
       try {
-        const data = new FormData(form);
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData);
         const res = await fetch(action, {
           method: 'POST',
-          body: data,
-          headers: { Accept: 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(payload),
         });
-        if (res.ok) {
+        const result = await res.json().catch(() => ({ success: false }));
+        if (res.ok && result.success) {
           status.textContent = form.dataset.success ?? 'OK';
           status.classList.remove('text-mochi-muted');
           status.classList.add('text-emerald-400');
           form.reset();
         } else {
-          throw new Error('bad status');
+          throw new Error(result.message ?? 'bad status');
         }
       } catch {
         status.textContent = form.dataset.error ?? 'Error';
