@@ -8,14 +8,14 @@
 // ───────────────────────────────────────────────────────────
 
 /** 当前发布版本号(展示用) */
-export const APK_VERSION = 'v0.0.2';
+export const APK_VERSION = 'v0.0.3';
 
 /** GitHub Releases 资产基础路径 */
-const REL = 'https://github.com/gongpx20069/mochi-pet-web/releases/download/v0.0.2';
+const REL = 'https://github.com/gongpx20069/mochi-pet-web/releases/download/v0.0.3';
 
 /** 默认下载:arm64-v8a —— 适配绝大多数现代安卓手机 */
-export const APK_URL = `${REL}/mochi-pet-0.0.2-arm64-v8a.apk`;
-export const APK_META = 'v0.0.2 · arm64-v8a · ~76MB · Android 8.0+';
+export const APK_URL = `${REL}/mochi-pet-0.0.3-arm64-v8a.apk`;
+export const APK_META = 'v0.0.3 · arm64-v8a · ~76MB · Android 8.0+';
 
 /**
  * 其他版本(折叠在「其他版本」面板里)。
@@ -23,7 +23,7 @@ export const APK_META = 'v0.0.2 · arm64-v8a · ~76MB · Android 8.0+';
  * 注:x86_64 模拟器版暂不对外发布。
  */
 export const APK_VARIANTS: { arch: string; url: string; size: string }[] = [
-  { arch: 'armeabi', url: `${REL}/mochi-pet-0.0.2-armeabi-v7a.apk`, size: '~64MB' },
+  { arch: 'armeabi', url: `${REL}/mochi-pet-0.0.3-armeabi-v7a.apk`, size: '~64MB' },
 ];
 
 /** APK 是否已就绪(填了直链即视为就绪) */
